@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.database.DatabaseOperations;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DatabaseOperations dbOper = new DatabaseOperations(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
