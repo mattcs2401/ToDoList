@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import mcssoft.com.todolist.utility.DatabaseLoadTask;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
@@ -22,14 +20,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             sqLiteDb.beginTransaction();
             sqLiteDb.execSQL(SchemaConstants.DROP_TABLE_SHOPPING_LIST);
             sqLiteDb.execSQL(SchemaConstants.CREATE_TABLE_SHOPPING_LIST);
-
+            sqLiteDb.setTransactionSuccessful();
         } catch(SQLException ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {
             sqLiteDb.endTransaction();
         }
-
-        populateTableDefaults(SchemaConstants.TABLE_SHOPPING_LIST);
     }
 
     @Override
@@ -53,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Housekeeping activities.
      */
-    public void onDestroy() {
+    public void close() {
         if(sqLiteDatabase.isOpen()) {
             sqLiteDatabase.close();
         }
@@ -68,15 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             SchemaConstants.SHOPPING_LIST_TYPE,
             SchemaConstants.SHOPPING_LIST_VALUE
         };
-    }
-
-    private void populateTableDefaults(String tableName) {
-        switch(tableName) {
-            case SchemaConstants.TABLE_SHOPPING_LIST:
-                DatabaseLoadTask dblt = new DatabaseLoadTask(context);
-                dblt.execute(new String[] {tableName});
-                break;
-        }
     }
 
     private Context context;
