@@ -28,6 +28,9 @@
         <item>White sauce</item>
         <item>Gravy traditional</item>
         <item>Stir fry sauce</item>
+        <item>Salt herbmare</item>
+        <item>Salt trocomare</item>
+        <item>Curry paste</item>
     </string-array>
 
     <string-array name="shopping_items_fruitveg_default">
@@ -38,7 +41,9 @@
         <item>Spud small</item>
         <item>Spud large</item>
         <item>Sweet spud</item>
-        <item>Greens</item>
+        <item>Greens beans</item>
+        <item>Greens brocoli</item>
+        <item>Cauliflower</item>
         <item>Carrot</item>
         <item>Mushroom</item>
         <item>Tomato large</item>
@@ -48,6 +53,8 @@
         <item>Red onion</item>
         <item>Brown onion</item>
         <item>Grapes</item>
+        <item>Banana</item>
+        <item>Pear</item>
     </string-array>
 
     <string-array name="shopping_items_meatfish_default">
