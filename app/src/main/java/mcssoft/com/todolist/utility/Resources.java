@@ -13,18 +13,23 @@ public class Resources {
         this.context = context;
     }
 
+    public String getString(int resId) {
+        return context.getResources().getString(resId);
+    }
+
     /**
      * Get app default string resources to populate initial shopping list values.
-     * @return [0] - general values, [1] - fruit and veg values, [2] - meat and fish values.
+     * @return [0]-general values, [1]-fruit and veg values, [2]-meat and fish values.
      */
     public List<String[]> getAllDefaults() {
         List theList = new ArrayList();
-        String[] l1 = context.getResources().getStringArray(R.array.shopping_items_general_default);
-        String[] l2 = context.getResources().getStringArray(R.array.shopping_items_fruitveg_default);
-        String[] l3 = context.getResources().getStringArray(R.array.shopping_items_meatfish_default);
-        theList.add(l1);
-        theList.add(l2);
-        theList.add(l3);
+        String[] sa = {};
+        sa = context.getResources().getStringArray(R.array.shopping_items_general_default);
+        theList.add(sa);
+        sa = context.getResources().getStringArray(R.array.shopping_items_fruitveg_default);
+        theList.add(sa);
+        sa = context.getResources().getStringArray(R.array.shopping_items_meatfish_default);
+        theList.add(sa);
         return theList;
     }
 

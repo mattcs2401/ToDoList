@@ -6,6 +6,32 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Bundle keys. -->
+    <string name="bundle_key">bundle_key</string>
+    <string name="list_type_key">list_type_key</string>
+    <string name="list_type_shopping_key">list_type_shopping_key</string>
+    <string name="list_type_general_key">list_type_general_key</string>
+    <string name="list_add_action_key">list_add_key</string>
+    <string name="list_edit_action_key">list_edit_key</string>
+    <string name="list_delete_action_key">list_delete_key</string>
+
+    <!-- Bundle values. -->
+    <string name="list_type_shopping">Shopping</string>
+    <string name="list_type_general">General</string>
+
+    <!-- Toolabr titles. -->
+    <string name="toolbar_title_new_shopping">New Shopping</string>
+
+    <!-- Button text. -->
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <!-- List select dialog. -->
+    <string name="rb_list_select_shopping">Shopping</string>
+    <string name="rb_list_select_general">General</string>
+    <string name="list_select_title">List Type</string>
+    <string name="list_select_message">Choose the type of list to create.</string>
+
     <!-- Shopping items. -->
     <string-array name="shopping_items_general_default">
         <item>Bread</item>

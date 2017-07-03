@@ -1,8 +1,8 @@
 package mcssoft.com.todolist.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,11 +14,44 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.database.DatabaseOperations;
+import mcssoft.com.todolist.fragment.ListSelectFragment;
+import mcssoft.com.todolist.interfaces.IListSelect;
+import mcssoft.com.todolist.utility.Resources;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements IListSelect,
+                   View.OnClickListener,
+                   NavigationView.OnNavigationItemSelectedListener   {
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Interface">
+    /**
+     * Interface return on user selecting the type of list to create.
+     * @param value The radio button id.
+     */
+    @Override
+    public void iSelected(int value) {
+        Resources res = new Resources(this);
+        switch(value) {
+            // General type list.
+            case R.id.id_rb_list_select_general:
+                // TBA
+                break;
+            // Shopping type list.
+            case R.id.id_rb_list_select_shopping:
+                // set list type as shopping.
+                Bundle bundle = new Bundle();
+                bundle.putString(res.getString(R.string.list_type_key), res.getString(R.string.list_type_shopping));
+                // set action as add.
+                Intent intent = new Intent(this, EditActivity.class);
+                intent.setAction(res.getString(R.string.list_add_action_key));
+                intent.putExtra(res.getString(R.string.bundle_key), bundle);
+                startActivity(intent);
+                break;
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +73,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -47,13 +89,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -99,9 +134,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if(view instanceof FloatingActionButton) {
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+            // Launch dialog for user to select new list type.
+            showListSelectDialog();
         }
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Utility">
+    private void showListSelectDialog() {
+        ListSelectFragment lsf = new ListSelectFragment();
+        lsf.show(getFragmentManager(), "");
+    }
+    //</editor-fold>
 }
+// Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+// .setAction("Action", null).show();
+
