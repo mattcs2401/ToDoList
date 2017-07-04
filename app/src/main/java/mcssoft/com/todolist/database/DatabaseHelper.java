@@ -62,7 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return new String[] {
             SchemaConstants.SHOPPING_LIST_ROWID,
             SchemaConstants.SHOPPING_LIST_TYPE,
-            SchemaConstants.SHOPPING_LIST_VALUE
+            SchemaConstants.SHOPPING_LIST_VALUE,
+            SchemaConstants.SHOPPING_LIST_VALUE_SEL
         };
     }
 

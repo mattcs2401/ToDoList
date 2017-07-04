@@ -17,6 +17,10 @@ public class Resources {
         return context.getResources().getString(resId);
     }
 
+    public String[] getShoppingItemTypes() {
+        return context.getResources().getStringArray(R.array.shopping_item_types);
+    }
+
     /**
      * Get app default string resources to populate initial shopping list values.
      * @return [0]-general values, [1]-fruit and veg values, [2]-meat and fish values.

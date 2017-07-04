@@ -51,6 +51,7 @@ public class DatabaseOperations {
      */
     public void writeTableDefaults(String tableName) {
         Resources resources = new Resources(context);
+        String[] itemTypes = resources.getShoppingItemTypes();
         List<String[]> listing = resources.getAllDefaults();
 
         SQLiteDatabase db = dbHelper.getDatabase();
@@ -61,8 +62,9 @@ public class DatabaseOperations {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, SchemaConstants.SHOPPING_LIST_TYPE_GEN);
+                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[0]);
                 cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
+                cv.put(SchemaConstants.SHOPPING_LIST_VALUE_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -77,7 +79,7 @@ public class DatabaseOperations {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, SchemaConstants.SHOPPING_LIST_TYPE_FANDV);
+                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[1]);
                 cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
@@ -93,7 +95,7 @@ public class DatabaseOperations {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, SchemaConstants.SHOPPING_LIST_TYPE_MANDF);
+                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[2]);
                 cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
