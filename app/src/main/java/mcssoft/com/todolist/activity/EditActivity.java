@@ -9,6 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.ActionBar.TabListener;
 import android.view.View;
+import android.widget.Spinner;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.PagerAdapter;
@@ -37,47 +42,14 @@ public class EditActivity extends AppCompatActivity {
             // delete a list item.
             deleteListItem(type);
         }
-
     }
 
     private void addListItem(String type) {
-
-        // try https://github.com/Intelliabb/android/tree/master/FragmentHostViewPager
-        // uses android.support.v4.app.FragmentTabHost
-
         if (type.equals(res.getString(R.string.list_type_shopping))) {
-
             setContentView(R.layout.cv_shopping);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            final ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(res.getString(R.string.toolbar_title_new_shopping));
-
-            Resources res = new Resources(this);
-            String[] pageTitles = res.getShoppingItemTypes();
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-            tabLayout.addTab(tabLayout.newTab().setText(pageTitles[0]));
-            tabLayout.addTab(tabLayout.newTab().setText(pageTitles[1]));
-            tabLayout.addTab(tabLayout.newTab().setText(pageTitles[2]));
-            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-            pagerAdapter = new PagerAdapter(getSupportFragmentManager(), this);
-            viewPager = (ViewPager) findViewById(R.id.id_pager_container);
-            viewPager.setAdapter(pagerAdapter);
-
-            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    viewPager.setCurrentItem(tab.getPosition());
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) { }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) { }
-            });
+            setActionBar();
+            setAdapter();
+            setTabLayout();
         }
     }
 
@@ -98,6 +70,29 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
+    private void setActionBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(res.getString(R.string.toolbar_title_new_shopping));
+    }
+
+    private void setAdapter() {
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager(), this);
+        viewPager = (ViewPager) findViewById(R.id.id_pager_container);
+        viewPager.setAdapter(pagerAdapter);
+    }
+
+    private void setTabLayout() {
+        Resources res = new Resources(this);
+        String[] pageTitles = res.getShoppingItemTypes();
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[0]));
+        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[1]));
+        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[2]));
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
     private Resources res;
     private ViewPager viewPager;

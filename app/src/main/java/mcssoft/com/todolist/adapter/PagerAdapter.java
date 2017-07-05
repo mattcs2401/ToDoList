@@ -26,6 +26,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         return sf;
     }
 
+//    @Override
+//    public int getItemPosition(Object object) {
+//        return super.getItemPosition(object);
+//    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         String title = null;
