@@ -17,6 +17,8 @@ public class Resources {
         return context.getResources().getString(resId);
     }
 
+    public int getInteger(int resId) { return context.getResources().getInteger(resId); }
+
     public String[] getShoppingItemTypes() {
         return context.getResources().getStringArray(R.array.shopping_item_types);
     }

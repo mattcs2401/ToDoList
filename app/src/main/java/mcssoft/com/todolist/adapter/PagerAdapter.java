@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.fragment.ShoppingFragment;
 import mcssoft.com.todolist.utility.Resources;
 
@@ -13,23 +14,18 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     public PagerAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
-        Resources res = new Resources(context);
-        pageTitles = res.getShoppingItemTypes();
+        resources = new Resources(context);
+        pageTitles = resources.getShoppingItemTypes();
     }
 
     @Override
     public Fragment getItem(int position) {
         ShoppingFragment sf = new ShoppingFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("key", position);
+        bundle.putInt(resources.getString(R.string.bundle_key), position);
         sf.setArguments(bundle);
         return sf;
     }
-
-//    @Override
-//    public int getItemPosition(Object object) {
-//        return super.getItemPosition(object);
-//    }
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -50,8 +46,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3; // TODO - get rid of magic number.
+        return resources.getInteger(R.integer.num_shopping_pages);
     }
 
     private String[] pageTitles;
+    private Resources resources;
 }

@@ -1,6 +1,5 @@
 package mcssoft.com.todolist.fragment;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +16,7 @@ import mcssoft.com.todolist.adapter.ShoppingAdapter;
 import mcssoft.com.todolist.database.DatabaseOperations;
 import mcssoft.com.todolist.database.SchemaConstants;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.utility.Resources;
 
 
 public class ShoppingFragment extends Fragment implements IItemClickListener {
@@ -30,7 +30,8 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
         if(args == null) {
             pageNo = 0;
         } else {
-            pageNo = args.getInt("key");
+            Resources res = new Resources(getActivity());
+            pageNo = args.getInt(res.getString(R.string.bundle_key));
         }
     }
 
@@ -43,7 +44,8 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setCursor(pageNo);        // generat backing data.
+
+        setCursor(pageNo);        // generate backing data.
         setShoppingAdapter();     // set adapter associated with the recycler view.
         setRecyclerView(rootView);// set the recycler view.
     }
@@ -64,7 +66,7 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     private int getDbRowId(int position) {
         adapter.getItemId(position);
         Cursor cursor = adapter.getCursor();
-        int dbRowId = cursor.getInt(cursor.getColumnIndex(SchemaConstants.SHOPPING_LIST_ROWID));
+        int dbRowId = cursor.getInt(cursor.getColumnIndex(SchemaConstants.SL_ITEM_ROWID));
         return dbRowId;
     }
 

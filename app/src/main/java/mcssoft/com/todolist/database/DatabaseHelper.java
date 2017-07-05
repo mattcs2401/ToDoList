@@ -18,8 +18,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDb) {
         try {
             sqLiteDb.beginTransaction();
-            sqLiteDb.execSQL(SchemaConstants.DROP_TABLE_SHOPPING_LIST);
-            sqLiteDb.execSQL(SchemaConstants.CREATE_TABLE_SHOPPING_LIST);
+            sqLiteDb.execSQL(SchemaConstants.DROP_TABLE_SL);
+            sqLiteDb.execSQL(SchemaConstants.DROP_TABLE_SL_ITEM);
+            sqLiteDb.execSQL(SchemaConstants.CREATE_TABLE_SL_ITEM);
+            sqLiteDb.execSQL(SchemaConstants.CREATE_TABLE_SL);
             sqLiteDb.setTransactionSuccessful();
         } catch(SQLException ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -36,15 +38,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public enum Projection {
-        ShoppingListSchema
+        SLItemSchema, SLSchema
     }
 
-    public static String [] getProjection(Projection projection) {
-        switch (projection) {
-            case ShoppingListSchema:
-                return getShoppingListProjection();
+    public static String [] getProjection(Projection p) {
+        String[] projection = null;
+        switch (p) {
+            case SLItemSchema:
+                projection = getSLItemProjection();
+                break;
+            case SLSchema:
+                projection = getSLProjection();
+                break;
         }
-        return  null;
+        return  projection;
     }
     /**
      * Housekeeping activities.
@@ -58,12 +65,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private static String[] getShoppingListProjection() {
+    private static String[] getSLItemProjection() {
         return new String[] {
-            SchemaConstants.SHOPPING_LIST_ROWID,
-            SchemaConstants.SHOPPING_LIST_TYPE,
-            SchemaConstants.SHOPPING_LIST_VALUE,
-            SchemaConstants.SHOPPING_LIST_VALUE_SEL
+            SchemaConstants.SL_ITEM_ROWID,
+            SchemaConstants.SL_ITEM_TYPE,
+            SchemaConstants.SL_ITEM_VALUE,
+            SchemaConstants.SL_ITEM_VAL_SEL
+        };
+    }
+
+    private static String[] getSLProjection() {
+        return new String[] {
+                SchemaConstants.SL_ROWID,
+                SchemaConstants.SL_ID,
+                SchemaConstants.SL_TYPE,
+                SchemaConstants.SL_VAL
         };
     }
 

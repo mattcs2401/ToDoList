@@ -34,7 +34,7 @@ public class DatabaseOperations {
                 selArgs = new String[]{res.getShoppingItemTypes()[2]};
                 break;
         }
-        return getAllRecords(SchemaConstants.TABLE_SHOPPING_LIST, SchemaConstants.WHERE_SHOPPING_LIST_TYPE, selArgs);
+        return getAllRecords(SchemaConstants.TABLE_SL_ITEM, SchemaConstants.WHERE_SL_ITEM_TYPE, selArgs);
     }
 
     /**
@@ -49,8 +49,8 @@ public class DatabaseOperations {
         try {
             db.beginTransaction();
             switch(tableName) {
-                case SchemaConstants.TABLE_SHOPPING_LIST:
-                    cursor = db.rawQuery("SELECT " + SchemaConstants.SHOPPING_LIST_ROWID + " FROM " + tableName + ";", args);
+                case SchemaConstants.TABLE_SL_ITEM:
+                    cursor = db.rawQuery("SELECT " + SchemaConstants.SL_ITEM_ROWID + " FROM " + tableName + ";", args);
                     break;
             }
         } catch (Exception ex) {
@@ -82,9 +82,9 @@ public class DatabaseOperations {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[0]);
-                cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
-                cv.put(SchemaConstants.SHOPPING_LIST_VALUE_SEL, "N");
+                cv.put(SchemaConstants.SL_ITEM_TYPE, itemTypes[0]);
+                cv.put(SchemaConstants.SL_ITEM_VALUE, val);
+                cv.put(SchemaConstants.SL_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -99,9 +99,9 @@ public class DatabaseOperations {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[1]);
-                cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
-                cv.put(SchemaConstants.SHOPPING_LIST_VALUE_SEL, "N");
+                cv.put(SchemaConstants.SL_ITEM_TYPE, itemTypes[1]);
+                cv.put(SchemaConstants.SL_ITEM_VALUE, val);
+                cv.put(SchemaConstants.SL_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -116,9 +116,9 @@ public class DatabaseOperations {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[2]);
-                cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
-                cv.put(SchemaConstants.SHOPPING_LIST_VALUE_SEL, "N");
+                cv.put(SchemaConstants.SL_ITEM_TYPE, itemTypes[2]);
+                cv.put(SchemaConstants.SL_ITEM_VALUE, val);
+                cv.put(SchemaConstants.SL_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -145,8 +145,8 @@ public class DatabaseOperations {
     private String[] getProjection(String tableName) {
         String[] projection = null;
         switch (tableName) {
-            case SchemaConstants.TABLE_SHOPPING_LIST:
-                projection = dbHelper.getProjection(DatabaseHelper.Projection.ShoppingListSchema);
+            case SchemaConstants.TABLE_SL_ITEM:
+                projection = dbHelper.getProjection(DatabaseHelper.Projection.SLItemSchema);
                 break;
         }
         return  projection;

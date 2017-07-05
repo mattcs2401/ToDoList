@@ -21,8 +21,8 @@ public class CheckActivity extends Activity {
 
         DatabaseOperations dbOper = new DatabaseOperations(this);
 
-        if(dbOper.getTableRowCount(SchemaConstants.TABLE_SHOPPING_LIST, null) < 1) {
-            dbOper.writeTableDefaults(SchemaConstants.TABLE_SHOPPING_LIST);
+        if(dbOper.getTableRowCount(SchemaConstants.TABLE_SL_ITEM, null) < 1) {
+            dbOper.writeTableDefaults(SchemaConstants.TABLE_SL_ITEM);
         }
 
         Intent intent = new Intent(this, MainActivity.class);
