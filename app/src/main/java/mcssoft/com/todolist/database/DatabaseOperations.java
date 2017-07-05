@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import java.util.List;
+
+import mcssoft.com.todolist.fragment.ShoppingFragment;
 import mcssoft.com.todolist.utility.Resources;
 
 public class DatabaseOperations {
@@ -15,6 +17,24 @@ public class DatabaseOperations {
     public DatabaseOperations(Context context) {
         this.context = context;
         dbHelper = new DatabaseHelper(context);
+    }
+
+    public Cursor getShoppingItems(ShoppingFragment.PageType pageType) {
+        String[] selArgs = null;
+        Resources res = new Resources(context);
+
+        switch(pageType) {
+            case General:
+                selArgs = new String[]{res.getShoppingItemTypes()[0]};
+                break;
+            case Fruit_and_Veg:
+                selArgs = new String[]{res.getShoppingItemTypes()[1]};
+                break;
+            case Meat_and_Fish:
+                selArgs = new String[]{res.getShoppingItemTypes()[2]};
+                break;
+        }
+        return getAllRecords(SchemaConstants.TABLE_SHOPPING_LIST, SchemaConstants.WHERE_SHOPPING_LIST_TYPE, selArgs);
     }
 
     /**
@@ -81,6 +101,7 @@ public class DatabaseOperations {
                 db.beginTransaction();
                 cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[1]);
                 cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
+                cv.put(SchemaConstants.SHOPPING_LIST_VALUE_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -97,6 +118,7 @@ public class DatabaseOperations {
                 db.beginTransaction();
                 cv.put(SchemaConstants.SHOPPING_LIST_TYPE, itemTypes[2]);
                 cv.put(SchemaConstants.SHOPPING_LIST_VALUE, val);
+                cv.put(SchemaConstants.SHOPPING_LIST_VALUE_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -107,6 +129,27 @@ public class DatabaseOperations {
         }
 
         dbHelper.close();
+    }
+
+    private Cursor getAllRecords(String tableName, @Nullable String whereClause, @Nullable String[] selArgs) {
+        if(whereClause == null) {
+            selArgs = null;
+        }
+        SQLiteDatabase db = dbHelper.getDatabase();
+        db.beginTransaction();
+        Cursor cursor = db.query(tableName, getProjection(tableName), whereClause, selArgs, null, null, null);
+        db.endTransaction();
+        return cursor;
+    }
+
+    private String[] getProjection(String tableName) {
+        String[] projection = null;
+        switch (tableName) {
+            case SchemaConstants.TABLE_SHOPPING_LIST:
+                projection = dbHelper.getProjection(DatabaseHelper.Projection.ShoppingListSchema);
+                break;
+        }
+        return  projection;
     }
 
     private Context context;

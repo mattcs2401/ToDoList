@@ -31,7 +31,6 @@ public class ShoppingAdapter  extends RecyclerView.Adapter<ShoppingViewHolder> {
             holder.getCbShoppingItem().setChecked(false);
         }
         holder.gettvShoppingItem().setText(cursor.getString(idValNdx));
-
     }
 
     @Override
@@ -43,6 +42,8 @@ public class ShoppingAdapter  extends RecyclerView.Adapter<ShoppingViewHolder> {
     public void setOnItemClickListener(IItemClickListener iclistener) {
         this.icListener = iclistener;
     }
+
+    public Cursor getCursor() { return cursor; }
 
     public void swapCursor(Cursor cursor) {
         if((cursor != null) && (cursor.getCount() > 0)) {
