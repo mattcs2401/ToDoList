@@ -14,12 +14,12 @@ public class ShoppingViewHolder extends ParentViewHolder {
         super(view);
         this.view = view;
         cbShoppingItem = (CheckBox) view.findViewById(R.id.id_cb_shopping_item);
+        cbShoppingItem.setOnClickListener(this);
         tvShoppingItem = (TextView) view.findViewById(R.id.id_tv_shopping_item);
     }
 
     @Override
     public void onClick(View view) {
-//        super.onClick(view);
         int position = getAdapterPosition(); // debug/testing purposes.
         icListener.onItemClick(view, position);
     }

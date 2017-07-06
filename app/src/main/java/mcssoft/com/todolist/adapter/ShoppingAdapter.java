@@ -39,6 +39,15 @@ public class ShoppingAdapter  extends RecyclerView.Adapter<ShoppingViewHolder> {
         return cursor.getLong(idColNdx);
     }
 
+    @Override
+    public int getItemCount() {
+        if(cursor != null) {
+            return cursor.getCount();
+        } else {
+            return 0;
+        }
+    }
+
     public void setOnItemClickListener(IItemClickListener iclistener) {
         this.icListener = iclistener;
     }
@@ -54,15 +63,6 @@ public class ShoppingAdapter  extends RecyclerView.Adapter<ShoppingViewHolder> {
             idValNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VALUE);
             idValSelNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VAL_SEL);
             notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        if(cursor != null) {
-            return cursor.getCount();
-        } else {
-            return 0;
         }
     }
 

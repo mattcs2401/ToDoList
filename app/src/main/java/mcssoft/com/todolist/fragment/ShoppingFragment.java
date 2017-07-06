@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.ShoppingAdapter;
@@ -53,9 +54,13 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public void onItemClick(View view, int position) {
-        int dbRowId = getDbRowId(position);
-
-        // TBA - do something.
+        int dbRowId = -1;
+        if(view instanceof CheckBox) {
+            // only interested if the checkbox is touched.
+            // TBA - do something.
+            dbRowId = getDbRowId(position);
+        }
+        String bp = "";
     }
     //</editor-fold>
 
