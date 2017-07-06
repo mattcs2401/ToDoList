@@ -19,6 +19,15 @@ public class DatabaseOperations {
         dbHelper = new DatabaseHelper(context);
     }
 
+    public Cursor getAllShopping() {
+        return getAllRecords(SchemaConstants.TABLE_SL, null, null);
+    }
+
+    public Cursor getAllGeneral() {
+        // TBA.
+        return null;
+    }
+
     public Cursor getShoppingItems(ShoppingFragment.PageType pageType) {
         String[] selArgs = null;
         Resources res = new Resources(context);
@@ -145,6 +154,9 @@ public class DatabaseOperations {
     private String[] getProjection(String tableName) {
         String[] projection = null;
         switch (tableName) {
+            case SchemaConstants.TABLE_SL:
+                projection = dbHelper.getProjection(DatabaseHelper.Projection.SLSchema);
+                break;
             case SchemaConstants.TABLE_SL_ITEM:
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.SLItemSchema);
                 break;

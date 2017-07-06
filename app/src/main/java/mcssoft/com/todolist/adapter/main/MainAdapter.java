@@ -9,6 +9,10 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
+    public MainAdapter() {
+        emptyView = false;
+    }
+
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
@@ -49,6 +53,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 //            idValNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VALUE);
 //            idValSelNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VAL_SEL);
             notifyDataSetChanged();
+        } else {
+            emptyView = true;
         }
     }
 
@@ -58,6 +64,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 //    private int idTypNdx;
 //    private int idValNdx;
 //    private int idValSelNdx;
+    private boolean emptyView;
     private MainViewHolder mvh;
     private IItemClickListener icListener;
 }

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.main.MainAdapter;
+import mcssoft.com.todolist.database.DatabaseOperations;
 import mcssoft.com.todolist.fragment.ListSelectFragment;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.interfaces.IListSelect;
@@ -166,8 +167,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setCursor() {
-        //DatabaseOperations dbOper = new DatabaseOperations(this);
-        cursor = null;
+        DatabaseOperations dbOper = new DatabaseOperations(this);
+        cursor = dbOper.getAllShopping();
     }
 
     private void setMainAdapter() {
