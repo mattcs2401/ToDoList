@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.DatabaseOperations;
 import mcssoft.com.todolist.database.SchemaConstants;
+import mcssoft.com.todolist.utility.Resources;
 
 /**
  * Utility class to perform some basic checks before the menu_activity_main part of the app starts.
@@ -21,11 +22,19 @@ public class CheckActivity extends Activity {
 
         DatabaseOperations dbOper = new DatabaseOperations(this);
 
+        // check if default values exist.
         if(dbOper.getTableRowCount(SchemaConstants.TABLE_SL_ITEM, null) < 1) {
             dbOper.writeTableDefaults(SchemaConstants.TABLE_SL_ITEM);
         }
 
+        Bundle args = new Bundle();
+        Resources res = new Resources(this);
+
+        int count = dbOper.getTableRowCount(SchemaConstants.TABLE_SL, null);
+        args.putInt(res.getString(R.string.sl_item_count_key), count);
+
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(res.getString(R.string.bundle_key), args);
         startActivity(intent);
     }
 }

@@ -3,8 +3,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="preference_settings">Preferences</string>
+
+    <!-- General text. -->
+    <string name="nothing_to_show">Nothing to show at this time.</string>
 
     <!-- Bundle keys. -->
     <string name="bundle_key">bundle_key</string>
@@ -14,6 +16,7 @@
     <string name="list_add_action_key">list_add_key</string>
     <string name="list_edit_action_key">list_edit_key</string>
     <string name="list_delete_action_key">list_delete_key</string>
+    <string name="sl_item_count_key">sl_item_count_key</string>
 
     <!-- Bundle values. -->
     <string name="list_type_shopping">Shopping</string>

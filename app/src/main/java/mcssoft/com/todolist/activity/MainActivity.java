@@ -1,6 +1,8 @@
 package mcssoft.com.todolist.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.main.MainAdapter;
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**
-     * Interface return on user selecting the type of list to create.
+     * Interface return on user selecting the type of list to create (from dialog).
      * @param value The radio button id.
      */
     @Override
@@ -56,23 +59,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0); // R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        setCursor();
-        setMainAdapter();
-        setRecyclerView();
+        initialiseBaseUI(); // toolbar, fab, nav drawer etc.
+        initialiseUI();     // what shows in the main screen,
     }
 
     @Override
@@ -185,6 +174,46 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(llm);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void initialiseBaseUI() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0); // R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void initialiseUI() {
+        int count = 0;
+        Resources res = new Resources(this);
+        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+        Bundle args = getIntent().getBundleExtra(res.getString(R.string.bundle_key));
+
+        if(args != null) {
+            // save value.
+            count = args.getInt(res.getString(R.string.sl_item_count_key));
+            sp.edit().putInt(res.getString(R.string.sl_item_count_key), count).commit();
+        } else {
+            // args will be null when entering this activity as back press from the Edit activity.
+            count = sp.getInt(res.getString(R.string.sl_item_count_key), 0);
+        }
+
+        if(count > 0) {
+            setCursor();
+            setMainAdapter();
+            setRecyclerView();
+        } else {
+            ((TextView) findViewById(R.id.id_tv_empty_view)).setText(res.getString(R.string.nothing_to_show));
+        }
     }
     //</editor-fold>
 
