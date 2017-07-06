@@ -10,7 +10,7 @@ import mcssoft.com.todolist.database.DatabaseOperations;
 import mcssoft.com.todolist.database.SchemaConstants;
 
 /**
- * Utility class to perform some basic checks before the main part of the app starts.
+ * Utility class to perform some basic checks before the menu_activity_main part of the app starts.
  */
 public class CheckActivity extends Activity {
 

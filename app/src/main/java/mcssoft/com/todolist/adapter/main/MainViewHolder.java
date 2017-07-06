@@ -1,21 +1,21 @@
-package mcssoft.com.todolist.adapter;
+package mcssoft.com.todolist.adapter.main;
 
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
+import mcssoft.com.todolist.interfaces.IItemClickListener;
 
-public class ShoppingViewHolder extends ParentViewHolder {
+public class MainViewHolder extends ParentViewHolder {
 
-    public ShoppingViewHolder(View view) {
+    public MainViewHolder(View view) {
         super(view);
         this.view = view;
-        cbShoppingItem = (CheckBox) view.findViewById(R.id.id_cb_shopping_item);
-        cbShoppingItem.setOnClickListener(this);
-        tvShoppingItem = (TextView) view.findViewById(R.id.id_tv_shopping_item);
+//        cbShoppingItem = (CheckBox) view.findViewById(R.id.id_cb_shopping_item);
+//        cbShoppingItem.setOnClickListener(this);
+//        tvShoppingItem = (TextView) view.findViewById(R.id.id_tv_shopping_item);
     }
 
     @Override
@@ -30,14 +30,14 @@ public class ShoppingViewHolder extends ParentViewHolder {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">
-    public CheckBox getCbShoppingItem() { return cbShoppingItem; }
-    public TextView gettvShoppingItem() { return tvShoppingItem; }
+//    public CheckBox getCbShoppingItem() { return cbShoppingItem; }
+//    public TextView gettvShoppingItem() { return tvShoppingItem; }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
     private View view;
-    private CheckBox cbShoppingItem;
-    private TextView tvShoppingItem;
+//    private CheckBox cbShoppingItem;
+//    private TextView tvShoppingItem;
     private IItemClickListener icListener;
     //</editor-fold>
 }

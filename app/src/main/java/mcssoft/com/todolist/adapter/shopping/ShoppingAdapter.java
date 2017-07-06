@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.adapter;
+package mcssoft.com.todolist.adapter.shopping;
 
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.SchemaConstants;
 
-public class ShoppingAdapter  extends RecyclerView.Adapter<ShoppingViewHolder> {
+public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
 
     @Override
     public ShoppingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

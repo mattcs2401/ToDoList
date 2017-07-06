@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.ShoppingAdapter;
+import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.DatabaseOperations;
 import mcssoft.com.todolist.database.SchemaConstants;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
