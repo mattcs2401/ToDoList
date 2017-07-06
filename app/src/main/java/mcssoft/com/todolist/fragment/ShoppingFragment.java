@@ -31,8 +31,7 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
         if(args == null) {
             pageNo = 0;
         } else {
-            Resources res = new Resources(getActivity());
-            pageNo = args.getInt(res.getString(R.string.bundle_key));
+            pageNo = args.getInt(Resources.getInstance().getString(R.string.bundle_key));
         }
     }
 

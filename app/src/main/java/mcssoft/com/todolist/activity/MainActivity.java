@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void iSelected(int value) {
-        Resources res = new Resources(this);
         switch(value) {
             // General type list.
             case R.id.id_rb_list_select_general:
@@ -137,13 +136,13 @@ public class MainActivity extends AppCompatActivity
 
     private void doNewShoppingList() {
         // set list type as shopping.
-        Resources res = new Resources(this);
         Bundle bundle = new Bundle();
-        bundle.putString(res.getString(R.string.list_type_key), res.getString(R.string.list_type_shopping));
+        bundle.putString(Resources.getInstance().getString(R.string.list_type_key),
+                Resources.getInstance().getString(R.string.list_type_shopping));
         // set action as add.
         Intent intent = new Intent(this, EditActivity.class);
-        intent.setAction(res.getString(R.string.list_add_action_key));
-        intent.putExtra(res.getString(R.string.bundle_key), bundle);
+        intent.setAction(Resources.getInstance().getString(R.string.list_add_action_key));
+        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
         startActivity(intent);
     }
 
@@ -194,17 +193,16 @@ public class MainActivity extends AppCompatActivity
 
     private void initialiseUI() {
         int count = 0;
-        Resources res = new Resources(this);
         SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
-        Bundle args = getIntent().getBundleExtra(res.getString(R.string.bundle_key));
+        Bundle args = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
 
         if(args != null) {
             // save value.
-            count = args.getInt(res.getString(R.string.sl_item_count_key));
-            sp.edit().putInt(res.getString(R.string.sl_item_count_key), count).commit();
+            count = args.getInt(Resources.getInstance().getString(R.string.sl_item_count_key));
+            sp.edit().putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count).commit();
         } else {
             // args will be null when entering this activity as back press from the Edit activity.
-            count = sp.getInt(res.getString(R.string.sl_item_count_key), 0);
+            count = sp.getInt(Resources.getInstance().getString(R.string.sl_item_count_key), 0);
         }
 
         if(count > 0) {
@@ -212,7 +210,7 @@ public class MainActivity extends AppCompatActivity
             setMainAdapter();
             setRecyclerView();
         } else {
-            ((TextView) findViewById(R.id.id_tv_empty_view)).setText(res.getString(R.string.nothing_to_show));
+            ((TextView) findViewById(R.id.id_tv_empty_view)).setText(Resources.getInstance().getString(R.string.nothing_to_show));
         }
     }
     //</editor-fold>

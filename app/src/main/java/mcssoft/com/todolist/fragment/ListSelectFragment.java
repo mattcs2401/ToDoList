@@ -27,17 +27,15 @@ public class ListSelectFragment extends DialogFragment
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Resources res = new Resources(getActivity());
-
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.list_type_select, null);
 
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity(), AlertDialog.THEME_HOLO_LIGHT);
         ab.setView(view)
-          .setTitle(res.getString(R.string.list_select_title))
-          .setMessage(res.getString(R.string.list_select_message))
-          .setNegativeButton(res.getString(R.string.btn_cancel), this)
-          .setPositiveButton(res.getString(R.string.btn_ok), this);
+          .setTitle(Resources.getInstance().getString(R.string.list_select_title))
+          .setMessage(Resources.getInstance().getString(R.string.list_select_message))
+          .setNegativeButton(Resources.getInstance().getString(R.string.btn_cancel), this)
+          .setPositiveButton(Resources.getInstance().getString(R.string.btn_ok), this);
 
         return ab.create();
     }

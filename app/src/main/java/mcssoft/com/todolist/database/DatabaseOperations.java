@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import java.util.List;
 
+import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.fragment.ShoppingFragment;
 import mcssoft.com.todolist.utility.Resources;
 
@@ -30,17 +31,16 @@ public class DatabaseOperations {
 
     public Cursor getShoppingItems(ShoppingFragment.PageType pageType) {
         String[] selArgs = null;
-        Resources res = new Resources(context);
 
         switch(pageType) {
             case General:
-                selArgs = new String[]{res.getShoppingItemTypes()[0]};
+                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[0]};
                 break;
             case Fruit_and_Veg:
-                selArgs = new String[]{res.getShoppingItemTypes()[1]};
+                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[1]};
                 break;
             case Meat_and_Fish:
-                selArgs = new String[]{res.getShoppingItemTypes()[2]};
+                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2]};
                 break;
         }
         return getAllRecords(SchemaConstants.TABLE_SL_ITEM, SchemaConstants.WHERE_SL_ITEM_TYPE, selArgs);
@@ -79,9 +79,8 @@ public class DatabaseOperations {
      * @param tableName The database table.
      */
     public void writeTableDefaults(String tableName) {
-        Resources resources = new Resources(context);
-        String[] itemTypes = resources.getShoppingItemTypes();
-        List<String[]> listing = resources.getAllDefaults();
+        String[] itemTypes = Resources.getInstance().getStringArray(R.array.shopping_item_types);
+        List<String[]> listing = mcssoft.com.todolist.utility.Resources.getInstance().getAllDefaults();
 
         SQLiteDatabase db = dbHelper.getDatabase();
         ContentValues cv = new ContentValues();

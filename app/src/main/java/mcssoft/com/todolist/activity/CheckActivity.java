@@ -19,6 +19,7 @@ public class CheckActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_check);  // this likely won't be seen.
+        Resources.getInstance(this);             // set the Resources singleton.
 
         DatabaseOperations dbOper = new DatabaseOperations(this);
 
@@ -28,13 +29,18 @@ public class CheckActivity extends Activity {
         }
 
         Bundle args = new Bundle();
-        Resources res = new Resources(this);
 
         int count = dbOper.getTableRowCount(SchemaConstants.TABLE_SL, null);
-        args.putInt(res.getString(R.string.sl_item_count_key), count);
+        args.putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count);
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(res.getString(R.string.bundle_key), args);
+        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), args);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Resources.getInstance().destroy();
     }
 }

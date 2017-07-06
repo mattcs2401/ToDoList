@@ -14,15 +14,14 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     public PagerAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
-        resources = new Resources(context);
-        pageTitles = resources.getShoppingItemTypes();
+        pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
     }
 
     @Override
     public Fragment getItem(int position) {
         ShoppingFragment sf = new ShoppingFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(resources.getString(R.string.bundle_key), position);
+        bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
         sf.setArguments(bundle);
         return sf;
     }
@@ -46,9 +45,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return resources.getInteger(R.integer.num_shopping_pages);
+        return Resources.getInstance().getInteger(R.integer.num_shopping_pages);
     }
 
     private String[] pageTitles;
-    private Resources resources;
 }

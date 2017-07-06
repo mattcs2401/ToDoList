@@ -1,5 +1,6 @@
 package mcssoft.com.todolist.utility;
 
+
 import android.content.Context;
 
 import java.util.ArrayList;
@@ -9,18 +10,62 @@ import mcssoft.com.todolist.R;
 
 public class Resources {
 
-    public Resources(Context context) {
+    private Resources(Context context) {
         this.context = context;
+    }
+
+    /**
+     * Get (initialise) an instance of MeetingResources.
+     * @param context The current context.
+     * @return An instance of MeetingResources.
+     */
+    public static synchronized Resources getInstance(Context context) {
+        if(!instanceExists()) {
+            instance = new Resources(context);
+        }
+        return instance;
+    }
+
+    /**
+     * Get the current MeetingResources instance.
+     * @return The current MeetingResources instance.
+     */
+    public static synchronized Resources getInstance() {
+        return instance;
+    }
+
+    /**
+     * Check if this instance exists.
+     * @return True if instance exists, else false.
+     */
+    public static boolean instanceExists() {
+        return instance != null ? true : false;
+    }
+
+    /**
+     * Get an integer resource.
+     * @param resId The resource id.
+     * @return The integer resource.
+     */
+    public int getInteger(int resId) {
+        return context.getResources().getInteger(resId);
+    }
+
+    /**
+     * Get an boolean resource.
+     * @param resId The resource id.
+     * @return The boolean resource.
+     */
+    public boolean getBoolean(int resId) {
+        return context.getResources().getBoolean(resId);
     }
 
     public String getString(int resId) {
         return context.getResources().getString(resId);
     }
 
-    public int getInteger(int resId) { return context.getResources().getInteger(resId); }
-
-    public String[] getShoppingItemTypes() {
-        return context.getResources().getStringArray(R.array.shopping_item_types);
+    public String[] getStringArray(int resId) {
+        return context.getResources().getStringArray(resId);
     }
 
     /**
@@ -30,14 +75,24 @@ public class Resources {
     public List<String[]> getAllDefaults() {
         List theList = new ArrayList();
         String[] sa = {};
-        sa = context.getResources().getStringArray(R.array.shopping_items_general_default);
+        sa = getStringArray(R.array.shopping_items_general_default);
         theList.add(sa);
-        sa = context.getResources().getStringArray(R.array.shopping_items_fruitveg_default);
+        sa = getStringArray(R.array.shopping_items_fruitveg_default);
         theList.add(sa);
-        sa = context.getResources().getStringArray(R.array.shopping_items_meatfish_default);
+        sa = getStringArray(R.array.shopping_items_meatfish_default);
         theList.add(sa);
         return theList;
     }
 
+    /**
+     * Ensure instance values are made NULL.
+     */
+    public void destroy() {
+        context = null;
+        instance = null;
+    }
+
     private Context context;
+    private static volatile Resources instance = null;
+
 }
