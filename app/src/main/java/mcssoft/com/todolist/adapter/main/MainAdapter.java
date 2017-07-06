@@ -2,20 +2,26 @@ package mcssoft.com.todolist.adapter.main;
 
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.SchemaConstants;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     public MainAdapter() {
-        emptyView = false;
     }
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.content_main_row, parent, false);
+        mvh = new MainViewHolder(view);
+        mvh.setItemClickListener(icListener);
+        return mvh;
     }
 
     @Override
@@ -31,11 +37,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(cursor != null) {
-            return cursor.getCount();
-        } else {
-            return 0;
-        }
+        return cursor.getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+
     }
 
     public void setOnItemClickListener(IItemClickListener iclistener) {
@@ -45,17 +53,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     public Cursor getCursor() { return cursor; }
 
     public void swapCursor(Cursor cursor) {
-        if((cursor != null) && (cursor.getCount() > 0)) {
-            this.cursor = cursor;
-            cursor.moveToFirst();
-            idColNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_ROWID);
+        this.cursor = cursor;
+        cursor.moveToFirst();
+        idColNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_ROWID);
 //            idTypNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_TYPE);
 //            idValNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VALUE);
 //            idValSelNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VAL_SEL);
-            notifyDataSetChanged();
-        } else {
-            emptyView = true;
-        }
+        notifyDataSetChanged();
     }
 
 
@@ -64,7 +68,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 //    private int idTypNdx;
 //    private int idValNdx;
 //    private int idValSelNdx;
-    private boolean emptyView;
     private MainViewHolder mvh;
     private IItemClickListener icListener;
 }
