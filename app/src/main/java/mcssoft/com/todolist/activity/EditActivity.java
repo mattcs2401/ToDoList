@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.PagerAdapter;
@@ -33,6 +34,12 @@ public class EditActivity extends AppCompatActivity {
             // delete a list item.
             deleteListItem(type);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_activity_edit, menu);
+        return true;
     }
 
     private void addListItem(String type) {

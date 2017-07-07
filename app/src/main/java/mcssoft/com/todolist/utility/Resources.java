@@ -52,7 +52,7 @@ public class Resources {
     }
 
     /**
-     * Get an boolean resource.
+     * Get a boolean resource.
      * @param resId The resource id.
      * @return The boolean resource.
      */
@@ -60,6 +60,11 @@ public class Resources {
         return context.getResources().getBoolean(resId);
     }
 
+    /**
+     * Get a String resource.
+     * @param resId The resource id.
+     * @return The String resource.
+     */
     public String getString(int resId) {
         return context.getResources().getString(resId);
     }
