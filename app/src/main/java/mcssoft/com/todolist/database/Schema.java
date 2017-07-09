@@ -1,6 +1,6 @@
 package mcssoft.com.todolist.database;
 
-public class SchemaConstants {
+public class Schema {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "TODOLIST";

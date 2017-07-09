@@ -9,7 +9,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
-        super(context, SchemaConstants.DATABASE_NAME, null, SchemaConstants.DATABASE_VERSION);
+        super(context, Schema.DATABASE_NAME, null, Schema.DATABASE_VERSION);
         sqLiteDatabase = this.getWritableDatabase();
         this.context = context;
     }
@@ -18,10 +18,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDb) {
         try {
             sqLiteDb.beginTransaction();
-            sqLiteDb.execSQL(SchemaConstants.DROP_TABLE_SL);
-            sqLiteDb.execSQL(SchemaConstants.DROP_TABLE_SL_ITEM);
-            sqLiteDb.execSQL(SchemaConstants.CREATE_TABLE_SL_ITEM);
-            sqLiteDb.execSQL(SchemaConstants.CREATE_TABLE_SL);
+            sqLiteDb.execSQL(Schema.DROP_TABLE_SL);
+            sqLiteDb.execSQL(Schema.DROP_TABLE_SL_ITEM);
+            sqLiteDb.execSQL(Schema.CREATE_TABLE_SL_ITEM);
+            sqLiteDb.execSQL(Schema.CREATE_TABLE_SL);
             sqLiteDb.setTransactionSuccessful();
         } catch(SQLException ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -67,19 +67,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String[] getSLItemProjection() {
         return new String[] {
-            SchemaConstants.SL_ITEM_ROWID,
-            SchemaConstants.SL_ITEM_TYPE,
-            SchemaConstants.SL_ITEM_VALUE,
-            SchemaConstants.SL_ITEM_VAL_SEL
+            Schema.SL_ITEM_ROWID,
+            Schema.SL_ITEM_TYPE,
+            Schema.SL_ITEM_VALUE,
+            Schema.SL_ITEM_VAL_SEL
         };
     }
 
     private static String[] getSLProjection() {
         return new String[] {
-                SchemaConstants.SL_ROWID,
-                SchemaConstants.SL_ID,
-                SchemaConstants.SL_TYPE,
-                SchemaConstants.SL_VAL
+                Schema.SL_ROWID,
+                Schema.SL_ID,
+                Schema.SL_TYPE,
+                Schema.SL_VAL
         };
     }
 

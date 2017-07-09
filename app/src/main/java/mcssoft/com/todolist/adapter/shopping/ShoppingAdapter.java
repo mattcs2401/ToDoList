@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.database.SchemaConstants;
 
 public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
 
@@ -58,10 +58,10 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         if((cursor != null) && (cursor.getCount() > 0)) {
             this.cursor = cursor;
             cursor.moveToFirst();
-            idColNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_ROWID);
-            idTypNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_TYPE);
-            idValNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VALUE);
-            idValSelNdx = cursor.getColumnIndex(SchemaConstants.SL_ITEM_VAL_SEL);
+            idColNdx = cursor.getColumnIndex(Schema.SL_ITEM_ROWID);
+            idTypNdx = cursor.getColumnIndex(Schema.SL_ITEM_TYPE);
+            idValNdx = cursor.getColumnIndex(Schema.SL_ITEM_VALUE);
+            idValSelNdx = cursor.getColumnIndex(Schema.SL_ITEM_VAL_SEL);
             notifyDataSetChanged();
         }
     }

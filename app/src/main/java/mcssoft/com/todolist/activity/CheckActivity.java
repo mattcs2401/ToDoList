@@ -3,12 +3,11 @@ package mcssoft.com.todolist.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.database.SchemaConstants;
+import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
@@ -25,8 +24,8 @@ public class CheckActivity extends Activity {
         Database.getInstance(getApplicationContext());     // set the database singleton.
 
         // check if default values exist.
-        if(Database.getInstance().getTableRowCount(SchemaConstants.TABLE_SL_ITEM, null) < 1) {
-            Database.getInstance().writeTableDefaults(SchemaConstants.TABLE_SL_ITEM);
+        if(Database.getInstance().getTableRowCount(Schema.TABLE_SL_ITEM, null) < 1) {
+            Database.getInstance().writeTableDefaults(Schema.TABLE_SL_ITEM);
         }
     }
 
@@ -35,7 +34,7 @@ public class CheckActivity extends Activity {
         super.onStart();
         Bundle args = new Bundle();
 
-        int count = Database.getInstance().getTableRowCount(SchemaConstants.TABLE_SL, null);
+        int count = Database.getInstance().getTableRowCount(Schema.TABLE_SL, null);
         args.putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count);
 
         Intent intent = new Intent(this, MainActivity.class);

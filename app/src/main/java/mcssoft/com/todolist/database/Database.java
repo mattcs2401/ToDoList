@@ -37,7 +37,7 @@ public class Database {
     }
 
     public Cursor getAllShopping() {
-        return getAllRecords(SchemaConstants.TABLE_SL, null, null);
+        return getAllRecords(Schema.TABLE_SL, null, null);
     }
 
     public Cursor getAllGeneral() {
@@ -59,7 +59,7 @@ public class Database {
                 selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2]};
                 break;
         }
-        return getAllRecords(SchemaConstants.TABLE_SL_ITEM, SchemaConstants.WHERE_SL_ITEM_TYPE, selArgs);
+        return getAllRecords(Schema.TABLE_SL_ITEM, Schema.WHERE_SL_ITEM_TYPE, selArgs);
     }
 
     /**
@@ -74,8 +74,8 @@ public class Database {
         try {
             db.beginTransaction();
             switch(tableName) {
-                case SchemaConstants.TABLE_SL_ITEM:
-                    cursor = db.rawQuery("SELECT " + SchemaConstants.SL_ITEM_ROWID + " FROM " + tableName + ";", args);
+                case Schema.TABLE_SL_ITEM:
+                    cursor = db.rawQuery("SELECT " + Schema.SL_ITEM_ROWID + " FROM " + tableName + ";", args);
                     break;
             }
         } catch (Exception ex) {
@@ -106,9 +106,9 @@ public class Database {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SL_ITEM_TYPE, itemTypes[0]);
-                cv.put(SchemaConstants.SL_ITEM_VALUE, val);
-                cv.put(SchemaConstants.SL_ITEM_VAL_SEL, "N");
+                cv.put(Schema.SL_ITEM_TYPE, itemTypes[0]);
+                cv.put(Schema.SL_ITEM_VALUE, val);
+                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -123,9 +123,9 @@ public class Database {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SL_ITEM_TYPE, itemTypes[1]);
-                cv.put(SchemaConstants.SL_ITEM_VALUE, val);
-                cv.put(SchemaConstants.SL_ITEM_VAL_SEL, "N");
+                cv.put(Schema.SL_ITEM_TYPE, itemTypes[1]);
+                cv.put(Schema.SL_ITEM_VALUE, val);
+                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -140,9 +140,9 @@ public class Database {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(SchemaConstants.SL_ITEM_TYPE, itemTypes[2]);
-                cv.put(SchemaConstants.SL_ITEM_VALUE, val);
-                cv.put(SchemaConstants.SL_ITEM_VAL_SEL, "N");
+                cv.put(Schema.SL_ITEM_TYPE, itemTypes[2]);
+                cv.put(Schema.SL_ITEM_VALUE, val);
+                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -174,10 +174,10 @@ public class Database {
     private String[] getProjection(String tableName) {
         String[] projection = null;
         switch (tableName) {
-            case SchemaConstants.TABLE_SL:
+            case Schema.TABLE_SL:
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.SLSchema);
                 break;
-            case SchemaConstants.TABLE_SL_ITEM:
+            case Schema.TABLE_SL_ITEM:
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.SLItemSchema);
                 break;
         }
