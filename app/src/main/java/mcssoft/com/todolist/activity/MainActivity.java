@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -124,7 +122,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(View view, int position) {
-
+        // TBA
     }
         //</editor-fold>
 
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0); // R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -217,6 +215,7 @@ public class MainActivity extends AppCompatActivity
 
     private Cursor cursor;
     private MainAdapter adapter;
+    private DrawerLayout drawer;
 }
 // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 // .setAction("Action", null).show();

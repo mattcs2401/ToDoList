@@ -1,5 +1,6 @@
 package mcssoft.com.todolist.activity;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.PagerAdapter;
@@ -15,7 +18,7 @@ import mcssoft.com.todolist.utility.Resources;
 /**
  * Class to Add, Edit, or Delete a To Do item.
  */
-public class EditActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity implements View.OnClickListener {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,23 @@ public class EditActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_edit, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.id_edit_options:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view instanceof FloatingActionButton) {
+            // save vakues.
+            String bp = "";
+        }
     }
 
     private void addListItem(String type) {
