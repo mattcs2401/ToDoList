@@ -7,6 +7,7 @@
 
     <!-- General text. -->
     <string name="nothing_to_show">Nothing to show at this time.</string>
+    <string name="app_home_screen">Unable to go back. This is the app\'s home screen.</string>
 
     <!-- Bundle keys. -->
     <string name="bundle_key">bundle_key</string>

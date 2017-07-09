@@ -14,7 +14,7 @@ import android.widget.CheckBox;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
-import mcssoft.com.todolist.database.DatabaseOperations;
+import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.SchemaConstants;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.utility.Resources;
@@ -75,16 +75,15 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     }
 
     private void setCursor(int pageNo) {
-        DatabaseOperations dbOper = new DatabaseOperations(getActivity());
         switch(pageNo) {
             case 0:
-                cursor = dbOper.getShoppingItems(PageType.General);
+                cursor = Database.getInstance().getShoppingItems(PageType.General);
                 break;
             case 1:
-                cursor = dbOper.getShoppingItems(PageType.Fruit_and_Veg);
+                cursor = Database.getInstance().getShoppingItems(PageType.Fruit_and_Veg);
                 break;
             case 2:
-                cursor = dbOper.getShoppingItems(PageType.Meat_and_Fish);
+                cursor = Database.getInstance().getShoppingItems(PageType.Meat_and_Fish);
                 break;
         }
     }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.main.MainAdapter;
-import mcssoft.com.todolist.database.DatabaseOperations;
+import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.fragment.ListSelectFragment;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.interfaces.IListSelect;
@@ -76,8 +77,10 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        }
+        else {
+            Snackbar.make(getCurrentFocus(),
+                    Resources.getInstance().getString(R.string.app_home_screen), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -153,8 +156,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setCursor() {
-        DatabaseOperations dbOper = new DatabaseOperations(this);
-        cursor = dbOper.getAllShopping();
+        cursor = Database.getInstance().getAllShopping();
     }
 
     private void setMainAdapter() {

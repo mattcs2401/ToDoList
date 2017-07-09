@@ -3,10 +3,11 @@ package mcssoft.com.todolist.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.database.DatabaseOperations;
+import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.SchemaConstants;
 import mcssoft.com.todolist.utility.Resources;
 
@@ -19,19 +20,22 @@ public class CheckActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_check);            // this likely won't be seen.
-        Resources.getInstance(getApplicationContext());    // set the Resources singleton.
 
-        DatabaseOperations dbOper = new DatabaseOperations(this);
+        Resources.getInstance(getApplicationContext());    // set the Resources singleton.
+        Database.getInstance(getApplicationContext());     // set the database singleton.
 
         // check if default values exist.
-        if(dbOper.getTableRowCount(SchemaConstants.TABLE_SL_ITEM, null) < 1) {
-            dbOper.writeTableDefaults(SchemaConstants.TABLE_SL_ITEM);
+        if(Database.getInstance().getTableRowCount(SchemaConstants.TABLE_SL_ITEM, null) < 1) {
+            Database.getInstance().writeTableDefaults(SchemaConstants.TABLE_SL_ITEM);
         }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         Bundle args = new Bundle();
-        
 
-        int count = dbOper.getTableRowCount(SchemaConstants.TABLE_SL, null);
+        int count = Database.getInstance().getTableRowCount(SchemaConstants.TABLE_SL, null);
         args.putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count);
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -40,26 +44,9 @@ public class CheckActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        String bp = "";
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String bp = "";
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        String bp = "";
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
+        Database.getInstance().destroy();
         Resources.getInstance().destroy();
     }
 }

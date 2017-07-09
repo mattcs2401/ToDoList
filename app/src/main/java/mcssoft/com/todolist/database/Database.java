@@ -13,11 +13,27 @@ import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.fragment.ShoppingFragment;
 import mcssoft.com.todolist.utility.Resources;
 
-public class DatabaseOperations {
+public class Database {
 
-    public DatabaseOperations(Context context) {
+    private Database(Context context) {
         this.context = context;
         dbHelper = new DatabaseHelper(context);
+    }
+
+    public static synchronized Database getInstance(Context context) {
+        if(!instanceExists()) {
+            instance = new Database(context);
+            dbHelper = new DatabaseHelper(context);
+        }
+        return instance;
+    }
+
+    public static synchronized Database getInstance() {
+        return instance;
+    }
+
+    public static boolean instanceExists() {
+        return instance != null ? true : false;
     }
 
     public Cursor getAllShopping() {
@@ -139,6 +155,11 @@ public class DatabaseOperations {
         dbHelper.close();
     }
 
+    public void destroy() {
+        dbHelper = null;
+        context = null;
+    }
+
     private Cursor getAllRecords(String tableName, @Nullable String whereClause, @Nullable String[] selArgs) {
         if(whereClause == null) {
             selArgs = null;
@@ -164,5 +185,6 @@ public class DatabaseOperations {
     }
 
     private Context context;
-    private DatabaseHelper dbHelper;
+    private static DatabaseHelper dbHelper;
+    private static volatile Database instance = null;
 }
