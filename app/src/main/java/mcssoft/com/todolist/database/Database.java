@@ -37,7 +37,7 @@ public class Database {
     }
 
     public Cursor getAllShopping() {
-        return getRecords(Schema.TABLE_SL, null, null);
+        return getRecords(Schema.TABLE_SL, null, null, null);
     }
 
     public Cursor getAllGeneral() {
@@ -45,8 +45,13 @@ public class Database {
         return null;
     }
 
-    public Cursor getShoppingItem(int dbRowId) {
-        return getRecords(Schema.TABLE_REF_ITEM, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
+    /**
+     * Get a record from the reference items.
+     * @param dbRowId The row id.
+     * @return The reference item record.
+     */
+    public Cursor getReferenceItem(int dbRowId) {
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
     }
 
     /**
@@ -93,7 +98,7 @@ public class Database {
                 selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2]};
                 break;
         }
-        return getRecords(Schema.TABLE_REF_ITEM, Schema.WHERE_REF_ITEM_TYPE, selArgs);
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_TYPE, selArgs);
     }
 
     /**
@@ -196,14 +201,17 @@ public class Database {
         context = null;
     }
 
-    private Cursor getRecords(String tableName, @Nullable String whereClause, @Nullable String[] selArgs) {
+    private Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
+        if(projection == null) {
+            projection = getProjection(tableName);
+        }
         if(whereClause == null) {
             // this will get all records.
             selArgs = null;
         }
         SQLiteDatabase db = dbHelper.getDatabase();
         db.beginTransaction();
-        Cursor cursor = db.query(tableName, getProjection(tableName), whereClause, selArgs, null, null, null);
+        Cursor cursor = db.query(tableName, projection, whereClause, selArgs, null, null, null);
         db.endTransaction();
         return cursor;
     }
