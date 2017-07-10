@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             sqLiteDb.beginTransaction();
             sqLiteDb.execSQL(Schema.DROP_TABLE_SL);
             sqLiteDb.execSQL(Schema.DROP_TABLE_REF_ITEM);
-            sqLiteDb.execSQL(Schema.CREATE_TABLE_SL_ITEM);
+            sqLiteDb.execSQL(Schema.CREATE_TABLE_REF_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_SL);
             sqLiteDb.setTransactionSuccessful();
         } catch(SQLException ex) {
@@ -38,14 +38,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public enum Projection {
-        SLItemSchema, SLSchema
+        RefItemSchema, SLSchema
     }
 
     public static String [] getProjection(Projection p) {
         String[] projection = null;
         switch (p) {
-            case SLItemSchema:
-                projection = getSLItemProjection();
+            case RefItemSchema:
+                projection = getRefItemProjection();
                 break;
             case SLSchema:
                 projection = getSLProjection();
@@ -65,10 +65,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private static String[] getSLItemProjection() {
+    private static String[] getRefItemProjection() {
         return new String[] {
             Schema.REF_ITEM_ROWID,
-            Schema.REF_ITEM_TYPE,
+            Schema.REF_ITEM_CODE,
+            Schema.REF_ITEM_DESC,
             Schema.REF_ITEM_VALUE,
             Schema.REF_ITEM_VAL_SEL
         };

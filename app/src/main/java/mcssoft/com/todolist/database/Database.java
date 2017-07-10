@@ -60,7 +60,7 @@ public class Database {
      * @param check True - set Y, else set N.
      * @return 1 if the row updated *(checked or unchecked).
      */
-    public int setCheckShoppingItem(int dbRowId, boolean check) {
+    public int setCheckReferenceItem(int dbRowId, boolean check) {
         int count = -1;
         ContentValues cv = new ContentValues();
         SQLiteDatabase db = dbHelper.getDatabase();
@@ -84,21 +84,22 @@ public class Database {
         return count;
     }
 
-    public Cursor getShoppingItems(ShoppingFragment.PageType pageType) {
+    public Cursor getReferenceItems(ShoppingFragment.PageType pageType) {
+
         String[] selArgs = null;
 
         switch(pageType) {
-            case General:
-                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[0]};
+            case GENRL:
+                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[0].split(":")[0]};
                 break;
-            case Fruit_and_Veg:
-                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[1]};
+            case FANDV:
+                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[1].split(":")[0]};
                 break;
-            case Meat_and_Fish:
-                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2]};
+            case MANDF:
+                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2].split(":")[0]};
                 break;
         }
-        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_TYPE, selArgs);
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, selArgs);
     }
 
     /**
@@ -134,18 +135,24 @@ public class Database {
      * @param tableName The database table.
      */
     public void writeTableDefaults(String tableName) {
+        String code;
+        String desc;
         String[] itemTypes = Resources.getInstance().getStringArray(R.array.shopping_item_types);
-        List<String[]> listing = mcssoft.com.todolist.utility.Resources.getInstance().getAllDefaults();
+        List<String[]> allDefaults = mcssoft.com.todolist.utility.Resources.getInstance().getAllDefaults();
 
         SQLiteDatabase db = dbHelper.getDatabase();
         ContentValues cv = new ContentValues();
 
-        String[] general = listing.get(0);
+        String[] general = allDefaults.get(0);
+        code = itemTypes[0].split(":")[0];
+        desc = itemTypes[0].split(":")[1];
 
         for (String val : general) {
+
             try {
                 db.beginTransaction();
-                cv.put(Schema.REF_ITEM_TYPE, itemTypes[0]);
+                cv.put(Schema.REF_ITEM_CODE, code);
+                cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
                 cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
@@ -159,12 +166,16 @@ public class Database {
             }
         }
 
-        general = listing.get(1);
+        general = allDefaults.get(1);
+        code = itemTypes[1].split(":")[0];
+        desc = itemTypes[1].split(":")[1];
 
         for (String val : general) {
+
             try {
                 db.beginTransaction();
-                cv.put(Schema.REF_ITEM_TYPE, itemTypes[1]);
+                cv.put(Schema.REF_ITEM_CODE, code);
+                cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
                 cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
@@ -176,12 +187,15 @@ public class Database {
             }
         }
 
-        general = listing.get(2);
+        general = allDefaults.get(2);
+        code = itemTypes[2].split(":")[0];
+        desc = itemTypes[2].split(":")[1];
 
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(Schema.REF_ITEM_TYPE, itemTypes[2]);
+                cv.put(Schema.REF_ITEM_CODE, code);
+                cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
                 cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
@@ -194,6 +208,7 @@ public class Database {
         }
 
         dbHelper.close();
+        // TODO - item type OTHER not done.
     }
 
     public void destroy() {
@@ -223,7 +238,7 @@ public class Database {
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.SLSchema);
                 break;
             case Schema.TABLE_REF_ITEM:
-                projection = dbHelper.getProjection(DatabaseHelper.Projection.SLItemSchema);
+                projection = dbHelper.getProjection(DatabaseHelper.Projection.RefItemSchema);
                 break;
         }
         return  projection;

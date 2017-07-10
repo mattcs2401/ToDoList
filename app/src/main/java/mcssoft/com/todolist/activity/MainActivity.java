@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void iSelected(int value) {
         switch(value) {
-            // General type list.
+            // GENRL type list.
             case R.id.id_rb_list_select_general:
                 doNewGeneralList();
                 break;

@@ -63,16 +63,16 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
             // mimmick the checkbox check/uncheck on the underlying record.
             dbRowId = getDbRowId(position);
             if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
-                Database.getInstance().setCheckShoppingItem(dbRowId, true);
+                Database.getInstance().setCheckReferenceItem(dbRowId, true);
             } else {
-                Database.getInstance().setCheckShoppingItem(dbRowId, false);
+                Database.getInstance().setCheckReferenceItem(dbRowId, false);
             }
         }
     }
     //</editor-fold>
 
     public enum PageType {
-        General, Fruit_and_Veg, Meat_and_Fish
+        GENRL, FANDV, MANDF
     }
 
     private int getDbRowId(int position) {
@@ -85,13 +85,13 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     private void setCursor(int pageNo) {
         switch(pageNo) {
             case 0:
-                cursor = Database.getInstance().getShoppingItems(PageType.General);
+                cursor = Database.getInstance().getReferenceItems(PageType.GENRL);
                 break;
             case 1:
-                cursor = Database.getInstance().getShoppingItems(PageType.Fruit_and_Veg);
+                cursor = Database.getInstance().getReferenceItems(PageType.FANDV);
                 break;
             case 2:
-                cursor = Database.getInstance().getShoppingItems(PageType.Meat_and_Fish);
+                cursor = Database.getInstance().getReferenceItems(PageType.MANDF);
                 break;
         }
     }

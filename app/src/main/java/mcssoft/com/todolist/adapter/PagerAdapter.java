@@ -31,13 +31,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         String title = null;
         switch(position) {
             case 0:
-                title = pageTitles[0];
+                title = pageTitles[0].split(":")[1];
                 break;
             case 1:
-                title = pageTitles[1];
+                title = pageTitles[1].split(":")[1];
                 break;
             case 2:
-                title = pageTitles[2];
+                title = pageTitles[2].split(":")[1];
                 break;
         }
         return title;

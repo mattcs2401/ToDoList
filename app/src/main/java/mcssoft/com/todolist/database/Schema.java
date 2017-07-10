@@ -6,24 +6,26 @@ public class Schema {
     public static final String DATABASE_NAME = "TODOLIST";
 
     //<editor-fold defaultstate="collapsed" desc="Region: Table REF_ITEM">
-    // A record in this table represent a single reference item selectable for a shopping list.
+    // A record in this table represent a single reference item.
     public static final String TABLE_REF_ITEM   = "REF_ITEM";
     public static final String REF_ITEM_ROWID   = "_id";
-    public static final String REF_ITEM_TYPE    = "REF_TYPE";    // e.g. General, Fruit&Veg etc
+    public static final String REF_ITEM_CODE    = "REF_CODE";    // e.g. GENRL, FANDV etc.
+    public static final String REF_ITEM_DESC    = "REF_DESC";    // e.g. GENRL, Fruit&Veg etc
     public static final String REF_ITEM_VALUE   = "REF_VALUE";   // e.g. Bread
     public static final String REF_ITEM_VAL_SEL = "REF_SELECT";  // Y or N, item selected in UI
 
-    public static final String CREATE_TABLE_SL_ITEM = "CREATE TABLE "
+    public static final String CREATE_TABLE_REF_ITEM = "CREATE TABLE "
             + TABLE_REF_ITEM   + " ("
             + REF_ITEM_ROWID   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + REF_ITEM_TYPE    + " TEXT NOT NULL, "
+            + REF_ITEM_CODE    + " TEXT NOT NULL, "
+            + REF_ITEM_DESC    + " TEXT NOT NULL, "
             + REF_ITEM_VALUE   + " TEXT NOT NULL, "
             + REF_ITEM_VAL_SEL + " TEXT NOT NULL)";
 
     public static final String DROP_TABLE_REF_ITEM =
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_REF_ITEM + ";";
 
-    public static final String WHERE_REF_ITEM_TYPE = REF_ITEM_TYPE + "=?";
+    public static final String WHERE_REF_ITEM_CODE = REF_ITEM_CODE + "=?";
 
     public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ROWID + "=?";
     //</editor-fold>

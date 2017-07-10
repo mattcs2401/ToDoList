@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="preference_settings">Preferences</string>
 
-    <!-- General text. -->
+    <!-- GENRL text. -->
     <string name="nothing_to_show">Nothing to show at this time.</string>
     <string name="app_home_screen">Unable to go back. This is the app\'s home screen.</string>
 
@@ -102,10 +102,10 @@
 
     <!-- Note: Don't change the order unless change ShoppingFragment.PageType. -->
     <string-array name="shopping_item_types">
-        <item>General</item>
-        <item>Fruit &amp; Veg</item>
-        <item>Meat &amp; Fish</item>
-        <item>Other</item>
+        <item>GENRL:General</item>
+        <item>FANDV:Fruit &amp; Veg</item>
+        <item>MANDF:Meat &amp; Fish</item>
+        <item>OTHER:Other</item>
     </string-array>
 
 </resources>

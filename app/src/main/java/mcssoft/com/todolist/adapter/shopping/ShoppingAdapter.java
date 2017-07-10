@@ -59,7 +59,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
             this.cursor = cursor;
             cursor.moveToFirst();
             idColNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
-            idTypNdx = cursor.getColumnIndex(Schema.REF_ITEM_TYPE);
+            idTypNdx = cursor.getColumnIndex(Schema.REF_ITEM_DESC);
             idValNdx = cursor.getColumnIndex(Schema.REF_ITEM_VALUE);
             idValSelNdx = cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL);
             notifyDataSetChanged();
