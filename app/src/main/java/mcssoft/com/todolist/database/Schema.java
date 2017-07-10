@@ -24,6 +24,8 @@ public class Schema {
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_SL_ITEM + ";";
 
     public static final String WHERE_SL_ITEM_TYPE = SL_ITEM_TYPE + "=?";
+
+    public static final String WHERE_SL_ITEM_ROWID = SL_ITEM_ROWID + "=?";
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Table SL">

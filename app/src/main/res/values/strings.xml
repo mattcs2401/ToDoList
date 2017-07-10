@@ -24,7 +24,8 @@
     <string name="list_type_general">General</string>
 
     <!-- Toolabr titles. -->
-    <string name="toolbar_title_new_shopping">New Shopping</string>
+    <string name="toolbar_title_new_shopping">New Shopping List</string>
+    <string name="toolbar_title_new_general">New General Item.</string>
 
     <!-- Button text. -->
     <string name="btn_ok">OK</string>

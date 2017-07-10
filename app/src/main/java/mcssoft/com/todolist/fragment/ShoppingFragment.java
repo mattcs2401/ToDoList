@@ -2,6 +2,7 @@ package mcssoft.com.todolist.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,11 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.model.ShoppingItem;
 import mcssoft.com.todolist.utility.Resources;
 
 
@@ -50,16 +55,24 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
         setRecyclerView(rootView);// set the recycler view.
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
+    //<editor-fold defaultstate="collapsed" desc="Region: Interface">
+    /**
+     * Interface IItemClickListener returns here.
+     * @param view The selected Adapter item view.
+     * @param position Row position of the Adapter's item.
+     */
     @Override
     public void onItemClick(View view, int position) {
         int dbRowId = -1;
         if(view instanceof CheckBox) {
-            // only interested if the checkbox is touched.
-            // TBA - do something.
+            // mimmick the checkbox check/uncheck on the underlying record.
             dbRowId = getDbRowId(position);
+            if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
+                Database.getInstance().setCheckShoppingItem(dbRowId, true);
+            } else {
+                Database.getInstance().setCheckShoppingItem(dbRowId, false);
+            }
         }
-        String bp = "";
     }
     //</editor-fold>
 

@@ -37,12 +37,46 @@ public class Database {
     }
 
     public Cursor getAllShopping() {
-        return getAllRecords(Schema.TABLE_SL, null, null);
+        return getRecords(Schema.TABLE_SL, null, null);
     }
 
     public Cursor getAllGeneral() {
         // TBA.
         return null;
+    }
+
+    public Cursor getShoppingItem(int dbRowId) {
+        return getRecords(Schema.TABLE_SL_ITEM, Schema.WHERE_SL_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
+    }
+
+    /**
+     * Set the the SL_ITEM_VAL_SEL column as N ot Y (i.e. check or uncheck);
+     * @param dbRowId The row id of the SL item.
+     * @param check True - set Y, else set N.
+     * @return 1 if the row updated *(checked or unchecked).
+     */
+    public int setCheckShoppingItem(int dbRowId, boolean check) {
+        int count = -1;
+        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = dbHelper.getDatabase();
+
+        try {
+            db.beginTransaction();
+            if(check) {
+                cv.put(Schema.SL_ITEM_VAL_SEL, "Y");
+            } else {
+                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
+            }
+            count = db.update(Schema.TABLE_SL_ITEM, cv, Schema.WHERE_SL_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
+            db.setTransactionSuccessful();
+        } catch(Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            if(db != null) {
+                db.endTransaction();
+            }
+        }
+        return count;
     }
 
     public Cursor getShoppingItems(ShoppingFragment.PageType pageType) {
@@ -59,7 +93,7 @@ public class Database {
                 selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2]};
                 break;
         }
-        return getAllRecords(Schema.TABLE_SL_ITEM, Schema.WHERE_SL_ITEM_TYPE, selArgs);
+        return getRecords(Schema.TABLE_SL_ITEM, Schema.WHERE_SL_ITEM_TYPE, selArgs);
     }
 
     /**
@@ -114,7 +148,9 @@ public class Database {
             } catch(SQLException ex){
                 Log.d(context.getClass().getCanonicalName(), ex.getMessage());
             } finally{
-                db.endTransaction();
+                if(db != null) {
+                    db.endTransaction();
+                }
             }
         }
 
@@ -160,8 +196,9 @@ public class Database {
         context = null;
     }
 
-    private Cursor getAllRecords(String tableName, @Nullable String whereClause, @Nullable String[] selArgs) {
+    private Cursor getRecords(String tableName, @Nullable String whereClause, @Nullable String[] selArgs) {
         if(whereClause == null) {
+            // this will get all records.
             selArgs = null;
         }
         SQLiteDatabase db = dbHelper.getDatabase();

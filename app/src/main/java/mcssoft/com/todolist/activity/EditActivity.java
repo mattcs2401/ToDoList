@@ -25,18 +25,17 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
         String action = getIntent().getAction();
         Bundle bundle = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
-        String type = bundle.getString(Resources.getInstance().getString(R.string.list_type_key));
+        listItemType = bundle.getString(Resources.getInstance().getString(R.string.list_type_key));
 
         if(action.equals(Resources.getInstance().getString(R.string.list_add_action_key))) {
             // add a new item to a list.
-            addListItem(type);
+            addListItem();
         } else if (action.equals(Resources.getInstance().getString(R.string.list_edit_action_key))) {
-            // edit a list item.
-            editListItem(type);
+            // TBA.
         } else if(action.equals(Resources.getInstance().getString(R.string.list_delete_action_key))) {
-            // delete a list item.
-            deleteListItem(type);
+            // TBA.
         }
+        String bpo = "";
     }
 
     @Override
@@ -45,10 +44,13 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.id_edit_options:
+            case R.id.id_edit_save:
+                // collate values that are checked in the shopping list items table.
+                collateValuesFromSave();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -57,43 +59,40 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if(view instanceof FloatingActionButton) {
-            // save vakues.
-            String bp = "";
+            collateValuesFromSave();
+        }
+    }
+    //</editor-fold>
+
+    private void collateValuesFromSave() {
+        if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
+            //
+        } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+            // TBA.
         }
     }
 
-    private void addListItem(String type) {
-        if (type.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
+    //<editor-fold defaultstate="collapsed" desc="Region: List actions">
+    private void addListItem() {
+        if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
             setContentView(R.layout.cv_shopping);
-            setActionBar();
+            setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_shopping));
             setAdapter();
             setTabLayout();
+        } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+            setContentView(R.layout.cv_general);
+            setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_general));
         }
     }
+    //</editor-fold>
 
-    private void editListItem(String type) {
-        if(type.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-
-        } else if (type.equals(Resources.getInstance().getString(R.string.list_type_general))) {
-
-        }
-    }
-
-    private void deleteListItem(String type) {
-        if(type.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-
-        } else if (type.equals(Resources.getInstance().getString(R.string.list_type_general))) {
-
-        }
-
-    }
-
-    private void setActionBar() {
+    //<editor-fold defaultstate="collapsed" desc="Region: Set UI components">
+    private void setActionBar(String title) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(Resources.getInstance().getString(R.string.toolbar_title_new_shopping));
+        actionBar.setTitle(title);
     }
 
     private void setAdapter() {
@@ -110,7 +109,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         tabLayout.addTab(tabLayout.newTab().setText(pageTitles[2]));
         tabLayout.setupWithViewPager(viewPager);
     }
+    //</editor-fold>
 
+    private String listItemType;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
 }
