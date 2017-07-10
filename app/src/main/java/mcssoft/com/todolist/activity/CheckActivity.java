@@ -24,8 +24,8 @@ public class CheckActivity extends Activity {
         Database.getInstance(getApplicationContext());     // set the database singleton.
 
         // check if default values exist.
-        if(Database.getInstance().getTableRowCount(Schema.TABLE_SL_ITEM, null) < 1) {
-            Database.getInstance().writeTableDefaults(Schema.TABLE_SL_ITEM);
+        if(Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM, null) < 1) {
+            Database.getInstance().writeTableDefaults(Schema.TABLE_REF_ITEM);
         }
     }
 

@@ -2,7 +2,6 @@ package mcssoft.com.todolist.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,15 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
-import mcssoft.com.todolist.model.ShoppingItem;
 import mcssoft.com.todolist.utility.Resources;
 
 
@@ -83,7 +78,7 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     private int getDbRowId(int position) {
         adapter.getItemId(position);
         Cursor cursor = adapter.getCursor();
-        int dbRowId = cursor.getInt(cursor.getColumnIndex(Schema.SL_ITEM_ROWID));
+        int dbRowId = cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID));
         return dbRowId;
     }
 

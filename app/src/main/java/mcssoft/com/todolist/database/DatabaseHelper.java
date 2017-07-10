@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             sqLiteDb.beginTransaction();
             sqLiteDb.execSQL(Schema.DROP_TABLE_SL);
-            sqLiteDb.execSQL(Schema.DROP_TABLE_SL_ITEM);
+            sqLiteDb.execSQL(Schema.DROP_TABLE_REF_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_SL_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_SL);
             sqLiteDb.setTransactionSuccessful();
@@ -67,10 +67,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String[] getSLItemProjection() {
         return new String[] {
-            Schema.SL_ITEM_ROWID,
-            Schema.SL_ITEM_TYPE,
-            Schema.SL_ITEM_VALUE,
-            Schema.SL_ITEM_VAL_SEL
+            Schema.REF_ITEM_ROWID,
+            Schema.REF_ITEM_TYPE,
+            Schema.REF_ITEM_VALUE,
+            Schema.REF_ITEM_VAL_SEL
         };
     }
 

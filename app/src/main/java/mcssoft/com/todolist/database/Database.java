@@ -46,11 +46,11 @@ public class Database {
     }
 
     public Cursor getShoppingItem(int dbRowId) {
-        return getRecords(Schema.TABLE_SL_ITEM, Schema.WHERE_SL_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
+        return getRecords(Schema.TABLE_REF_ITEM, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
     }
 
     /**
-     * Set the the SL_ITEM_VAL_SEL column as N ot Y (i.e. check or uncheck);
+     * Set the the REF_ITEM_VAL_SEL column as N ot Y (i.e. check or uncheck);
      * @param dbRowId The row id of the SL item.
      * @param check True - set Y, else set N.
      * @return 1 if the row updated *(checked or unchecked).
@@ -63,11 +63,11 @@ public class Database {
         try {
             db.beginTransaction();
             if(check) {
-                cv.put(Schema.SL_ITEM_VAL_SEL, "Y");
+                cv.put(Schema.REF_ITEM_VAL_SEL, "Y");
             } else {
-                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
+                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
             }
-            count = db.update(Schema.TABLE_SL_ITEM, cv, Schema.WHERE_SL_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
+            count = db.update(Schema.TABLE_REF_ITEM, cv, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
             db.setTransactionSuccessful();
         } catch(Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -93,7 +93,7 @@ public class Database {
                 selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2]};
                 break;
         }
-        return getRecords(Schema.TABLE_SL_ITEM, Schema.WHERE_SL_ITEM_TYPE, selArgs);
+        return getRecords(Schema.TABLE_REF_ITEM, Schema.WHERE_REF_ITEM_TYPE, selArgs);
     }
 
     /**
@@ -108,8 +108,8 @@ public class Database {
         try {
             db.beginTransaction();
             switch(tableName) {
-                case Schema.TABLE_SL_ITEM:
-                    cursor = db.rawQuery("SELECT " + Schema.SL_ITEM_ROWID + " FROM " + tableName + ";", args);
+                case Schema.TABLE_REF_ITEM:
+                    cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName + ";", args);
                     break;
             }
         } catch (Exception ex) {
@@ -140,9 +140,9 @@ public class Database {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(Schema.SL_ITEM_TYPE, itemTypes[0]);
-                cv.put(Schema.SL_ITEM_VALUE, val);
-                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
+                cv.put(Schema.REF_ITEM_TYPE, itemTypes[0]);
+                cv.put(Schema.REF_ITEM_VALUE, val);
+                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -159,9 +159,9 @@ public class Database {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(Schema.SL_ITEM_TYPE, itemTypes[1]);
-                cv.put(Schema.SL_ITEM_VALUE, val);
-                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
+                cv.put(Schema.REF_ITEM_TYPE, itemTypes[1]);
+                cv.put(Schema.REF_ITEM_VALUE, val);
+                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -176,9 +176,9 @@ public class Database {
         for (String val : general) {
             try {
                 db.beginTransaction();
-                cv.put(Schema.SL_ITEM_TYPE, itemTypes[2]);
-                cv.put(Schema.SL_ITEM_VALUE, val);
-                cv.put(Schema.SL_ITEM_VAL_SEL, "N");
+                cv.put(Schema.REF_ITEM_TYPE, itemTypes[2]);
+                cv.put(Schema.REF_ITEM_VALUE, val);
+                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insert(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -214,7 +214,7 @@ public class Database {
             case Schema.TABLE_SL:
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.SLSchema);
                 break;
-            case Schema.TABLE_SL_ITEM:
+            case Schema.TABLE_REF_ITEM:
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.SLItemSchema);
                 break;
         }

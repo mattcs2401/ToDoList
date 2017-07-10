@@ -5,27 +5,27 @@ public class Schema {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "TODOLIST";
 
-    //<editor-fold defaultstate="collapsed" desc="Region: Table SL_ITEM">
-    // A record in this table represent a single item selectable for a shopping list.
-    public static final String TABLE_SL_ITEM   = "SL_ITEM";
-    public static final String SL_ITEM_ROWID   = "_id";
-    public static final String SL_ITEM_TYPE    = "SLI_TYPE";    // e.g. General, Fruit&Veg etc
-    public static final String SL_ITEM_VALUE   = "SLI_VALUE";   // e.g. Bread
-    public static final String SL_ITEM_VAL_SEL = "SLI_SELECT";  // Y or N, item selected in UI
+    //<editor-fold defaultstate="collapsed" desc="Region: Table REF_ITEM">
+    // A record in this table represent a single reference item selectable for a shopping list.
+    public static final String TABLE_REF_ITEM   = "REF_ITEM";
+    public static final String REF_ITEM_ROWID   = "_id";
+    public static final String REF_ITEM_TYPE    = "REF_TYPE";    // e.g. General, Fruit&Veg etc
+    public static final String REF_ITEM_VALUE   = "REF_VALUE";   // e.g. Bread
+    public static final String REF_ITEM_VAL_SEL = "REF_SELECT";  // Y or N, item selected in UI
 
     public static final String CREATE_TABLE_SL_ITEM = "CREATE TABLE "
-            + TABLE_SL_ITEM   + " ("
-            + SL_ITEM_ROWID   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + SL_ITEM_TYPE    + " TEXT NOT NULL, "
-            + SL_ITEM_VALUE   + " TEXT NOT NULL, "
-            + SL_ITEM_VAL_SEL + " TEXT NOT NULL)";
+            + TABLE_REF_ITEM   + " ("
+            + REF_ITEM_ROWID   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + REF_ITEM_TYPE    + " TEXT NOT NULL, "
+            + REF_ITEM_VALUE   + " TEXT NOT NULL, "
+            + REF_ITEM_VAL_SEL + " TEXT NOT NULL)";
 
-    public static final String DROP_TABLE_SL_ITEM =
-            "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_SL_ITEM + ";";
+    public static final String DROP_TABLE_REF_ITEM =
+            "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_REF_ITEM + ";";
 
-    public static final String WHERE_SL_ITEM_TYPE = SL_ITEM_TYPE + "=?";
+    public static final String WHERE_REF_ITEM_TYPE = REF_ITEM_TYPE + "=?";
 
-    public static final String WHERE_SL_ITEM_ROWID = SL_ITEM_ROWID + "=?";
+    public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ROWID + "=?";
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Table SL">
