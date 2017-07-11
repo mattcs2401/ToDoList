@@ -34,7 +34,7 @@ public class CheckActivity extends Activity {
         super.onStart();
         Bundle args = new Bundle();
 
-        int count = Database.getInstance().getTableRowCount(Schema.TABLE_SL, null);
+        int count = Database.getInstance().getTableRowCount(Schema.TABLE_SLIST, null);
         args.putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count);
 
         Intent intent = new Intent(this, MainActivity.class);

@@ -18,10 +18,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDb) {
         try {
             sqLiteDb.beginTransaction();
-            sqLiteDb.execSQL(Schema.DROP_TABLE_SL);
+            sqLiteDb.execSQL(Schema.DROP_TABLE_SLIST);
+            sqLiteDb.execSQL(Schema.DROP_TABLE_SLIST_ITEM);
             sqLiteDb.execSQL(Schema.DROP_TABLE_REF_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_REF_ITEM);
-            sqLiteDb.execSQL(Schema.CREATE_TABLE_SL);
+            sqLiteDb.execSQL(Schema.CREATE_TABLE_SLIST);
+            sqLiteDb.execSQL(Schema.CREATE_TABLE_SLIST_ITEM);
             sqLiteDb.setTransactionSuccessful();
         } catch(SQLException ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -38,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public enum Projection {
-        RefItemSchema, SLSchema
+        RefItemSchema, SListSchema, SListItemSchema
     }
 
     public static String [] getProjection(Projection p) {
@@ -47,8 +49,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             case RefItemSchema:
                 projection = getRefItemProjection();
                 break;
-            case SLSchema:
-                projection = getSLProjection();
+            case SListSchema:
+                projection = getSListProjection();
+                break;
+            case SListItemSchema:
+                projection = getSListItemProjection();
                 break;
         }
         return  projection;
@@ -75,12 +80,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         };
     }
 
-    private static String[] getSLProjection() {
+    private static String[] getSListProjection() {
         return new String[] {
-                Schema.SL_ROWID,
-                Schema.SL_ID,
-                Schema.SL_TYPE,
-                Schema.SL_VAL
+                Schema.SLIST_ROWID,
+                Schema.SLIST_ID,
+                Schema.SLIST_NAME,
+                Schema.SLIST_DATE
+        };
+    }
+
+    private static String[] getSListItemProjection() {
+        return new String[]{
+            Schema.SLIST_ITEM_ROWID,
+            Schema.SLIST_ITEM_SLIST_ID, // SLIST.SLIST_ID
+            Schema.SLIST_ITEM_REF_ID    // REF_ITEM.ROWID
         };
     }
 

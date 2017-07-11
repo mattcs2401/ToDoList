@@ -37,7 +37,7 @@ public class Database {
     }
 
     public Cursor getAllShopping() {
-        return getRecords(Schema.TABLE_SL, null, null, null);
+        return getRecords(Schema.TABLE_SLIST, null, null, null);
     }
 
     public Cursor getAllGeneral() {
@@ -234,8 +234,8 @@ public class Database {
     private String[] getProjection(String tableName) {
         String[] projection = null;
         switch (tableName) {
-            case Schema.TABLE_SL:
-                projection = dbHelper.getProjection(DatabaseHelper.Projection.SLSchema);
+            case Schema.TABLE_SLIST:
+                projection = dbHelper.getProjection(DatabaseHelper.Projection.SListSchema);
                 break;
             case Schema.TABLE_REF_ITEM:
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.RefItemSchema);
