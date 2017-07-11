@@ -1,5 +1,6 @@
 package mcssoft.com.todolist.activity;
 
+import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.PagerAdapter;
+import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
@@ -51,6 +53,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.id_edit_save:
                 // collate values that are checked in the shopping list items table.
                 collateValuesFromSave();
+                clearValuesFromSave();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -60,16 +63,35 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view instanceof FloatingActionButton) {
             collateValuesFromSave();
+            clearValuesFromSave();
         }
     }
     //</editor-fold>
 
+    /**
+     * Get a list of all the selected shopping items.
+     */
     private void collateValuesFromSave() {
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-            //
+            Cursor cursor = Database.getInstance().getCheckedReferenceItems();
+            if(cursor.getCount() > 0) {
+                //cursor.moveToFirst();
+                String bp = "";
+            } else {
+
+            }
+
+            String bp = "";
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             // TBA.
         }
+    }
+
+    /**
+     * Clear the check against all the previously selected shopping items.
+     */
+    private void clearValuesFromSave() {
+        Database.getInstance().unCheckReferenceItems();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Region: List actions">
@@ -93,6 +115,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(title);
+        ((FloatingActionButton) findViewById(R.id.id_fab)).setOnClickListener(this);
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.id_fab);
+//        fab.setOnClickListener(this);
     }
 
     private void setAdapter() {

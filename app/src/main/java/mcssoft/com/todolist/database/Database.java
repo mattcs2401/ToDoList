@@ -46,6 +46,18 @@ public class Database {
     }
 
     /**
+     * Uncheck previously selected reference items.
+     * @return A count of the items unchecked.
+     */
+    public int unCheckReferenceItems() {
+        Cursor cursor = getCheckedReferenceItems();
+        while(cursor.moveToNext()) {
+
+        }
+        return cursor.getCount();
+    }
+
+    /**
      * Get a record from the reference items.
      * @param dbRowId The row id.
      * @return The reference item record.
@@ -84,7 +96,15 @@ public class Database {
         return count;
     }
 
-    public Cursor getReferenceItems(ShoppingFragment.PageType pageType) {
+    /**
+     * Get the reference items that have been checked (REF_ITEM.REF_ITEM_SEL_VAL="Y").
+     * @return A cursor over the checked items.
+     */
+    public Cursor getCheckedReferenceItems() {
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_SEL, new String[] {"Y"});
+    }
+
+    public Cursor getCheckedReferenceItems(ShoppingFragment.PageType pageType) {
 
         String[] selArgs = null;
 
@@ -230,6 +250,12 @@ public class Database {
         db.endTransaction();
         return cursor;
     }
+
+//    private int setRecords() {
+//        Cursor cursor = getRecords(Schema.TABLE_REF_ITEM,)
+//
+//        return 0;
+//    }
 
     private String[] getProjection(String tableName) {
         String[] projection = null;

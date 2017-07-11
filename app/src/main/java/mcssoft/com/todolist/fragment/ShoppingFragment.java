@@ -85,13 +85,13 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     private void setCursor(int pageNo) {
         switch(pageNo) {
             case 0:
-                cursor = Database.getInstance().getReferenceItems(PageType.GENRL);
+                cursor = Database.getInstance().getCheckedReferenceItems(PageType.GENRL);
                 break;
             case 1:
-                cursor = Database.getInstance().getReferenceItems(PageType.FANDV);
+                cursor = Database.getInstance().getCheckedReferenceItems(PageType.FANDV);
                 break;
             case 2:
-                cursor = Database.getInstance().getReferenceItems(PageType.MANDF);
+                cursor = Database.getInstance().getCheckedReferenceItems(PageType.MANDF);
                 break;
         }
     }

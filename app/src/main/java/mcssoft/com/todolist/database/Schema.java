@@ -26,7 +26,7 @@ public class Schema {
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_REF_ITEM + ";";
 
     public static final String WHERE_REF_ITEM_CODE = REF_ITEM_CODE + "=?";
-
+    public static final String WHERE_REF_ITEM_SEL = REF_ITEM_VAL_SEL + "=?";
     public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ROWID + "=?";
     //</editor-fold>
 
