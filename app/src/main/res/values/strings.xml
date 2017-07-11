@@ -5,9 +5,12 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="preference_settings">Preferences</string>
 
-    <!-- GENRL text. -->
+    <!-- General text. -->
     <string name="nothing_to_show">Nothing to show at this time.</string>
     <string name="app_home_screen">Unable to go back. This is the app\'s home screen.</string>
+    <string name="date_format">dd/MM/yyyy</string>
+    <string name="date_time_format">dd/MM/yyyy HH:mm</string>
+    <string name="date_time_format_compacted">ddMMyyyyHHmmss</string>
 
     <!-- Bundle keys. -->
     <string name="bundle_key">bundle_key</string>
