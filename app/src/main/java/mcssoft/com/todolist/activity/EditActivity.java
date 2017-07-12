@@ -110,7 +110,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         colVals.add(dateTime.getFormattedDate(false));     // list date.
         colVals.add("TBA");                                // list name.
 
-        int rowId = Database.getInstance().createShoppingList(colVals);
+        long rowId = Database.getInstance().createShoppingList(colVals);
         Database.getInstance().createShoppingListItems(rowId);
     }
     //</editor-fold>

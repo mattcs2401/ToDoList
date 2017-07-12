@@ -164,8 +164,8 @@ public class Database {
      * @param colVals [0]-list id, [1]-list date, [2]-list name.
      * @return The rowId of the newly inserted row, or -1,
      */
-    public int createShoppingList(List<String> colVals) {
-        int rowId = -1;
+    public long createShoppingList(List<String> colVals) {
+        long rowId = -1;
         SQLiteDatabase db = dbHelper.getDatabase();
         ContentValues cv = new ContentValues();
 
@@ -175,45 +175,46 @@ public class Database {
             cv.put(Schema.SLIST_ID, colVals.get(0));
             cv.put(Schema.SLIST_DATE, colVals.get(1));
             cv.put(Schema.SLIST_NAME, colVals.get(2));
-//            rowId = db.insertOrThrow(Schema.TABLE_SLIST, null, cv);
-//            db.setTransactionSuccessful();
+            rowId = db.insertOrThrow(Schema.TABLE_SLIST, null, cv);
+            db.setTransactionSuccessful();
         } catch(Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {
-            if(db != null) {
-                db.endTransaction();
-            }
-            return rowId;
+            db.endTransaction();
         }
+        return rowId;
     }
 
     /**
      * Write new shopping list item values and associate with a shopping list.
      * @param rowId The rowid of the shopping list to associate with,
-     * @return TBA
+     * @return The count of shopping list items.
      */
-    public int createShoppingListItems(int rowId) {
-        Cursor cursor = null;
+    public int createShoppingListItems(long rowId) {
         SQLiteDatabase db = dbHelper.getDatabase();
-        ContentValues cv = new ContentValues();
+        Cursor refCursor = Database.getInstance().getCheckedReferenceItems();
 
-        try {
-            cursor = Database.getInstance().getRecords(Schema.TABLE_SLIST, null,
-                    Schema.WHERE_SLIST_ROWID, new String[] {Integer.toString(rowId)});
+        int refId;
+        ContentValues cv;
 
-            if(cursor != null && cursor.getCount() == 1) {
+        while(refCursor.moveToNext()) {
+            cv = new ContentValues();
+            refId = refCursor.getInt(refCursor.getColumnIndex(Schema.REF_ITEM_ROWID));
 
-            } else {
-                // TBA
-            }
-        } catch(Exception ex) {
-
-        } finally {
-            if(db != null) {
+            try {
+                db.beginTransaction();
+                cv.put(Schema.SLIST_ITEM_SLIST_ID, rowId);
+                cv.put(Schema.SLIST_ITEM_REF_ID, refId);
+                db.insertOrThrow(Schema.TABLE_SLIST_ITEM, null, cv);
+                db.setTransactionSuccessful();
+            } catch(Exception ex) {
+                Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+            } finally {
                 db.endTransaction();
             }
-            return cursor.getCount();
         }
+
+        return refCursor.getCount();
     }
 
     /**

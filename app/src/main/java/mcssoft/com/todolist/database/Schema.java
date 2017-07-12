@@ -57,13 +57,13 @@ public class Schema {
     // This is a linking table between tables SLIST and REF_ITEM.
     public static final String TABLE_SLIST_ITEM    = "SLIST_ITEM";
     public static final String SLIST_ITEM_ROWID    = "_id";
-    public static final String SLIST_ITEM_SLIST_ID = "SLIST_ID";     // SLIST.SLIST_ID
+    public static final String SLIST_ITEM_SLIST_ID = "SLIST_ID";     // SLIST.ROWID
     public static final String SLIST_ITEM_REF_ID   = "REF_ID";       // REF_ITEM.ROWID
 
     public static final String CREATE_TABLE_SLIST_ITEM = "CREATE TABLE "
             + TABLE_SLIST_ITEM    + " ("
             + SLIST_ITEM_ROWID    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + SLIST_ITEM_SLIST_ID + " TEXT NOT NULL, "
+            + SLIST_ITEM_SLIST_ID + " INTEGER NOT NULL, "
             + SLIST_ITEM_REF_ID   + " INTEGER NOT NULL)";
 
     public static final String DROP_TABLE_SLIST_ITEM =
