@@ -24,8 +24,8 @@ public class CheckActivity extends Activity {
         Database.getInstance(getApplicationContext());     // set the database singleton.
 
         // check if default values exist.
-        if(Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM, null) < 1) {
-            Database.getInstance().writeTableDefaults(Schema.TABLE_REF_ITEM);
+        if(Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM, null, null) < 1) {
+            Database.getInstance().setTableDefaults(Schema.TABLE_REF_ITEM);
         }
     }
 
@@ -34,7 +34,7 @@ public class CheckActivity extends Activity {
         super.onStart();
         Bundle args = new Bundle();
 
-        int count = Database.getInstance().getTableRowCount(Schema.TABLE_SLIST, null);
+        int count = Database.getInstance().getTableRowCount(Schema.TABLE_SLIST, null, null);
         args.putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count);
 
         Intent intent = new Intent(this, MainActivity.class);

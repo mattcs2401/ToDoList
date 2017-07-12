@@ -15,6 +15,7 @@ import mcssoft.com.todolist.utility.Resources;
 
 public class Database {
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Instance">
     private Database(Context context) {
         this.context = context;
         dbHelper = new DatabaseHelper(context);
@@ -35,6 +36,7 @@ public class Database {
     public static boolean instanceExists() {
         return instance != null ? true : false;
     }
+    //</editor-fold>
 
     public Cursor getAllShopping() {
         return getRecords(Schema.TABLE_SLIST, null, null, null);
@@ -50,9 +52,11 @@ public class Database {
      * @return A count of the items unchecked.
      */
     public int unCheckReferenceItems() {
+        int rowId;
         Cursor cursor = getCheckedReferenceItems();
         while(cursor.moveToNext()) {
-
+            rowId = cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID));
+            setCheckReferenceItem(rowId, false);
         }
         return cursor.getCount();
     }
@@ -128,14 +132,19 @@ public class Database {
      * @param args Optional aguments.
      * @return The number of records.
      */
-    public int getTableRowCount(String tableName, @Nullable String[] args) {
+    public int getTableRowCount(String tableName, @Nullable String where, @Nullable String[] args) {
         Cursor cursor = null;
         SQLiteDatabase db = dbHelper.getDatabase();
         try {
             db.beginTransaction();
             switch(tableName) {
                 case Schema.TABLE_REF_ITEM:
-                    cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName + ";", args);
+                    if(where == null) {
+                        args = null;
+                        cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName, args);
+                    } else {
+                        cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName + where, args);
+                    }
                     break;
             }
         } catch (Exception ex) {
@@ -151,10 +160,67 @@ public class Database {
     }
 
     /**
+     * Write shopping list item values ino a new shopping list.
+     * @param colVals [0]-list id, [1]-list date, [2]-list name.
+     * @return The rowId of the newly inserted row, or -1,
+     */
+    public int createShoppingList(List<String> colVals) {
+        int rowId = -1;
+        SQLiteDatabase db = dbHelper.getDatabase();
+        ContentValues cv = new ContentValues();
+
+        // create the shopping list.
+        try {
+            db.beginTransaction();
+            cv.put(Schema.SLIST_ID, colVals.get(0));
+            cv.put(Schema.SLIST_DATE, colVals.get(1));
+            cv.put(Schema.SLIST_NAME, colVals.get(2));
+//            rowId = db.insertOrThrow(Schema.TABLE_SLIST, null, cv);
+//            db.setTransactionSuccessful();
+        } catch(Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            if(db != null) {
+                db.endTransaction();
+            }
+            return rowId;
+        }
+    }
+
+    /**
+     * Write new shopping list item values and associate with a shopping list.
+     * @param rowId The rowid of the shopping list to associate with,
+     * @return TBA
+     */
+    public int createShoppingListItems(int rowId) {
+        Cursor cursor = null;
+        SQLiteDatabase db = dbHelper.getDatabase();
+        ContentValues cv = new ContentValues();
+
+        try {
+            cursor = Database.getInstance().getRecords(Schema.TABLE_SLIST, null,
+                    Schema.WHERE_SLIST_ROWID, new String[] {Integer.toString(rowId)});
+
+            if(cursor != null && cursor.getCount() == 1) {
+
+            } else {
+                // TBA
+            }
+        } catch(Exception ex) {
+
+        } finally {
+            if(db != null) {
+                db.endTransaction();
+            }
+            return cursor.getCount();
+        }
+    }
+
+    /**
      * Write default table values to the database. Values are derived from app string resources.
      * @param tableName The database table.
      */
-    public void writeTableDefaults(String tableName) {
+    public void setTableDefaults(String tableName) {
         String code;
         String desc;
         String[] itemTypes = Resources.getInstance().getStringArray(R.array.shopping_item_types);
@@ -175,7 +241,7 @@ public class Database {
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
                 cv.put(Schema.REF_ITEM_VAL_SEL, "N");
-                db.insert(tableName, null, cv);
+                db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
                 Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -198,7 +264,7 @@ public class Database {
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
                 cv.put(Schema.REF_ITEM_VAL_SEL, "N");
-                db.insert(tableName, null, cv);
+                db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
                 Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -218,7 +284,7 @@ public class Database {
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
                 cv.put(Schema.REF_ITEM_VAL_SEL, "N");
-                db.insert(tableName, null, cv);
+                db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
                 Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -236,7 +302,7 @@ public class Database {
         context = null;
     }
 
-    private Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
+    public Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
         if(projection == null) {
             projection = getProjection(tableName);
         }
@@ -244,18 +310,20 @@ public class Database {
             // this will get all records.
             selArgs = null;
         }
-        SQLiteDatabase db = dbHelper.getDatabase();
-        db.beginTransaction();
-        Cursor cursor = db.query(tableName, projection, whereClause, selArgs, null, null, null);
-        db.endTransaction();
-        return cursor;
-    }
 
-//    private int setRecords() {
-//        Cursor cursor = getRecords(Schema.TABLE_REF_ITEM,)
-//
-//        return 0;
-//    }
+        Cursor cursor = null;
+        SQLiteDatabase db = dbHelper.getDatabase();
+
+        try {
+            db.beginTransaction();
+            cursor = db.query(tableName, projection, whereClause, selArgs, null, null, null);
+            db.endTransaction();
+        } catch(Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            return cursor;
+        }
+    }
 
     private String[] getProjection(String tableName) {
         String[] projection = null;

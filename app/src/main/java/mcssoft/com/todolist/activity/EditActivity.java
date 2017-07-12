@@ -1,6 +1,5 @@
 package mcssoft.com.todolist.activity;
 
-import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
@@ -12,9 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.PagerAdapter;
 import mcssoft.com.todolist.database.Database;
+import mcssoft.com.todolist.database.Schema;
+import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
@@ -52,9 +56,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         switch (item.getItemId()) {
             case R.id.id_edit_save:
                 // collate values that are checked in the shopping list items table.
-                collateValuesFromSave();
-                clearValuesFromSave();
-                return true;
+                finalise();
+                //return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -62,28 +65,32 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if(view instanceof FloatingActionButton) {
-            collateValuesFromSave();
-            clearValuesFromSave();
+            finalise();
         }
     }
     //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Utility">
+    private void finalise() {
+        collateValuesFromSave();
+        clearValuesFromSave();
+        finish();
+    }
 
     /**
      * Get a list of all the selected shopping items.
      */
     private void collateValuesFromSave() {
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-            Cursor cursor = Database.getInstance().getCheckedReferenceItems();
-            if(cursor.getCount() > 0) {
-                //cursor.moveToFirst();
-                String bp = "";
+            int count = Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM,
+                    Schema.RAW_WHERE_REF_ITEM_SEL, new String[] {"Y"});
+            if(count > 0) {
+                writeNewShoppingList();
             } else {
-
+                String bp = "";
             }
-
-            String bp = "";
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
-            // TBA.
+            String bp = "";
         }
     }
 
@@ -92,7 +99,21 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void clearValuesFromSave() {
         Database.getInstance().unCheckReferenceItems();
+
     }
+
+    private void writeNewShoppingList() {
+        List<String> colVals = new ArrayList<>();
+        DateTime dateTime = new DateTime();
+
+        colVals.add(dateTime.getCompactedDateTime());      // list identifier.
+        colVals.add(dateTime.getFormattedDate(false));     // list date.
+        colVals.add("TBA");                                // list name.
+
+        int rowId = Database.getInstance().createShoppingList(colVals);
+        Database.getInstance().createShoppingListItems(rowId);
+    }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: List actions">
     private void addListItem() {
@@ -115,9 +136,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(title);
-        ((FloatingActionButton) findViewById(R.id.id_fab)).setOnClickListener(this);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.id_fab);
-//        fab.setOnClickListener(this);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.id_fab);
+        fab.setOnClickListener(this);
     }
 
     private void setAdapter() {

@@ -10,7 +10,7 @@
     <string name="app_home_screen">Unable to go back. This is the app\'s home screen.</string>
     <string name="date_format">dd/MM/yyyy</string>
     <string name="date_time_format">dd/MM/yyyy HH:mm</string>
-    <string name="date_time_format_compacted">ddMMyyyyHHmmss</string>
+    <string name="date_time_format_compacted">yyyyMMddHHmmss</string>
 
     <!-- Bundle keys. -->
     <string name="bundle_key">bundle_key</string>

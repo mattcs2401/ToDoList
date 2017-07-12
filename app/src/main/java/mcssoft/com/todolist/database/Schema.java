@@ -27,6 +27,7 @@ public class Schema {
 
     public static final String WHERE_REF_ITEM_CODE = REF_ITEM_CODE + "=?";
     public static final String WHERE_REF_ITEM_SEL = REF_ITEM_VAL_SEL + "=?";
+    public static final String RAW_WHERE_REF_ITEM_SEL = " WHERE " + REF_ITEM_VAL_SEL + "=?";
     public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ROWID + "=?";
     //</editor-fold>
 
@@ -48,7 +49,7 @@ public class Schema {
     public static final String DROP_TABLE_SLIST =
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_SLIST + ";";
 
-    public static final String WHERE_SLIST_ID = SLIST_ID + "=?";
+    public static final String WHERE_SLIST_ROWID = SLIST_ROWID + "=?";
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Table SLIST_ITEM">

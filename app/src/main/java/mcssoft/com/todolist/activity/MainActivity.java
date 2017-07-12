@@ -70,6 +70,15 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == NEW_SHOPPING) {
+
+            String bp = "";
+        }
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
@@ -144,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, EditActivity.class);
         intent.setAction(Resources.getInstance().getString(R.string.list_add_action_key));
         intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
-        startActivity(intent);
+        startActivityForResult(intent, NEW_SHOPPING);
     }
 
     private void doNewGeneralList() {
@@ -218,6 +227,8 @@ public class MainActivity extends AppCompatActivity
     private Cursor cursor;
     private MainAdapter adapter;
     private DrawerLayout drawer;
+
+    private static final int NEW_SHOPPING = 1;   // request code.
 }
 // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 // .setAction("Action", null).show();

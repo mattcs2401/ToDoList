@@ -16,6 +16,10 @@ public class DateTime {
         timeMillis = Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
     }
 
+    /**
+     * Create a DateTime object using the given date and time.
+     * @param timeMillis The date and time in millis.
+     */
     public DateTime(long timeMillis) {
         this.timeMillis = timeMillis;
     }
