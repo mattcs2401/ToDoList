@@ -12,22 +12,27 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
-    public MainAdapter(boolean isEmptyView) {
-        this.isEmptyView = isEmptyView;
-    }
+    public MainAdapter() { }
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+//        switch(viewType) {
+//            case EMPTY_VIEW:
+//                view = inflater.inflate(R.layout.shopping_row_empty, parent, false);
+//                return new MainViewHolder(view);
+//            default:
+//                view = inflater.inflate(R.layout.shopping_row, parent, false);
+//                return new MainViewHolder(view, icListener);
+//        }
+
         if(!isEmptyView) {
             view = inflater.inflate(R.layout.shopping_row, parent, false);
-            mvh = new MainViewHolder(view, isEmptyView);
-            mvh.setItemClickListener(icListener);
-            return mvh;
+            return new MainViewHolder(view, icListener);
         } else {
             view = inflater.inflate(R.layout.shopping_row_empty, parent, false);
-            return new MainViewHolder(view, isEmptyView);
+            return new MainViewHolder(view);
         }
     }
 
@@ -36,6 +41,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         if(!isEmptyView) {
             cursor.moveToPosition(position);
             holder.getTvDate().setText(cursor.getString(idDateNdx));
+        } else {
+            holder.getEmptyView().getText().toString();
         }
     }
 
@@ -47,21 +54,32 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(cursor != null) {
-            return cursor.getCount();
+        if(isEmptyView) {
+            return  1; // need to do this so the onCreateViewHolder fires.
         } else {
-            return 1; // need this for empty view.
+            if(cursor != null) {
+                return cursor.getCount();
+            } else {
+                return 0;
+            }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-
+        if(isEmptyView) {
+            return EMPTY_VIEW;
+        } else {
+            return super.getItemViewType(position);
+        }
     }
 
     public void setOnItemClickListener(IItemClickListener iclistener) {
         this.icListener = iclistener;
+    }
+
+    public void setEmptyView(boolean isEmptyView) {
+        this.isEmptyView = isEmptyView;
     }
 
     public Cursor getCursor() { return cursor; }
@@ -84,7 +102,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     private int idDateNdx;                  // SLIST.DATE
     private int idNameNdx;                  // SLIST.NAME
     private int idNdx;                      // SLIST.ID
-    private MainViewHolder mvh;
     private boolean isEmptyView;
     private IItemClickListener icListener;
+
+    private static final int EMPTY_VIEW = 2;
 }

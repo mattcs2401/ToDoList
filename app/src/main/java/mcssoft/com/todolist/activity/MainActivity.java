@@ -168,11 +168,14 @@ public class MainActivity extends AppCompatActivity
         cursor = Database.getInstance().getAllShopping();
     }
 
-    private void setMainAdapter(boolean isEmptyView) {
-        adapter = new MainAdapter(isEmptyView);
-        if(!isEmptyView) {
-            adapter.swapCursor(cursor);
-            adapter.setOnItemClickListener(this);
+    private void setMainAdapter() {
+        adapter = new MainAdapter();
+        adapter.setOnItemClickListener(this);
+        adapter.swapCursor(cursor);
+        if(cursor.getCount() == 0) {
+            adapter.setEmptyView(true);
+        } else {
+            adapter.setEmptyView(false);
         }
     }
 
@@ -203,21 +206,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initialiseUI() {
-        int count = 0;
-        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
-        Bundle args = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
-
-        if(args != null) {
-            // save value.
-            count = args.getInt(Resources.getInstance().getString(R.string.sl_item_count_key));
-            sp.edit().putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count).commit();
-        } else {
-            // args will be null when entering this activity as back press from the Edit activity.
-            count = sp.getInt(Resources.getInstance().getString(R.string.sl_item_count_key), 0);
-        }
+//        int count = 0;
+//        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
+//        Bundle args = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
+//
+//        if(args != null) {
+//            // save value.
+//            count = args.getInt(Resources.getInstance().getString(R.string.sl_item_count_key));
+//            sp.edit().putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count).commit();
+//        } else {
+//            // args will be null when entering this activity as back press from the Edit activity.
+//            count = sp.getInt(Resources.getInstance().getString(R.string.sl_item_count_key), 0);
+//        }
 
             setCursor();
-            setMainAdapter(true);
+            setMainAdapter();
             setRecyclerView();
     }
     //</editor-fold>
