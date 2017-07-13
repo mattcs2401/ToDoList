@@ -28,7 +28,9 @@ public class MainViewHolder extends ParentViewHolder {
             ivExpand = (ImageView) view.findViewById(R.id.id_iv_expand);
             ivExpand.setOnClickListener(this);
         } else {
-            ((TextView) view.findViewById(R.id.id_tv_empty)).setText(Resources.getInstance().getString(R.string.nothing_to_show));
+            this.view = view;
+            tvEmpty = (TextView) view.findViewById(R.id.id_tv_empty);
+            tvEmpty.setText(Resources.getInstance().getString(R.string.nothing_to_show));
         }
     }
 
@@ -50,6 +52,7 @@ public class MainViewHolder extends ParentViewHolder {
     public TextView getTvItems() { return tvItems; }
     public ImageView getIvExpand() { return ivExpand; }
     public ImageView getIvDelete() { return ivDelete; }
+    public TextView getEmptyView() { return tvEmpty; }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
@@ -58,6 +61,7 @@ public class MainViewHolder extends ParentViewHolder {
     private TextView tvDate;
     private TextView tvNumItems;
     private TextView tvItems;
+    private TextView tvEmpty;
     private ImageView ivExpand;
     private ImageView ivDelete;
     private IItemClickListener icListener;
