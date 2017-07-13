@@ -168,10 +168,12 @@ public class MainActivity extends AppCompatActivity
         cursor = Database.getInstance().getAllShopping();
     }
 
-    private void setMainAdapter() {
-        adapter = new MainAdapter();
-        adapter.swapCursor(cursor);
-        adapter.setOnItemClickListener(this);
+    private void setMainAdapter(boolean isEmptyView) {
+        adapter = new MainAdapter(isEmptyView);
+        if(!isEmptyView) {
+            adapter.swapCursor(cursor);
+            adapter.setOnItemClickListener(this);
+        }
     }
 
     private  void setRecyclerView() {
@@ -214,13 +216,9 @@ public class MainActivity extends AppCompatActivity
             count = sp.getInt(Resources.getInstance().getString(R.string.sl_item_count_key), 0);
         }
 
-        if(count > 0) {
             setCursor();
-            setMainAdapter();
+            setMainAdapter(true);
             setRecyclerView();
-        } else {
-            ((TextView) findViewById(R.id.id_tv_empty_view)).setText(Resources.getInstance().getString(R.string.nothing_to_show));
-        }
     }
     //</editor-fold>
 

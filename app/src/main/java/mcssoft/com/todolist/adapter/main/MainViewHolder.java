@@ -2,20 +2,34 @@ package mcssoft.com.todolist.adapter.main;
 
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.utility.Resources;
 
 public class MainViewHolder extends ParentViewHolder {
 
-    public MainViewHolder(View view) {
+
+    public MainViewHolder(View view, boolean isEmptyView) {
         super(view);
-        this.view = view;
-//        cbShoppingItem = (CheckBox) view.findViewById(R.id.id_cb_shopping_item);
-//        cbShoppingItem.setOnClickListener(this);
-//        tvShoppingItem = (TextView) view.findViewById(R.id.id_tv_shopping_item);
+        if(!isEmptyView) {
+            this.view = view;
+            tvTitle = (TextView) view.findViewById(R.id.id_tv_shopping_title);
+            tvDate = (TextView) view.findViewById(R.id.id_tv_date);
+            tvNumItems = (TextView) view.findViewById(R.id.id_tv_num_items);
+            tvItems = (TextView) view.findViewById(R.id.id_tv_items);
+            ivDelete = (ImageView) view.findViewById(R.id.id_iv_delete);
+            ivDelete.setOnClickListener(this);
+            ivExpand = (ImageView) view.findViewById(R.id.id_iv_expand);
+            ivExpand.setOnClickListener(this);
+        } else {
+            ((TextView) view.findViewById(R.id.id_tv_empty)).setText(Resources.getInstance().getString(R.string.nothing_to_show));
+        }
     }
 
     @Override
@@ -30,14 +44,22 @@ public class MainViewHolder extends ParentViewHolder {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">
-//    public CheckBox getCbShoppingItem() { return cbShoppingItem; }
-//    public TextView gettvShoppingItem() { return tvShoppingItem; }
+    public TextView getTvTitle() { return tvTitle; }
+    public TextView getTvDate() { return tvDate; }
+    public TextView getTvNumItems() { return tvNumItems; }
+    public TextView getTvItems() { return tvItems; }
+    public ImageView getIvExpand() { return ivExpand; }
+    public ImageView getIvDelete() { return ivDelete; }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
     private View view;
-//    private CheckBox cbShoppingItem;
-//    private TextView tvShoppingItem;
+    private TextView tvTitle;
+    private TextView tvDate;
+    private TextView tvNumItems;
+    private TextView tvItems;
+    private ImageView ivExpand;
+    private ImageView ivDelete;
     private IItemClickListener icListener;
     //</editor-fold>
 }

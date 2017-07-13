@@ -16,7 +16,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     public ShoppingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        view = inflater.inflate(R.layout.shopping_row, parent, false);
+        view = inflater.inflate(R.layout.shopping_item_row, parent, false);
         svh = new ShoppingViewHolder(view);
         svh.setItemClickListener(icListener);
         return svh;

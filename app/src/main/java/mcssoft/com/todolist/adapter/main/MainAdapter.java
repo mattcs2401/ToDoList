@@ -12,21 +12,31 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
-    public MainAdapter() {
+    public MainAdapter(boolean isEmptyView) {
+        this.isEmptyView = isEmptyView;
     }
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.content_main_row, parent, false);
-        mvh = new MainViewHolder(view);
-        mvh.setItemClickListener(icListener);
-        return mvh;
+        if(!isEmptyView) {
+            view = inflater.inflate(R.layout.shopping_row, parent, false);
+            mvh = new MainViewHolder(view, isEmptyView);
+            mvh.setItemClickListener(icListener);
+            return mvh;
+        } else {
+            view = inflater.inflate(R.layout.shopping_row_empty, parent, false);
+            return new MainViewHolder(view, isEmptyView);
+        }
     }
 
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
-
+        if(!isEmptyView) {
+            cursor.moveToPosition(position);
+            holder.getTvDate().setText(cursor.getString(idDateNdx));
+        }
     }
 
     @Override
@@ -37,7 +47,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     @Override
     public int getItemCount() {
-        return cursor.getCount();
+        if(cursor != null) {
+            return cursor.getCount();
+        } else {
+            return 1; // need this for empty view.
+        }
     }
 
     @Override
@@ -53,21 +67,24 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     public Cursor getCursor() { return cursor; }
 
     public void swapCursor(Cursor cursor) {
-        this.cursor = cursor;
-        cursor.moveToFirst();
-        idColNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
-//            idTypNdx = cursor.getColumnIndex(Schema.REF_ITEM_DESC);
-//            idValNdx = cursor.getColumnIndex(Schema.REF_ITEM_VALUE);
-//            idValSelNdx = cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL);
-        notifyDataSetChanged();
+        if((cursor != null) && (cursor.getCount() > 0)) {
+            this.cursor = cursor;
+            cursor.moveToFirst();
+            idColNdx = cursor.getColumnIndex(Schema.SLIST_ROWID);
+            idDateNdx = cursor.getColumnIndex(Schema.SLIST_DATE);
+//            idNameNdx = cursor.getColumnIndex(Schema.SLIST_NAME);
+//            idNdx = cursor.getColumnIndex(Schema.SLIST_ID);
+            notifyDataSetChanged();
+        }
     }
 
 
-    private Cursor cursor;                  // backing data.
-    private int idColNdx;
-//    private int idTypNdx;
-//    private int idValNdx;
-//    private int idValSelNdx;
+    private Cursor cursor;                  // backing data
+    private int idColNdx;                   // SLIST.ROWID
+    private int idDateNdx;                  // SLIST.DATE
+    private int idNameNdx;                  // SLIST.NAME
+    private int idNdx;                      // SLIST.ID
     private MainViewHolder mvh;
+    private boolean isEmptyView;
     private IItemClickListener icListener;
 }
