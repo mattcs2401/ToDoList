@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.PagerAdapter;
+import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.utility.DateTime;
@@ -141,7 +141,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setAdapter() {
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager(), this);
+        pagerAdapter = new ShoppingItemPagerAdapter(getSupportFragmentManager(), this);
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
         viewPager.setAdapter(pagerAdapter);
     }
@@ -158,5 +158,5 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
     private String listItemType;
     private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
+    private ShoppingItemPagerAdapter pagerAdapter;
 }

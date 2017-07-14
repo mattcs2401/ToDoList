@@ -9,10 +9,6 @@ public class ParentViewHolder extends RecyclerView.ViewHolder implements View.On
         super(view);
     }
 
-    public ParentViewHolder(View view, boolean isEmptyView) {
-        super(view);
-    }
-
     @Override
     public void onClick(View view) { }
 }

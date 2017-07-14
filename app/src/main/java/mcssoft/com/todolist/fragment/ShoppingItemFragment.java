@@ -13,16 +13,16 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
+import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
 
-public class ShoppingFragment extends Fragment implements IItemClickListener {
+public class ShoppingItemFragment extends Fragment implements IItemClickListener {
 
-    public ShoppingFragment() { }
+    public ShoppingItemFragment() { }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.shopping_fragment, container, false);
+        rootView = inflater.inflate(R.layout.shopping_item_fragment, container, false);
         return rootView;
     }
 
@@ -97,7 +97,7 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     }
 
     private void setShoppingAdapter() {
-        adapter = new ShoppingAdapter();
+        adapter = new ShoppingItemAdapter();
         adapter.swapCursor(cursor);
         adapter.setOnItemClickListener(this);
      }
@@ -116,5 +116,5 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     private Bundle args;
     private Cursor cursor;
     private View rootView;
-    private ShoppingAdapter adapter;
+    private ShoppingItemAdapter adapter;
 }

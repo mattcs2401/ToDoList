@@ -1,8 +1,6 @@
 package mcssoft.com.todolist.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,10 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.main.MainAdapter;
+import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.fragment.ListSelectFragment;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
@@ -169,13 +166,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setMainAdapter() {
-        adapter = new MainAdapter();
+        adapter = new ShoppingAdapter();
         adapter.setOnItemClickListener(this);
-        adapter.swapCursor(cursor);
         if(cursor.getCount() == 0) {
             adapter.setEmptyView(true);
         } else {
             adapter.setEmptyView(false);
+            adapter.swapCursor(cursor);
         }
     }
 
@@ -226,7 +223,7 @@ public class MainActivity extends AppCompatActivity
     //</editor-fold>
 
     private Cursor cursor;
-    private MainAdapter adapter;
+    private ShoppingAdapter adapter;
     private DrawerLayout drawer;
 
     private static final int NEW_SHOPPING = 1;   // request code.

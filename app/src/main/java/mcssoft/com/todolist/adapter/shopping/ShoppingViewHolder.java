@@ -2,20 +2,36 @@ package mcssoft.com.todolist.adapter.shopping;
 
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import mcssoft.com.todolist.interfaces.IItemClickListener;
+import org.w3c.dom.Text;
+
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
+import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.utility.Resources;
 
-public class ShoppingViewHolder extends ParentViewHolder {
+public class ShoppingViewHolder extends ParentViewHolder implements View.OnClickListener {
+
 
     public ShoppingViewHolder(View view) {
         super(view);
-        this.view = view;
-        cbShoppingItem = (CheckBox) view.findViewById(R.id.id_cb_shopping_item);
-        cbShoppingItem.setOnClickListener(this);
-        tvShoppingItem = (TextView) view.findViewById(R.id.id_tv_shopping_item);
+        tvEmpty = (TextView) view.findViewById(R.id.id_tv_empty);
+        tvEmpty.setText(Resources.getInstance().getString(R.string.nothing_to_show));
+    }
+
+    public ShoppingViewHolder(View view, IItemClickListener iclistener) {
+        super(view);
+        tvTitle = (TextView) view.findViewById(R.id.id_tv_shopping_title);
+        tvDate = (TextView) view.findViewById(R.id.id_tv_date);
+        tvNumItems = (TextView) view.findViewById(R.id.id_tv_num_items);
+        tvItems = (TextView) view.findViewById(R.id.id_tv_items);
+        ivDelete = (ImageView) view.findViewById(R.id.id_iv_delete);
+        ivDelete.setOnClickListener(this);
+        ivExpand = (ImageView) view.findViewById(R.id.id_iv_expand);
+        ivExpand.setOnClickListener(this);
+        this.icListener = iclistener;
     }
 
     @Override
@@ -24,20 +40,24 @@ public class ShoppingViewHolder extends ParentViewHolder {
         icListener.onItemClick(view, position);
     }
 
-    public void setItemClickListener(IItemClickListener iclistener) {
-        this.icListener = iclistener;
-        view.setOnClickListener(this);
-    }
-
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">
-    public CheckBox getCbShoppingItem() { return cbShoppingItem; }
-    public TextView gettvShoppingItem() { return tvShoppingItem; }
+    public TextView getTvTitle() { return tvTitle; }
+    public TextView getTvDate() { return tvDate; }
+    public TextView getTvNumItems() { return tvNumItems; }
+    public TextView getTvItems() { return tvItems; }
+    public ImageView getIvExpand() { return ivExpand; }
+    public ImageView getIvDelete() { return ivDelete; }
+    public TextView getEmptyView() { return tvEmpty; }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
-    private View view;
-    private CheckBox cbShoppingItem;
-    private TextView tvShoppingItem;
+    private TextView tvTitle;
+    private TextView tvDate;
+    private TextView tvNumItems;
+    private TextView tvItems;
+    private TextView tvEmpty;
+    private ImageView ivExpand;
+    private ImageView ivDelete;
     private IItemClickListener icListener;
     //</editor-fold>
 }

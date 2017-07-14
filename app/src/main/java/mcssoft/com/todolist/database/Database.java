@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.List;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.fragment.ShoppingFragment;
+import mcssoft.com.todolist.fragment.ShoppingItemFragment;
 import mcssoft.com.todolist.utility.Resources;
 
 public class Database {
@@ -108,7 +108,7 @@ public class Database {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_SEL, new String[] {"Y"});
     }
 
-    public Cursor getCheckedReferenceItems(ShoppingFragment.PageType pageType) {
+    public Cursor getCheckedReferenceItems(ShoppingItemFragment.PageType pageType) {
 
         String[] selArgs = null;
 

@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.adapter;
+package mcssoft.com.todolist.adapter.shopping.item;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,19 +7,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.fragment.ShoppingFragment;
+import mcssoft.com.todolist.fragment.ShoppingItemFragment;
 import mcssoft.com.todolist.utility.Resources;
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
 
-    public PagerAdapter(FragmentManager fragmentManager, Context context) {
+    public ShoppingItemPagerAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
         pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
     }
 
     @Override
     public Fragment getItem(int position) {
-        ShoppingFragment sf = new ShoppingFragment();
+        ShoppingItemFragment sf = new ShoppingItemFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
         sf.setArguments(bundle);
@@ -45,7 +45,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return Resources.getInstance().getInteger(R.integer.num_shopping_pages);
+        return Resources.getInstance().getInteger(R.integer.num_shopping_item_pages);
     }
 
     private String[] pageTitles;

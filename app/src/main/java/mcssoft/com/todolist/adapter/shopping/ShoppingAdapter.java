@@ -6,31 +6,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.adapter.shopping.ShoppingViewHolder;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
-import mcssoft.com.todolist.R;
 
 public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
+
+    public ShoppingAdapter() { }
 
     @Override
     public ShoppingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        view = inflater.inflate(R.layout.shopping_item_row, parent, false);
-        svh = new ShoppingViewHolder(view);
-        svh.setItemClickListener(icListener);
-        return svh;
+        switch(viewType) {
+            case EMPTY_VIEW:
+                view = inflater.inflate(R.layout.shopping_row_empty, parent, false);
+                return new ShoppingViewHolder(view);
+            case SHOPPING_VIEW:
+                view = inflater.inflate(R.layout.shopping_row, parent, false);
+                return new ShoppingViewHolder(view, icListener);
+        }
+        return null;
     }
 
     @Override
     public void onBindViewHolder(ShoppingViewHolder holder, int position) {
-        cursor.moveToPosition(position);
-        if(cursor.getString(idValSelNdx).equals("Y")) {
-            holder.getCbShoppingItem().setChecked(true);
+        if(!isEmptyView) {
+            cursor.moveToPosition(position);
+            holder.getTvDate().setText(cursor.getString(idDateNdx));
         } else {
-            holder.getCbShoppingItem().setChecked(false);
+            holder.getEmptyView().getText().toString();
         }
-        holder.gettvShoppingItem().setText(cursor.getString(idValNdx));
     }
 
     @Override
@@ -41,36 +48,51 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(cursor != null) {
-            return cursor.getCount();
-        } else {
-            return 0;
+        if(isEmptyView) {
+            return  1; // need to do this so the onCreateViewHolder fires.
         }
+        return cursor.getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(isEmptyView) {
+            return EMPTY_VIEW;
+        }
+        //return super.getItemViewType(position);  // this returns 0.
+        return SHOPPING_VIEW;
     }
 
     public void setOnItemClickListener(IItemClickListener iclistener) {
         this.icListener = iclistener;
     }
 
+    public void setEmptyView(boolean isEmptyView) {
+        this.isEmptyView = isEmptyView;
+    }
+
     public Cursor getCursor() { return cursor; }
 
     public void swapCursor(Cursor cursor) {
-        if((cursor != null) && (cursor.getCount() > 0)) {
             this.cursor = cursor;
             cursor.moveToFirst();
-            idColNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
-            idTypNdx = cursor.getColumnIndex(Schema.REF_ITEM_DESC);
-            idValNdx = cursor.getColumnIndex(Schema.REF_ITEM_VALUE);
-            idValSelNdx = cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL);
+            idColNdx = cursor.getColumnIndex(Schema.SLIST_ROWID);
+            idDateNdx = cursor.getColumnIndex(Schema.SLIST_DATE);
+//            idNameNdx = cursor.getColumnIndex(Schema.SLIST_NAME);
+//            idNdx = cursor.getColumnIndex(Schema.SLIST_ID);
             notifyDataSetChanged();
-        }
     }
 
-    private Cursor cursor;                  // backing data.
-    private int idColNdx;
-    private int idTypNdx;
-    private int idValNdx;
-    private int idValSelNdx;
-    private ShoppingViewHolder svh;
+
+    private Cursor cursor;                  // backing data
+    private int idColNdx;                   // SLIST.ROWID
+    private int idDateNdx;                  // SLIST.DATE
+    private int idNameNdx;                  // SLIST.NAME
+    private int idNdx;                      // SLIST.ID
+    private boolean isEmptyView;
     private IItemClickListener icListener;
+
+    private static final int EMPTY_VIEW = 0;
+    private static final int SHOPPING_VIEW = 1;
+    private static final int GENERAL_VIEW = 2;
 }
