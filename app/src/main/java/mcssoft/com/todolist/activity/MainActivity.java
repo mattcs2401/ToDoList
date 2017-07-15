@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.adapter.pager.MainPagerAdapter;
+import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.fragment.ListSelectFragment;
@@ -58,7 +61,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initialiseBaseUI(); // toolbar, fab, nav drawer etc.
-        initialiseUI();     // what shows in the main screen,
+        setAdapter();
+//        initialiseUI();     // what shows in the main screen,
     }
 
     @Override
@@ -165,26 +169,32 @@ public class MainActivity extends AppCompatActivity
         cursor = Database.getInstance().getAllShopping();
     }
 
-    private void setMainAdapter() {
-        adapter = new ShoppingAdapter();
-        adapter.setOnItemClickListener(this);
-        if(cursor.getCount() == 0) {
-            adapter.setEmptyView(true);
-        } else {
-            adapter.setEmptyView(false);
-            adapter.swapCursor(cursor);
-        }
+//    private void setMainAdapter() {
+//        adapter = new ShoppingAdapter();
+//        adapter.setOnItemClickListener(this);
+//        if(cursor.getCount() == 0) {
+//            adapter.setEmptyView(true);
+//        } else {
+//            adapter.setEmptyView(false);
+//            adapter.swapCursor(cursor);
+//        }
+//    }
+
+    private void setAdapter() {
+        pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), this);
+        viewPager = (ViewPager) findViewById(R.id.id_pager_container);
+        viewPager.setAdapter(pagerAdapter);
     }
 
-    private  void setRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.id_rv_content_main);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        llm.scrollToPosition(0);
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-    }
+//    private  void setRecyclerView() {
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.id_rv_content_main);
+//        LinearLayoutManager llm = new LinearLayoutManager(this);
+//        llm.setOrientation(LinearLayoutManager.VERTICAL);
+//        llm.scrollToPosition(0);
+//        recyclerView.setLayoutManager(llm);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(adapter);
+//    }
 
     private void initialiseBaseUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -202,7 +212,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void initialiseUI() {
+//    private void initialiseUI() {
 //        int count = 0;
 //        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
 //        Bundle args = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
@@ -216,15 +226,17 @@ public class MainActivity extends AppCompatActivity
 //            count = sp.getInt(Resources.getInstance().getString(R.string.sl_item_count_key), 0);
 //        }
 
-            setCursor();
-            setMainAdapter();
-            setRecyclerView();
-    }
+//            setCursor();
+//            setMainAdapter();
+//            setRecyclerView();
+//    }
     //</editor-fold>
 
     private Cursor cursor;
     private ShoppingAdapter adapter;
     private DrawerLayout drawer;
+    private ViewPager viewPager;
+    private MainPagerAdapter pagerAdapter;
 
     private static final int NEW_SHOPPING = 1;   // request code.
 }

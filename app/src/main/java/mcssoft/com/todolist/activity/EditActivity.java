@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemPagerAdapter;
+import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.utility.DateTime;

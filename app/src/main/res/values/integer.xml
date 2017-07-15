@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="num_main_pages">2</integer>
     <integer name="num_shopping_item_pages">3</integer>
 </resources>

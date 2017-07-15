@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.adapter.shopping.item;
+package mcssoft.com.todolist.adapter.pager;
 
 import android.content.Context;
 import android.os.Bundle;
