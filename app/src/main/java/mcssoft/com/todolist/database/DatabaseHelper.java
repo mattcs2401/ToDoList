@@ -20,10 +20,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             sqLiteDb.beginTransaction();
             sqLiteDb.execSQL(Schema.DROP_TABLE_SLIST);
             sqLiteDb.execSQL(Schema.DROP_TABLE_SLIST_ITEM);
+            sqLiteDb.execSQL(Schema.DROP_TABLE_GENERAL);
             sqLiteDb.execSQL(Schema.DROP_TABLE_REF_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_REF_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_SLIST);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_SLIST_ITEM);
+            sqLiteDb.execSQL(Schema.CREATE_TABLE_GENERAL);
             sqLiteDb.setTransactionSuccessful();
         } catch(SQLException ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -40,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public enum Projection {
-        RefItemSchema, SListSchema, SListItemSchema
+        RefItemSchema, SListSchema, SListItemSchema, GeneralSchema
     }
 
     public static String [] getProjection(Projection p) {
@@ -54,6 +56,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 break;
             case SListItemSchema:
                 projection = getSListItemProjection();
+                break;
+            case GeneralSchema:
+                projection = getGeneralProjection();
                 break;
         }
         return  projection;
@@ -97,6 +102,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         };
     }
 
+    private static String[] getGeneralProjection() {
+        return new String[] {
+            Schema.GENERAL_ROWID
+        };
+    }
     private Context context;
     private SQLiteDatabase sqLiteDatabase;
 }

@@ -52,6 +52,17 @@ public class Schema {
     public static final String WHERE_SLIST_ROWID = SLIST_ROWID + "=?";
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Table GENERAL">
+    public static final String TABLE_GENERAL = "GENERAL";
+    public static final String GENERAL_ROWID = "_id";
+
+    public static final String CREATE_TABLE_GENERAL = "CREATE TABLE "
+            + TABLE_GENERAL + " ("
+            + GENERAL_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ")";
+
+    public static final String DROP_TABLE_GENERAL =
+            "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_GENERAL + ";";
+    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Region: Table SLIST_ITEM">
     // A record in this table represents a single entry in a Shopping List.
     // This is a linking table between tables SLIST and REF_ITEM.

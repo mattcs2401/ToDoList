@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.general.GeneralAdapter;
 import mcssoft.com.todolist.database.Database;
+import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 
 
@@ -71,13 +72,12 @@ public class GeneralFragment extends Fragment implements IItemClickListener {
     private int getDbRowId(int position) {
         adapter.getItemId(position);
         Cursor cursor = adapter.getCursor();
-//        int dbRowId = cursor.getInt(cursor.getColumnIndex(Schema.SLIST_ROWID));
-//        return dbRowId;
-        return 0;
+        int dbRowId = cursor.getInt(cursor.getColumnIndex(Schema.GENERAL_ROWID));
+        return dbRowId;
     }
 
     private void setCursor() {
-        cursor = Database.getInstance().getAllShopping();
+        cursor = Database.getInstance().getAllGeneral();
     }
 
     private void setGeneralAdapter() {

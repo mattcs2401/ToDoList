@@ -43,8 +43,7 @@ public class Database {
     }
 
     public Cursor getAllGeneral() {
-        // TBA.
-        return null;
+        return getRecords(Schema.TABLE_GENERAL, null, null, null);//
     }
 
     /**
@@ -190,7 +189,8 @@ public class Database {
      * @param rowId The rowid of the shopping list to associate with,
      * @return The count of shopping list items.
      */
-    public int createShoppingListItems(long rowId) {
+    public int createShoppingListItems(long rowId)
+    {
         SQLiteDatabase db = dbHelper.getDatabase();
         Cursor refCursor = Database.getInstance().getCheckedReferenceItems();
 

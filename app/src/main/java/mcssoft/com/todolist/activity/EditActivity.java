@@ -121,7 +121,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             setContentView(R.layout.cv_shopping);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_shopping));
             setAdapter();
-            setTabLayout();
+//            setTabLayout();
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             setContentView(R.layout.cv_general);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_general));
@@ -146,14 +146,14 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         viewPager.setAdapter(pagerAdapter);
     }
 
-    private void setTabLayout() {
-        String[] pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[0]));
-        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[1]));
-        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[2]));
-        tabLayout.setupWithViewPager(viewPager);
-    }
+//    private void setTabLayout() {
+//        String[] pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+//        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[0]));
+//        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[1]));
+//        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[2]));
+//        tabLayout.setupWithViewPager(viewPager);
+//    }
     //</editor-fold>
 
     private String listItemType;

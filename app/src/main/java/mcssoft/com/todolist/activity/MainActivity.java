@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
+        String bp = ";";
         if(view instanceof FloatingActionButton) {
             // Launch dialog for user to select new list type.
             showListSelectDialog();
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(View view, int position) {
+        String bp = ";";
         // TBA
     }
         //</editor-fold>

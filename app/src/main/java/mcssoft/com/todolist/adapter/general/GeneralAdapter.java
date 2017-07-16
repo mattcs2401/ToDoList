@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.shopping.ShoppingViewHolder;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 
@@ -21,10 +20,10 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch(viewType) {
             case EMPTY_VIEW:
-                view = inflater.inflate(R.layout.shopping_row_empty, parent, false);
+                view = inflater.inflate(R.layout.row_empty, parent, false);
                 return new GeneralViewHolder(view);
             case GENERAL_VIEW:
-                view = inflater.inflate(R.layout.shopping_row, parent, false);
+                view = inflater.inflate(R.layout.general_row, parent, false);
                 return new GeneralViewHolder(view, icListener);
         }
         return null;

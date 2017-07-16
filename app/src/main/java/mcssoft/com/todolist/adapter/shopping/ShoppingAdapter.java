@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.shopping.ShoppingViewHolder;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 
@@ -21,7 +20,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch(viewType) {
             case EMPTY_VIEW:
-                view = inflater.inflate(R.layout.shopping_row_empty, parent, false);
+                view = inflater.inflate(R.layout.row_empty, parent, false);
                 return new ShoppingViewHolder(view);
             case SHOPPING_VIEW:
                 view = inflater.inflate(R.layout.shopping_row, parent, false);
