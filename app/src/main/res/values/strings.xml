@@ -21,6 +21,7 @@
     <string name="list_edit_action_key">list_edit_key</string>
     <string name="list_delete_action_key">list_delete_key</string>
     <string name="sl_item_count_key">sl_item_count_key</string>
+    <string name="sl_details_rowid_key">sl_details_rowid_key</string>
 
     <!-- Bundle values. -->
     <string name="list_type_shopping">Shopping</string>
@@ -39,6 +40,9 @@
     <string name="rb_list_select_general">General</string>
     <string name="list_select_title">List Type</string>
     <string name="list_select_message">Choose the type of list to create.</string>
+
+    <!-- Shopping details dialog. -->
+    <string name="sl_details_dialog_title">Shopping List Details</string>
 
     <!-- Snackbar text. -->
     <string name="snackbar_item_removed">Item removed</string>

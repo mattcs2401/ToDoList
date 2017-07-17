@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
@@ -21,9 +22,8 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
 
-public class ShoppingFragment extends Fragment implements IItemClickListener, View.OnClickListener {
-
-    public ShoppingFragment() { }
+public class ShoppingFragment extends Fragment
+        implements IItemClickListener, View.OnClickListener {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,17 +59,20 @@ public class ShoppingFragment extends Fragment implements IItemClickListener, Vi
      */
     @Override
     public void onItemClick(View view, int position) {
-        int dbRowId = -1;
-        if(view instanceof ImageView) {
-            // Expand or Delete was selected.
-            dbRowId = getDbRowId(position);
-            switch (view.getId()) {
-                case R.id.id_iv_delete:
-                    // TBA - confirm delete dialog / or snqackbar with undo button.
-                    doSnackBarDelete(view);
-                    break;
-            }
-            String bp = "TBA";
+        this.position = position;
+        int dbRowId = getDbRowId(position);
+        switch(view.getId()) {
+            case R.id.id_iv_delete:
+                // TBA - confirm delete dialog / or snqackbar with undo button.
+                doSnackBarDelete(view);
+                break;
+            case R.id.id_iv_expand:
+                Toast.makeText(getActivity(), "Expand not implemted yet.", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.id_cv_shopping_row:
+                // show a dialog with summary of shopping items.
+                showShoppingDetails(dbRowId);
+                break;
         }
     }
     //</editor-fold>
@@ -83,6 +86,7 @@ public class ShoppingFragment extends Fragment implements IItemClickListener, Vi
     }
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private int getDbRowId(int position) {
         adapter.getItemId(position);
         Cursor cursor = adapter.getCursor();
@@ -128,8 +132,17 @@ public class ShoppingFragment extends Fragment implements IItemClickListener, Vi
         snackbar.show();
     }
 
-    //    private int pageNo;
-    private Bundle args;
+    private void showShoppingDetails(int dbRowId) {
+        Bundle args = new Bundle();
+        args.putInt(Resources.getInstance().getString(R.string.sl_details_rowid_key), dbRowId);
+        ShoppingDetailsFragment sdf = new ShoppingDetailsFragment();
+        sdf.setArguments(args);
+        sdf.show(getActivity().getFragmentManager(), "");
+    }
+    //</editor-fold>
+
+    private int position;
+//    private Bundle args;
     private Cursor cursor;
     private View rootView;
     private ShoppingAdapter adapter;

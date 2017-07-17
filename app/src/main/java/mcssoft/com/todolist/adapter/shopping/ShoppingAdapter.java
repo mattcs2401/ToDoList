@@ -82,7 +82,6 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
             notifyDataSetChanged();
     }
 
-
     private Cursor cursor;                  // backing data
     private int idColNdx;                   // SLIST.ROWID
     private int idDateNdx;                  // SLIST.DATE
