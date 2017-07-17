@@ -78,6 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String[] getRefItemProjection() {
         return new String[] {
             Schema.REF_ITEM_ROWID,
+            Schema.REF_ITEM_ARCHV,
             Schema.REF_ITEM_CODE,
             Schema.REF_ITEM_DESC,
             Schema.REF_ITEM_VALUE,
@@ -88,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String[] getSListProjection() {
         return new String[] {
                 Schema.SLIST_ROWID,
+                Schema.SLIST_ARCHV,
                 Schema.SLIST_ID,
                 Schema.SLIST_NAME,
                 Schema.SLIST_DATE
@@ -97,6 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String[] getSListItemProjection() {
         return new String[]{
             Schema.SLIST_ITEM_ROWID,
+            Schema.SLIST_ITEM_ARCHV,
             Schema.SLIST_ITEM_SLIST_ID, // SLIST.SLIST_ID
             Schema.SLIST_ITEM_REF_ID    // REF_ITEM.ROWID
         };
@@ -104,9 +107,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String[] getGeneralProjection() {
         return new String[] {
-            Schema.GENERAL_ROWID
+            Schema.GENERAL_ROWID,
+            Schema.GENERAL_ARCHV
         };
     }
+
     private Context context;
     private SQLiteDatabase sqLiteDatabase;
 }

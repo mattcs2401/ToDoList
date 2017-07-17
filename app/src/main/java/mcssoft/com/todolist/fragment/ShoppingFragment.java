@@ -28,12 +28,6 @@ public class ShoppingFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        args = getArguments();
-//        if(args == null) {
-//            pageNo = 0;
-//        } else {
-//            pageNo = args.getInt(Resources.getInstance().getString(R.string.bundle_key));
-//        }
     }
 
     @Override

@@ -172,6 +172,7 @@ public class Database {
         try {
             db.beginTransaction();
             cv.put(Schema.SLIST_ID, colVals.get(0));
+            cv.put(Schema.SLIST_ARCHV, "N");
             cv.put(Schema.SLIST_DATE, colVals.get(1));
             cv.put(Schema.SLIST_NAME, colVals.get(2));
             rowId = db.insertOrThrow(Schema.TABLE_SLIST, null, cv);
@@ -204,6 +205,7 @@ public class Database {
             try {
                 db.beginTransaction();
                 cv.put(Schema.SLIST_ITEM_SLIST_ID, rowId);
+                cv.put(Schema.SLIST_ITEM_ARCHV, "N");
                 cv.put(Schema.SLIST_ITEM_REF_ID, refId);
                 db.insertOrThrow(Schema.TABLE_SLIST_ITEM, null, cv);
                 db.setTransactionSuccessful();
@@ -238,6 +240,7 @@ public class Database {
 
             try {
                 db.beginTransaction();
+                cv.put(Schema.REF_ITEM_ARCHV, "N");
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
@@ -261,6 +264,7 @@ public class Database {
 
             try {
                 db.beginTransaction();
+                cv.put(Schema.REF_ITEM_ARCHV, "N");
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
@@ -281,6 +285,7 @@ public class Database {
         for (String val : general) {
             try {
                 db.beginTransaction();
+                cv.put(Schema.REF_ITEM_ARCHV, "N");
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
@@ -335,6 +340,8 @@ public class Database {
             case Schema.TABLE_REF_ITEM:
                 projection = dbHelper.getProjection(DatabaseHelper.Projection.RefItemSchema);
                 break;
+            case Schema.TABLE_GENERAL:
+                projection = dbHelper.getProjection(DatabaseHelper.Projection.GeneralSchema);
         }
         return  projection;
     }
