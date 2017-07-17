@@ -171,34 +171,14 @@ public class MainActivity extends AppCompatActivity
         cursor = Database.getInstance().getAllShopping();
     }
 
-//    private void setMainAdapter() {
-//        adapter = new ShoppingAdapter();
-//        adapter.setOnItemClickListener(this);
-//        if(cursor.getCount() == 0) {
-//            adapter.setEmptyView(true);
-//        } else {
-//            adapter.setEmptyView(false);
-//            adapter.swapCursor(cursor);
-//        }
-//    }
-
     private void setAdapter() {
         pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), this);
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
         viewPager.setAdapter(pagerAdapter);
     }
 
-//    private  void setRecyclerView() {
-//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.id_rv_content_main);
-//        LinearLayoutManager llm = new LinearLayoutManager(this);
-//        llm.setOrientation(LinearLayoutManager.VERTICAL);
-//        llm.scrollToPosition(0);
-//        recyclerView.setLayoutManager(llm);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(adapter);
-//    }
-
-    private void initialiseBaseUI() {
+    private void initialiseBaseUI()
+    {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -213,25 +193,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-//    private void initialiseUI() {
-//        int count = 0;
-//        SharedPreferences sp = getPreferences(Context.MODE_PRIVATE);
-//        Bundle args = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
-//
-//        if(args != null) {
-//            // save value.
-//            count = args.getInt(Resources.getInstance().getString(R.string.sl_item_count_key));
-//            sp.edit().putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count).commit();
-//        } else {
-//            // args will be null when entering this activity as back press from the Edit activity.
-//            count = sp.getInt(Resources.getInstance().getString(R.string.sl_item_count_key), 0);
-//        }
-
-//            setCursor();
-//            setMainAdapter();
-//            setRecyclerView();
-//    }
     //</editor-fold>
 
     private Cursor cursor;
@@ -242,6 +203,4 @@ public class MainActivity extends AppCompatActivity
 
     private static final int NEW_SHOPPING = 1;   // request code.
 }
-// Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-// .setAction("Action", null).show();
 
