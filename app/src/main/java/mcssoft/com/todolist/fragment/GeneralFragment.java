@@ -82,7 +82,12 @@ public class GeneralFragment extends Fragment implements IItemClickListener {
 
     private void setGeneralAdapter() {
         adapter = new GeneralAdapter();
-        adapter.swapCursor(cursor);
+        if(cursor == null || cursor.getCount() < 1) {
+            adapter.setEmptyView(true);
+        } else {
+            adapter.setEmptyView(false);
+            adapter.swapCursor(cursor);
+        }
         adapter.setOnItemClickListener(this);
      }
 

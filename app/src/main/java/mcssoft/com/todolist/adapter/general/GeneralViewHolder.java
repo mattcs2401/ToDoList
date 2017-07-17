@@ -29,6 +29,7 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
 //        ivExpand = (ImageView) view.findViewById(R.id.id_iv_expand);
 //        ivExpand.setOnClickListener(this);
         this.icListener = iclistener;
+        view.setOnClickListener(this);
     }
 
     @Override

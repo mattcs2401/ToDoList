@@ -1,11 +1,8 @@
 package mcssoft.com.todolist.adapter.shopping;
 
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
@@ -28,16 +25,21 @@ public class ShoppingViewHolder extends ParentViewHolder implements View.OnClick
         tvNumItems = (TextView) view.findViewById(R.id.id_tv_num_items);
         tvItems = (TextView) view.findViewById(R.id.id_tv_items);
         ivDelete = (ImageView) view.findViewById(R.id.id_iv_delete);
-        ivDelete.setOnClickListener(this);
         ivExpand = (ImageView) view.findViewById(R.id.id_iv_expand);
+
+        ivDelete.setOnClickListener(this);
         ivExpand.setOnClickListener(this);
         this.icListener = iclistener;
+        view.setOnClickListener(this);
     }
 
+    /**
+     * Use onClick to interface back to Fragment.
+     * @param view
+     */
     @Override
     public void onClick(View view) {
-        int position = getAdapterPosition(); // debug/testing purposes.
-        icListener.onItemClick(view, position);
+        icListener.onItemClick(view, getAdapterPosition());
     }
 
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">

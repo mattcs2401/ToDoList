@@ -3,6 +3,7 @@ package mcssoft.com.todolist.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,15 +11,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.utility.Resources;
 
 
-public class ShoppingFragment extends Fragment implements IItemClickListener {
+public class ShoppingFragment extends Fragment implements IItemClickListener, View.OnClickListener {
 
     public ShoppingFragment() { }
 
@@ -57,15 +60,26 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
     @Override
     public void onItemClick(View view, int position) {
         int dbRowId = -1;
-//        if(view instanceof CheckBox) {
-//            // mimmick the checkbox check/uncheck on the underlying record.
-//            dbRowId = getDbRowId(position);
-//            if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
-//                Database.getInstance().setCheckReferenceItem(dbRowId, true);
-//            } else {
-//                Database.getInstance().setCheckReferenceItem(dbRowId, false);
-//            }
-//        }
+        if(view instanceof ImageView) {
+            // Expand or Delete was selected.
+            dbRowId = getDbRowId(position);
+            switch (view.getId()) {
+                case R.id.id_iv_delete:
+                    // TBA - confirm delete dialog / or snqackbar with undo button.
+                    doSnackBarDelete(view);
+                    break;
+            }
+            String bp = "TBA";
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.snackbar_action) {
+            doSnackBarRestore(view);
+        }
     }
     //</editor-fold>
 
@@ -82,7 +96,12 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
 
     private void setShoppingAdapter() {
         adapter = new ShoppingAdapter();
-        adapter.swapCursor(cursor);
+        if(cursor == null || cursor.getCount() < 1) {
+            adapter.setEmptyView(true);
+        } else {
+            adapter.setEmptyView(false);
+            adapter.swapCursor(cursor);
+        }
         adapter.setOnItemClickListener(this);
      }
 
@@ -96,7 +115,20 @@ public class ShoppingFragment extends Fragment implements IItemClickListener {
         recyclerView.setAdapter(adapter);
     }
 
-//    private int pageNo;
+    private void doSnackBarDelete(View view) {
+        Snackbar snackbar = Snackbar.make(view, Resources.getInstance()
+                .getString(R.string.snackbar_item_removed), Snackbar.LENGTH_LONG)
+                .setAction(Resources.getInstance().getString(R.string.snackbar_item_undo), this);
+        snackbar.show();
+    }
+
+    private void doSnackBarRestore(View view) {
+        Snackbar snackbar = Snackbar.make(view, Resources.getInstance()
+                .getString(R.string.snackbar_item_restored), Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
+
+    //    private int pageNo;
     private Bundle args;
     private Cursor cursor;
     private View rootView;
