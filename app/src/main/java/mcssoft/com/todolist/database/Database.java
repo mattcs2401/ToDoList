@@ -39,11 +39,11 @@ public class Database {
     //</editor-fold>
 
     public Cursor getAllShopping() {
-        return getRecords(Schema.TABLE_SLIST, null, null, null);
+        return getRecords(Schema.TABLE_SLIST, null, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
     }
 
     public Cursor getAllGeneral() {
-        return getRecords(Schema.TABLE_GENERAL, null, null, null);//
+        return getRecords(Schema.TABLE_GENERAL, null, Schema.WHERE_GENERAL_ARCHV, new String[] {"N"});
     }
 
     /**
@@ -186,6 +186,37 @@ public class Database {
     }
 
     /**
+     * Set the archive flag on a shopping list entry.
+     * @param dbRowId The row id in the database (SLIST table).
+     * @param archive True==archive, False==un-archive.
+     * @return The count of items updated.
+     */
+    public int archiveShoppingList(int dbRowId, boolean archive) {
+        int count = -1;
+        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = dbHelper.getDatabase();
+
+        try {
+            db.beginTransaction();
+            if(archive) {
+                cv.put(Schema.SLIST_ARCHV, "Y");
+            } else {
+                cv.put(Schema.SLIST_ARCHV, "N");
+            }
+            count = db.update(Schema.TABLE_SLIST, cv, Schema.WHERE_SLIST_ROWID, new String[] {Integer.toString(dbRowId)});
+            // TODO - update associated shopping list item records.
+            db.setTransactionSuccessful();
+        } catch(Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            if(db != null) {
+                db.endTransaction();
+            }
+        }
+        return count;
+    }
+
+    /**
      * Write new shopping list item values and associate with a shopping list.
      * @param rowId The rowid of the shopping list to associate with,
      * @return The count of shopping list items.
@@ -308,13 +339,16 @@ public class Database {
         context = null;
     }
 
-    public Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
+    private Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
+
+        // sanity checks.
+        if(whereClause == null) {
+            selArgs = null;
+        } else if(selArgs == null) {
+            whereClause = null;
+        }
         if(projection == null) {
             projection = getProjection(tableName);
-        }
-        if(whereClause == null) {
-            // this will get all records.
-            selArgs = null;
         }
 
         Cursor cursor = null;

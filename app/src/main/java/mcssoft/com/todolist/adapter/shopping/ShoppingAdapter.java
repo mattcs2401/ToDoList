@@ -73,13 +73,18 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     public Cursor getCursor() { return cursor; }
 
     public void swapCursor(Cursor cursor) {
+        if(cursor == null || cursor.getCount() < 1) {
+            isEmptyView = true;
+        } else {
+            isEmptyView = false;
             this.cursor = cursor;
             cursor.moveToFirst();
             idColNdx = cursor.getColumnIndex(Schema.SLIST_ROWID);
             idDateNdx = cursor.getColumnIndex(Schema.SLIST_DATE);
 //            idNameNdx = cursor.getColumnIndex(Schema.SLIST_NAME);
 //            idNdx = cursor.getColumnIndex(Schema.SLIST_ID);
-            notifyDataSetChanged();
+        }
+        notifyDataSetChanged();
     }
 
     private Cursor cursor;                  // backing data
@@ -92,5 +97,4 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
 
     private static final int EMPTY_VIEW = 0;
     private static final int SHOPPING_VIEW = 1;
-    private static final int GENERAL_VIEW = 2;
 }

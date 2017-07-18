@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity
 
         initialiseBaseUI(); // toolbar, fab, nav drawer etc.
         setAdapter();
-//        initialiseUI();     // what shows in the main screen,
     }
 
     @Override
@@ -177,8 +176,7 @@ public class MainActivity extends AppCompatActivity
         viewPager.setAdapter(pagerAdapter);
     }
 
-    private void initialiseBaseUI()
-    {
+    private void initialiseBaseUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

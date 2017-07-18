@@ -54,11 +54,14 @@ public class ShoppingFragment extends Fragment
     @Override
     public void onItemClick(View view, int position) {
         this.position = position;
-        int dbRowId = getDbRowId(position);
+        dbRowId = getDbRowId(position);
         switch(view.getId()) {
             case R.id.id_iv_delete:
                 // TBA - confirm delete dialog / or snqackbar with undo button.
+                Database.getInstance().archiveShoppingList(dbRowId, true);
                 doSnackBarDelete(view);
+                //adapter.notifyItemRemoved(position);
+                adapter.swapCursor(Database.getInstance().getAllShopping());
                 break;
             case R.id.id_iv_expand:
                 Toast.makeText(getActivity(), "Expand not implemted yet.", Toast.LENGTH_SHORT).show();
@@ -75,7 +78,9 @@ public class ShoppingFragment extends Fragment
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.snackbar_action) {
+            Database.getInstance().archiveShoppingList(dbRowId, false);
             doSnackBarRestore(view);
+            adapter.swapCursor(Database.getInstance().getAllShopping());
         }
     }
     //</editor-fold>
@@ -135,8 +140,8 @@ public class ShoppingFragment extends Fragment
     }
     //</editor-fold>
 
+    private int dbRowId;
     private int position;
-//    private Bundle args;
     private Cursor cursor;
     private View rootView;
     private ShoppingAdapter adapter;
