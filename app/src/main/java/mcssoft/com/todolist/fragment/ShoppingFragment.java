@@ -136,7 +136,7 @@ public class ShoppingFragment extends Fragment
         args.putInt(Resources.getInstance().getString(R.string.sl_details_rowid_key), dbRowId);
         ShoppingDetailsFragment sdf = new ShoppingDetailsFragment();
         sdf.setArguments(args);
-        sdf.show(getActivity().getFragmentManager(), "");
+        sdf.show(getActivity().getFragmentManager(), null);
     }
     //</editor-fold>
 

@@ -6,11 +6,11 @@ import android.widget.TextView;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
 
-public class ShoppingDetailsViewHolder extends ParentViewHolder {
+public class ShoppingDetailsHeaderViewHolder extends ParentViewHolder {
 
-    public ShoppingDetailsViewHolder(View view) {
+    public ShoppingDetailsHeaderViewHolder(View view) {
         super(view);
-        title = (TextView) view.findViewById(R.id.id_tv_shopping_summary_item);
+        headerTitle = (TextView) view.findViewById(R.id.id_tv_shopping_summary_item);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class ShoppingDetailsViewHolder extends ParentViewHolder {
         super.onClick(view);
     }
 
-    public TextView getTitle() { return title; }
+    public TextView getHeaderTitle() { return headerTitle; }
 
-    private TextView title;
+    private TextView headerTitle;
 }

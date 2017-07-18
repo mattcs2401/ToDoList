@@ -28,5 +28,9 @@ public class ShoppingList {
         shoppingList.add(item);
     }
 
+    public int getSize() {
+        return shoppingList.size();
+    }
+
     private List<ShoppingListItem> shoppingList;
 }

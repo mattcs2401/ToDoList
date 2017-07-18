@@ -7,8 +7,9 @@ package mcssoft.com.todolist.model;
  */
 public class ShoppingListItem {
 
-    public ShoppingListItem(boolean isHeader) {
+    public ShoppingListItem(boolean isHeader, String description) {
         this.isHeader = isHeader;
+        this.description = description;
     }
 
     public ShoppingListItem(String code, String description, String value) {

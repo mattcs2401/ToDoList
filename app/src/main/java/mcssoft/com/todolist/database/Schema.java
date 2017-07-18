@@ -99,5 +99,8 @@ public class Schema {
     //</editor-fold>
 
     // Raw query
-    public static final String QUERY_RAW_GET_SHOPPING = "";
+    public static final String QUERY_RAW_GET_SHOPPING =
+        "SELECT RI.REF_CODE, RI.REF_DESC, RI.REF_VALUE " +
+        "FROM REF_ITEM RI, SLIST_ITEM SLI, SLIST SL " +
+        "WHERE RI._ID=SLI.REF_ID AND SLI.SLIST_ID=SL._ID AND SL._ID=?";
 }
