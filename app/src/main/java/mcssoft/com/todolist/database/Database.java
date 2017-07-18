@@ -38,6 +38,10 @@ public class Database {
     }
     //</editor-fold>
 
+    public Cursor getShopping(int dbRowId) {
+        return getRecordsRaw(Schema.QUERY_RAW_GET_SHOPPING, new String[] {Integer.toString(dbRowId)});
+    }
+
     public Cursor getAllShopping() {
         return getRecords(Schema.TABLE_SLIST, null, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
     }
@@ -221,8 +225,7 @@ public class Database {
      * @param rowId The rowid of the shopping list to associate with,
      * @return The count of shopping list items.
      */
-    public int createShoppingListItems(long rowId)
-    {
+    public int createShoppingListItems(long rowId) {
         SQLiteDatabase db = dbHelper.getDatabase();
         Cursor refCursor = Database.getInstance().getCheckedReferenceItems();
 
@@ -361,6 +364,20 @@ public class Database {
         } catch(Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {
+            return cursor;
+        }
+    }
+
+    private Cursor getRecordsRaw(String query, @Nullable String[] selArgs) {
+        Cursor cursor = null;
+        SQLiteDatabase db = dbHelper.getDatabase();
+        try {
+            db.beginTransaction();
+            cursor = db.rawQuery(query, selArgs);
+        } catch (Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            db.endTransaction();
             return cursor;
         }
     }

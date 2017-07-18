@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.fragment;
+package mcssoft.com.todolist.fragment.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;

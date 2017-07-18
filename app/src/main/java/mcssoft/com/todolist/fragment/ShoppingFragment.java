@@ -11,13 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
+import mcssoft.com.todolist.fragment.dialog.ShoppingDetailsFragment;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
