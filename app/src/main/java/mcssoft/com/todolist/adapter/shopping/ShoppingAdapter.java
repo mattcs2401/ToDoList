@@ -1,14 +1,18 @@
 package mcssoft.com.todolist.adapter.shopping;
 
 import android.database.Cursor;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.utility.Resources;
 
 public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
 
@@ -32,15 +36,20 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     @Override
     public void onBindViewHolder(ShoppingViewHolder holder, int position) {
         if(!isEmptyView) {
-            int count = cursor.getCount();
             cursor.moveToPosition(position);
             holder.getTvDate().setText(cursor.getString(idDateNdx));
 
-            holder.getTvNumItems().setText(Integer.toString(count));
-            if(count > 1) {
-                holder.getTvItems().setText("items");
+            if(metaData != null && metaData.size() == cursor.getCount()) {
+                int count = metaData.get(position)[1];
+                holder.getTvNumItems().setText(Integer.toString(count));
+                if(count > 1) {
+
+                    holder.getTvItems().setText("items");
+                } else {
+                    holder.getTvItems().setText("item");
+                }
             } else {
-                holder.getTvItems().setText("item");
+                holder.getTvNumItems().setText("items");
             }
         } else {
             holder.getEmptyView().getText().toString();
@@ -89,10 +98,12 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
             cursor.moveToFirst();
             idColNdx = cursor.getColumnIndex(Schema.SLIST_ROWID);
             idDateNdx = cursor.getColumnIndex(Schema.SLIST_DATE);
-//            idNameNdx = cursor.getColumnIndex(Schema.SLIST_NAME);
-//            idNdx = cursor.getColumnIndex(Schema.SLIST_ID);
         }
         notifyDataSetChanged();
+    }
+
+    public void setMetaData(ArrayList<int[]> metaData) {
+        this.metaData = metaData;
     }
 
     private Cursor cursor;                  // backing data
@@ -101,6 +112,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     private int idNameNdx;                  // SLIST.NAME
     private int idNdx;                      // SLIST.ID
     private boolean isEmptyView;
+    private ArrayList<int[]> metaData;
     private IItemClickListener icListener;
 
     private static final int EMPTY_VIEW = 0;

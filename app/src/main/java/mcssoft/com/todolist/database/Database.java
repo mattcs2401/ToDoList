@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import mcssoft.com.todolist.R;
@@ -43,7 +47,27 @@ public class Database {
     }
 
     public Cursor getAllShopping() {
-        return getRecords(Schema.TABLE_SLIST, null, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
+        Cursor cursor = getRecords(Schema.TABLE_SLIST, null, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
+//        Bundle bundle = new Bundle();
+//        bundle.putStringArrayList(Resources.getInstance().getString(R.string.bundle_key), getShoppingAndItemCount());
+//        cursor.respond(bundle);
+        return cursor;
+    }
+
+    /**
+     * Basically get metadata for a shopping list.
+     * @return [0]-shopping list db row id, [1]-count of associated items.
+     */
+    public ArrayList<int[]> getShoppingMetaData() {
+        ArrayList<int[]> idsList = new ArrayList<>();
+        Cursor ids = getRecords(Schema.TABLE_SLIST, new String[] {Schema.SLIST_ROWID}, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
+        while(ids.moveToNext()) {
+            int rowId = ids.getInt(ids.getColumnIndexOrThrow(Schema.SLIST_ROWID));
+            Cursor cursor = getShopping(rowId);
+            int count = cursor.getCount();
+            idsList.add(new int[] {rowId, count});
+        }
+        return idsList;
     }
 
     public Cursor getAllGeneral() {

@@ -104,6 +104,7 @@ public class ShoppingFragment extends Fragment
         } else {
             adapter.setEmptyView(false);
             adapter.swapCursor(cursor);
+            adapter.setMetaData(Database.getInstance().getShoppingMetaData());
         }
         adapter.setOnItemClickListener(this);
      }
