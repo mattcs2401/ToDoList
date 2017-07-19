@@ -23,11 +23,6 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case SHOPPING:
-//                ShoppingFragment sf = new ShoppingFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
-//                sf.setArguments(bundle);
-//                return sf;
                 return new ShoppingFragment();
             case GENERAL:
                 return new GeneralFragment();

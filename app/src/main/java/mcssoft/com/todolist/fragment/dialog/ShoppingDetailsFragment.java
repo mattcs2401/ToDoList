@@ -39,7 +39,7 @@ public class ShoppingDetailsFragment extends DialogFragment
         ab.setView(rootView)
           .setTitle(Resources.getInstance().getString(R.string.sl_details_dialog_title))
 //          .setMessage("")
-          .setNegativeButton(Resources.getInstance().getString(R.string.btn_cancel), this)
+//          .setNegativeButton(Resources.getInstance().getString(R.string.btn_cancel), this)
           .setPositiveButton(Resources.getInstance().getString(R.string.btn_ok), this);
 
         return ab.create();
@@ -58,11 +58,9 @@ public class ShoppingDetailsFragment extends DialogFragment
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case AlertDialog.BUTTON_POSITIVE:
-//                int id = ((RadioGroup) rootView.findViewById(R.id.id_rg_list_select)).getCheckedRadioButtonId();
-//                iListSelect.iSelected(id);
-                break;
-            case AlertDialog.BUTTON_NEGATIVE:
-//                iListSelect.iSelected(-1);
+                // TBA.
+//                break;
+//            case AlertDialog.BUTTON_NEGATIVE:
         }
     }
 

@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
         String bp = ";";
         // TBA
     }
-        //</editor-fold>
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void showListSelectDialog() {
@@ -161,10 +161,6 @@ public class MainActivity extends AppCompatActivity
         // TBA.
     }
 
-    private void setCursor() {
-        cursor = Database.getInstance().getAllShopping();
-    }
-
     private void setAdapter() {
         pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), this);
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
@@ -188,12 +184,13 @@ public class MainActivity extends AppCompatActivity
     }
     //</editor-fold>
 
-    private Cursor cursor;
-    private ShoppingAdapter adapter;
+    //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
     private DrawerLayout drawer;
     private ViewPager viewPager;
     private MainPagerAdapter pagerAdapter;
 
     private static final int NEW_SHOPPING = 1;   // request code.
+    private static final int NEW_GENERAL = 2;    // "       "
+    //</editor-fold>
 }
 
