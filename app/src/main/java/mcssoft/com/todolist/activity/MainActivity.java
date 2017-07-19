@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == NEW_SHOPPING) {
-
-            String bp = "";
+            setAdapter();    // essentially trigger reload main view.
         }
     }
     //</editor-fold>
