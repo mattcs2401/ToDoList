@@ -49,7 +49,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
                     holder.getTvItems().setText("item");
                 }
             } else {
-                holder.getTvNumItems().setText("items");
+                holder.getTvNumItems().setText("");
             }
         } else {
             holder.getEmptyView().getText().toString();
@@ -111,9 +111,9 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     private int idDateNdx;                  // SLIST.DATE
     private int idNameNdx;                  // SLIST.NAME
     private int idNdx;                      // SLIST.ID
-    private boolean isEmptyView;
-    private ArrayList<int[]> metaData;
-    private IItemClickListener icListener;
+    private boolean isEmptyView;            // flag, nothing to show.
+    private ArrayList<int[]> metaData;      // shopping list meta data.
+    private IItemClickListener icListener;  // interface listener.
 
     private static final int EMPTY_VIEW = 0;
     private static final int SHOPPING_VIEW = 1;
