@@ -32,8 +32,16 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     @Override
     public void onBindViewHolder(ShoppingViewHolder holder, int position) {
         if(!isEmptyView) {
+            int count = cursor.getCount();
             cursor.moveToPosition(position);
             holder.getTvDate().setText(cursor.getString(idDateNdx));
+
+            holder.getTvNumItems().setText(Integer.toString(count));
+            if(count > 1) {
+                holder.getTvItems().setText("items");
+            } else {
+                holder.getTvItems().setText("item");
+            }
         } else {
             holder.getEmptyView().getText().toString();
         }

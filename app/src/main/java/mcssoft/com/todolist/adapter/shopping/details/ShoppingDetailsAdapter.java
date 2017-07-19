@@ -69,9 +69,11 @@ public class ShoppingDetailsAdapter extends RecyclerView.Adapter {
         String code = cursor.getString(idCodeNdx);
         String oldCode = code;
 
+        // Set first header and row.
         setHeaderRow(cursor.getString(idDescNdx));
         setContentRow(code, cursor.getString(idDescNdx), cursor.getString(idValueNdx));
 
+        // Set subsequent rows or headers.
         while(cursor.moveToNext()) {
             code = cursor.getString(idCodeNdx);
             if(code.equals(oldCode)) {
@@ -85,20 +87,18 @@ public class ShoppingDetailsAdapter extends RecyclerView.Adapter {
     }
 
     private void setContentRow(String code, String desc, String value) {
-        ShoppingListItem sListItem = new ShoppingListItem(code, desc, value);
-        shoppingList.putShoppingListItem(sListItem);
+        shoppingList.putShoppingListItem(new ShoppingListItem(code, desc, value));
     }
 
     private void setHeaderRow(String desc) {
-        ShoppingListItem sListItem = new ShoppingListItem(true, desc);
-        shoppingList.putShoppingListItem(sListItem);
+        shoppingList.putShoppingListItem(new ShoppingListItem(true, desc));
     }
 
     private int idCodeNdx;
     private int idDescNdx;
     private int idValueNdx;
-    private Cursor cursor;
-    private ShoppingList shoppingList;
+    private Cursor cursor;             // backing data.
+    private ShoppingList shoppingList; // backing data as list.
 
     private static final int HEADER_VIEW = 0;
     private static final int SHOPPING_VIEW = 1;

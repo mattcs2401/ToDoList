@@ -70,7 +70,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="31dp"
             android:layout_marginTop="16dp"
-            android:text="items"
             app:layout_constraintLeft_toRightOf="@+id/id_tv_num_items"
             app:layout_constraintTop_toBottomOf="@+id/id_tv_shopping_title"
             android:layout_marginStart="31dp" />
