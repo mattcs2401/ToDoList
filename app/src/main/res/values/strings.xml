@@ -62,6 +62,7 @@
         <item>Cheese grated</item>
         <item>Cheese sliced</item>
         <item>Cheese parma</item>
+        <item>Corn chips</item>
         <item>Crackers</item>
         <item>Curry paste</item>
         <item>Eggs</item>
@@ -74,6 +75,7 @@
         <item>Roo</item>
         <item>Salt herbmare</item>
         <item>Salt trocomare</item>
+        <item>Salse</item>
         <item>Stir fry sauce</item>
         <item>Sweet chilli sauce</item>
         <item>Tin fish large</item>
@@ -104,11 +106,14 @@
         <item>Sweet spud</item>
         <item>Tomato large</item>
         <item>Tomato small</item>
+        <item>Zuchini</item>
     </string-array>
 
     <string-array name="shopping_items_meatfish_default">
+        <item>Bacon</item>
         <item>Chicken breast</item>
         <item>Chicken thigh</item>
+        <item>Ham</item>
         <item>Mussels</item>
         <item>Oysters</item>
         <item>Prawns</item>
