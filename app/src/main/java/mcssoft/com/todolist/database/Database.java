@@ -357,7 +357,7 @@ public class Database {
             }
         }
 
-        dbHelper.close();
+//        dbHelper.close();
         // TODO - item type OTHER not done.
     }
 

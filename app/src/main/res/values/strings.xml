@@ -51,65 +51,71 @@
 
     <!-- Shopping items. -->
     <string-array name="shopping_items_general_default">
+        <item>Block</item>
+        <item>Biscuits</item>
+        <item>Bix</item>
         <item>Bread</item>
         <item>Bread rolls</item>
         <item>Butter</item>
-        <item>Block</item>
-        <item>Bix</item>
-        <item>Pouch</item>
-        <item>Litter</item>
-        <item>Roo</item>
-        <item>Pet Mince</item>
-        <item>Eggs</item>
-        <item>Juice</item>
         <item>Canola oil</item>
-        <item>Malt vinegar</item>
-        <item>Tin fish large</item>
-        <item>Tin fish small</item>
-        <item>Worcester sauce</item>
-        <item>Sweet chilli sauce</item>
-        <item>White sauce</item>
+        <item>Cheese block</item>
+        <item>Cheese grated</item>
+        <item>Cheese sliced</item>
+        <item>Cheese parma</item>
+        <item>Crackers</item>
+        <item>Curry paste</item>
+        <item>Eggs</item>
         <item>Gravy traditional</item>
-        <item>Stir fry sauce</item>
+        <item>Juice</item>
+        <item>Litter</item>
+        <item>Malt vinegar</item>
+        <item>Pet Mince</item>
+        <item>Pouch</item>
+        <item>Roo</item>
         <item>Salt herbmare</item>
         <item>Salt trocomare</item>
-        <item>Curry paste</item>
+        <item>Stir fry sauce</item>
+        <item>Sweet chilli sauce</item>
+        <item>Tin fish large</item>
+        <item>Tin fish small</item>
+        <item>White sauce</item>
+        <item>Worcester sauce</item>
     </string-array>
 
     <string-array name="shopping_items_fruitveg_default">
-        <item>Capsicum</item>
+        <item>Apple</item>
         <item>Asparagus</item>
+        <item>Banana</item>
+        <item>Carrot</item>
+        <item>Capsicum</item>
+        <item>Cauliflower</item>
         <item>Cucumber</item>
+        <item>Grapes</item>
+        <item>Greens beans</item>
+        <item>Greens brocoli</item>
+        <item>Mandarin</item>
+        <item>Mushroom</item>
+        <item>Onion brown</item>
+        <item>Onion red</item>
+        <item>Pear</item>
         <item>Pumpkin</item>
         <item>Spud small</item>
         <item>Spud large</item>
         <item>Sweet spud</item>
-        <item>Greens beans</item>
-        <item>Greens brocoli</item>
-        <item>Cauliflower</item>
-        <item>Carrot</item>
-        <item>Mushroom</item>
         <item>Tomato large</item>
         <item>Tomato small</item>
-        <item>Apple</item>
-        <item>Mandarin</item>
-        <item>Red onion</item>
-        <item>Brown onion</item>
-        <item>Grapes</item>
-        <item>Banana</item>
-        <item>Pear</item>
     </string-array>
 
     <string-array name="shopping_items_meatfish_default">
-        <item>Slow cook meat</item>
-        <item>Red meat</item>
-        <item>Chicken thigh</item>
         <item>Chicken breast</item>
-        <item>Salmon</item>
-        <item>White fish</item>
+        <item>Chicken thigh</item>
         <item>Mussels</item>
-        <item>Prawns</item>
         <item>Oysters</item>
+        <item>Prawns</item>
+        <item>Red meat</item>
+        <item>Salmon</item>
+        <item>Slow cook meat</item>
+        <item>White fish</item>
     </string-array>
 
     <!-- Note: Don't change the order unless change ShoppingItemFragment.PageType. -->
