@@ -61,11 +61,17 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
         int dbRowId = -1;
         if(view instanceof CheckBox) {
             // mimmick the checkbox check/uncheck on the underlying record.
-            dbRowId = getDbRowId(position);
+            //dbRowId = getDbRowId(position);
+            String pos = Integer.toString(position);
+            String pgNo = Integer.toString(pageNo);
+            String id = pgNo + ":" + pos;
+
             if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
-                Database.getInstance().setCheckReferenceItem(dbRowId, true);
+                //Database.getInstance().setCheckReferenceItem(dbRowId, true);
+                adapter.updateItemMetadata(new String[] {id, pgNo, pos, "1"});
             } else {
-                Database.getInstance().setCheckReferenceItem(dbRowId, false);
+                //Database.getInstance().setCheckReferenceItem(dbRowId, false);
+                adapter.updateItemMetadata(new String[] {id, pgNo, pos, "0"});
             }
         }
     }

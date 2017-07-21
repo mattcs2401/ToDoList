@@ -6,11 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.R;
 
 public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHolder> {
+
+    public ShoppingItemAdapter() {
+        metaDataList = new ArrayList<>();
+    }
 
     @Override
     public ShoppingItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -25,6 +32,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
     @Override
     public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
         cursor.moveToPosition(position);
+        // TODO - use the metadata here.
         if(cursor.getString(idValSelNdx).equals("Y")) {
             holder.getCbShoppingItem().setChecked(true);
         } else {
@@ -54,6 +62,17 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
 
     public Cursor getCursor() { return cursor; }
 
+    public void updateItemMetadata(String[] metaData) {
+        if(!checkExistsInList(metaData[0])) {
+            metaDataList.add(metaData);
+        } else {
+            int ndx = getIndex(metaData);
+            if(ndx > -1) {
+                metaDataList.set(ndx, metaData);
+            }
+        }
+    }
+
     public void swapCursor(Cursor cursor) {
         if((cursor != null) && (cursor.getCount() > 0)) {
             this.cursor = cursor;
@@ -66,11 +85,31 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
         }
     }
 
+    private boolean checkExistsInList(String metaId) {
+        for(String[] item : metaDataList) {
+            if(item[0].equals(metaId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int getIndex(String[] metaData) {
+        int len = metaDataList.size();
+        for(int ndx=0; ndx < len; ndx++) {
+            if(metaDataList.get(ndx)[0].equals(metaData[0])) {
+                return ndx;
+            }
+        }
+        return -1;
+    }
+
     private Cursor cursor;                  // backing data.
     private int idColNdx;
     private int idTypNdx;
     private int idValNdx;
     private int idValSelNdx;
+    private List<String[]> metaDataList;
     private ShoppingItemViewHolder svh;
     private IItemClickListener icListener;
 }
