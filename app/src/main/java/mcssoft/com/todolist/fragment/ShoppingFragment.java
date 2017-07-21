@@ -25,6 +25,7 @@ import mcssoft.com.todolist.utility.Resources;
 public class ShoppingFragment extends Fragment
         implements IItemClickListener, View.OnClickListener {
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class ShoppingFragment extends Fragment
         setShoppingAdapter();     // set adapter associated with the recycler view.
         setRecyclerView(rootView);// set the recycler view.
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**

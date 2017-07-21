@@ -32,13 +32,7 @@ public class CheckActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        Bundle args = new Bundle();
-
-        int count = Database.getInstance().getTableRowCount(Schema.TABLE_SLIST, null, null);
-        args.putInt(Resources.getInstance().getString(R.string.sl_item_count_key), count);
-
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), args);
         startActivity(intent);
     }
 
