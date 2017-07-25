@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.model;
+package mcssoft.com.todolist.model.summary;
 
 /**
  * Utility class to model a shopping list item.

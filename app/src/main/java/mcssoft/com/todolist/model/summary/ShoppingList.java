@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.model;
+package mcssoft.com.todolist.model.summary;
 
 import java.util.ArrayList;
 import java.util.List;

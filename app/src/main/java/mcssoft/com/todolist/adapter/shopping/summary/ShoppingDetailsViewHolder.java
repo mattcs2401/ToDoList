@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.adapter.shopping.details;
+package mcssoft.com.todolist.adapter.shopping.summary;
 
 import android.view.View;
 import android.widget.TextView;

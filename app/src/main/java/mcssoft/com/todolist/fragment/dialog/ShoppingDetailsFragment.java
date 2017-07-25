@@ -1,6 +1,5 @@
 package mcssoft.com.todolist.fragment.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -15,9 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.shopping.details.ShoppingDetailsAdapter;
+import mcssoft.com.todolist.adapter.shopping.summary.ShoppingDetailsAdapter;
 import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.interfaces.IListSelect;
 import mcssoft.com.todolist.utility.Resources;
 
 public class ShoppingDetailsFragment extends DialogFragment

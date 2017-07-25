@@ -67,11 +67,9 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
             String id = pgNo + ":" + pos;
 
             if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
-                //Database.getInstance().setCheckReferenceItem(dbRowId, true);
-                adapter.updateItemMetadata(new String[] {id, pgNo, pos, "1"});
+                Database.getInstance().setCheckReferenceItem(dbRowId, true);
             } else {
-                //Database.getInstance().setCheckReferenceItem(dbRowId, false);
-                adapter.updateItemMetadata(new String[] {id, pgNo, pos, "0"});
+                Database.getInstance().setCheckReferenceItem(dbRowId, false);
             }
         }
     }

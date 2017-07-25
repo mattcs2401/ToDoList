@@ -1,4 +1,4 @@
-package mcssoft.com.todolist.adapter.shopping.details;
+package mcssoft.com.todolist.adapter.shopping.summary;
 
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.shopping.ShoppingViewHolder;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.model.ShoppingList;
-import mcssoft.com.todolist.model.ShoppingListItem;
+import mcssoft.com.todolist.model.summary.ShoppingList;
+import mcssoft.com.todolist.model.summary.ShoppingListItem;
 
 public class ShoppingDetailsAdapter extends RecyclerView.Adapter {
 
