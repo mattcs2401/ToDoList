@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.adapter.shopping.summary.ShoppingDetailsAdapter;
+import mcssoft.com.todolist.adapter.shopping.summary.ShoppingSummaryAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.utility.Resources;
 
@@ -67,7 +67,7 @@ public class ShoppingDetailsFragment extends DialogFragment
     }
 
     private void setShoppingDetailsAdapter() {
-        adapter = new ShoppingDetailsAdapter();
+        adapter = new ShoppingSummaryAdapter();
         adapter.swapCursor(cursor);
 
     }
@@ -85,6 +85,6 @@ public class ShoppingDetailsFragment extends DialogFragment
     private View rootView;
     private int dbRowId;
     private Cursor cursor;
-    private ShoppingDetailsAdapter adapter;
+    private ShoppingSummaryAdapter adapter;
 
 }

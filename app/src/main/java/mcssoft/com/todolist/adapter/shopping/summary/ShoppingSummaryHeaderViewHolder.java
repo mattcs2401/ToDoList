@@ -6,9 +6,9 @@ import android.widget.TextView;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
 
-public class ShoppingDetailsHeaderViewHolder extends ParentViewHolder {
+public class ShoppingSummaryHeaderViewHolder extends ParentViewHolder {
 
-    public ShoppingDetailsHeaderViewHolder(View view) {
+    public ShoppingSummaryHeaderViewHolder(View view) {
         super(view);
         headerTitle = (TextView) view.findViewById(R.id.id_tv_shopping_summary_item);
     }

@@ -5,14 +5,14 @@ package mcssoft.com.todolist.model.summary;
  * Note: The SLIST_ITEM table is just a linking table between SLIST and REF_ITEM. The values in this
  *       class were originally sourced from REF_ITEM.
  */
-public class ShoppingListItem {
+public class ShoppingSummaryListItem {
 
-    public ShoppingListItem(boolean isHeader, String description) {
+    public ShoppingSummaryListItem(boolean isHeader, String description) {
         this.isHeader = isHeader;
         this.description = description;
     }
 
-    public ShoppingListItem(String code, String description, String value) {
+    public ShoppingSummaryListItem(String code, String description, String value) {
         this.code = code;
         this.description = description;
         this.value = value;

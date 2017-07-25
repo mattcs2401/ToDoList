@@ -6,9 +6,9 @@ import android.widget.TextView;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
 
-public class ShoppingDetailsViewHolder extends ParentViewHolder {
+public class ShoppingSummaryViewHolder extends ParentViewHolder {
 
-    public ShoppingDetailsViewHolder(View view) {
+    public ShoppingSummaryViewHolder(View view) {
         super(view);
         title = (TextView) view.findViewById(R.id.id_tv_shopping_summary_item);
     }

@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.model.summary.ShoppingList;
-import mcssoft.com.todolist.model.summary.ShoppingListItem;
+import mcssoft.com.todolist.model.summary.ShoppingSummaryList;
+import mcssoft.com.todolist.model.summary.ShoppingSummaryListItem;
 
-public class ShoppingDetailsAdapter extends RecyclerView.Adapter {
+public class ShoppingSummaryAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -20,21 +20,21 @@ public class ShoppingDetailsAdapter extends RecyclerView.Adapter {
         switch(viewType) {
             case HEADER_VIEW:
                 view = inflater.inflate(R.layout.shopping_details_header_row, parent, false);
-                return new ShoppingDetailsHeaderViewHolder(view);
+                return new ShoppingSummaryHeaderViewHolder(view);
             case SHOPPING_VIEW:
                 view = inflater.inflate(R.layout.shopping_details_item_row, parent, false);
-                return new ShoppingDetailsViewHolder(view);
+                return new ShoppingSummaryViewHolder(view);
         }
         throw new RuntimeException("No match for " + viewType + ".");
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ShoppingListItem sListItem = shoppingList.getShoppingListItem(position);
-        if(holder instanceof ShoppingDetailsHeaderViewHolder) {
-            ((ShoppingDetailsHeaderViewHolder) holder).getHeaderTitle().setText(sListItem.getDescription());
-        } else if (holder instanceof ShoppingDetailsViewHolder) {
-            ((ShoppingDetailsViewHolder) holder).getTitle().setText(sListItem.getValue());
+        ShoppingSummaryListItem sListItem = shoppingList.getShoppingListItem(position);
+        if(holder instanceof ShoppingSummaryHeaderViewHolder) {
+            ((ShoppingSummaryHeaderViewHolder) holder).getHeaderTitle().setText(sListItem.getDescription());
+        } else if (holder instanceof ShoppingSummaryViewHolder) {
+            ((ShoppingSummaryViewHolder) holder).getTitle().setText(sListItem.getValue());
         }
     }
 
@@ -62,7 +62,7 @@ public class ShoppingDetailsAdapter extends RecyclerView.Adapter {
         idDescNdx = cursor.getColumnIndex(Schema.REF_ITEM_DESC);
         idValueNdx = cursor.getColumnIndex(Schema.REF_ITEM_VALUE);
 
-        shoppingList = new ShoppingList();
+        shoppingList = new ShoppingSummaryList();
         cursor.moveToFirst();
 
         String code = cursor.getString(idCodeNdx);
@@ -86,18 +86,18 @@ public class ShoppingDetailsAdapter extends RecyclerView.Adapter {
     }
 
     private void setContentRow(String code, String desc, String value) {
-        shoppingList.putShoppingListItem(new ShoppingListItem(code, desc, value));
+        shoppingList.putShoppingListItem(new ShoppingSummaryListItem(code, desc, value));
     }
 
     private void setHeaderRow(String desc) {
-        shoppingList.putShoppingListItem(new ShoppingListItem(true, desc));
+        shoppingList.putShoppingListItem(new ShoppingSummaryListItem(true, desc));
     }
 
     private int idCodeNdx;
     private int idDescNdx;
     private int idValueNdx;
     private Cursor cursor;             // backing data.
-    private ShoppingList shoppingList; // backing data as list.
+    private ShoppingSummaryList shoppingList; // backing data as list.
 
     private static final int HEADER_VIEW = 0;
     private static final int SHOPPING_VIEW = 1;
