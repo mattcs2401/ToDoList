@@ -15,8 +15,8 @@ import android.widget.CheckBox;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemAdapter;
 import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.model.items.ShoppingItemsList;
 import mcssoft.com.todolist.utility.Resources;
 
 
@@ -79,23 +79,32 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
         GENRL, FANDV, MANDF
     }
 
+
     private void setCursor(int pageNo) {
+        Cursor cursor = null;
         switch(pageNo) {
             case 0:
-                cursor = Database.getInstance().getCheckedReferenceItems(PageType.GENRL);
+                cursor = Database.getInstance().getReferenceItems(PageType.GENRL);
                 break;
             case 1:
-                cursor = Database.getInstance().getCheckedReferenceItems(PageType.FANDV);
+                cursor = Database.getInstance().getReferenceItems(PageType.FANDV);
                 break;
             case 2:
-                cursor = Database.getInstance().getCheckedReferenceItems(PageType.MANDF);
+                cursor = Database.getInstance().getReferenceItems(PageType.MANDF);
                 break;
         }
+        setShoppingsItemList(cursor)
+    }
+
+    private ShoppingItemsList setShoppingsItemList(Cursor cursor) {
+
+        return null;
     }
 
     private void setShoppingAdapter() {
         adapter = new ShoppingItemAdapter();
-        adapter.swapCursor(cursor);
+
+        //adapter.swapCursor(cursor);
         adapter.setOnItemClickListener(this);
      }
 
@@ -109,9 +118,16 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
         recyclerView.setAdapter(adapter);
     }
 
+    private ShoppingItemsList setBackingData(Cursor cursor) {
+
+        return null;
+
+    }
+
     private int pageNo;
     private Bundle args;
-    private Cursor cursor;
+//    private Cursor cursor;
     private View rootView;
     private ShoppingItemAdapter adapter;
+    private ShoppingItemsList list;
 }

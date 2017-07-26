@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -80,7 +78,7 @@ public class Database {
      */
     public int unCheckReferenceItems() {
         int rowId;
-        Cursor cursor = getCheckedReferenceItems();
+        Cursor cursor = getReferenceItems();
         while(cursor.moveToNext()) {
             rowId = cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID));
             setCheckReferenceItem(rowId, false);
@@ -131,26 +129,26 @@ public class Database {
      * Get the reference items that have been checked (REF_ITEM.REF_ITEM_SEL_VAL="Y").
      * @return A cursor over the checked items.
      */
-    public Cursor getCheckedReferenceItems() {
+    public Cursor getReferenceItems() {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_SEL, new String[] {"Y"});
     }
 
-    public Cursor getCheckedReferenceItems(ShoppingItemFragment.PageType pageType) {
+    public Cursor getReferenceItems(ShoppingItemFragment.PageType pageType) {
 
-        String[] selArgs = null;
+        String type = null;
 
         switch(pageType) {
             case GENRL:
-                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[0].split(":")[0]};
+                type = Resources.getInstance().getStringArray(R.array.shopping_item_types)[0].split(":")[0];
                 break;
             case FANDV:
-                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[1].split(":")[0]};
+                type = Resources.getInstance().getStringArray(R.array.shopping_item_types)[1].split(":")[0];
                 break;
             case MANDF:
-                selArgs = new String[]{Resources.getInstance().getStringArray(R.array.shopping_item_types)[2].split(":")[0]};
+                type = Resources.getInstance().getStringArray(R.array.shopping_item_types)[2].split(":")[0];
                 break;
         }
-        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, selArgs);
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, new String[] {"N", type});
     }
 
     /**
@@ -251,7 +249,7 @@ public class Database {
      */
     public int createShoppingListItems(long rowId) {
         SQLiteDatabase db = dbHelper.getDatabase();
-        Cursor refCursor = Database.getInstance().getCheckedReferenceItems();
+        Cursor refCursor = Database.getInstance().getReferenceItems();
 
         int refId;
         ContentValues cv;
