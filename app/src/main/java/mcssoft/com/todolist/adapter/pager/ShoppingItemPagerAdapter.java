@@ -1,13 +1,20 @@
 package mcssoft.com.todolist.adapter.pager;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import java.util.ArrayList;
+
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.database.Database;
+import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.fragment.ShoppingItemFragment;
+import mcssoft.com.todolist.model.items.ShoppingItemsList;
+import mcssoft.com.todolist.model.items.ShoppingItemsListItem;
 import mcssoft.com.todolist.utility.Resources;
 
 public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
@@ -15,6 +22,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
     public ShoppingItemPagerAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
         pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
+        getAllData();
     }
 
     @Override
@@ -22,25 +30,14 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         ShoppingItemFragment sf = new ShoppingItemFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
+        bundle.putParcelable(Resources.getInstance().getString(R.string.bundle_data_key), getData(position));
         sf.setArguments(bundle);
         return sf;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        String title = null;
-        switch(position) {
-            case 0:
-                title = pageTitles[0].split(":")[1];
-                break;
-            case 1:
-                title = pageTitles[1].split(":")[1];
-                break;
-            case 2:
-                title = pageTitles[2].split(":")[1];
-                break;
-        }
-        return title;
+        return pageTitles[position].split(":")[1];
     }
 
     @Override
@@ -48,5 +45,38 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         return Resources.getInstance().getInteger(R.integer.num_shopping_item_pages);
     }
 
+    private ShoppingItemsList getData(int position) {
+        // TODO - there is redundant processing here.
+        int size = shoppingItemsListAll.size();
+        String refCode = pageTitles[position].split(":")[0];
+        ShoppingItemsList dataList = new ShoppingItemsList(refCode);
+
+        for(int ndx = 0; ndx < size; ndx++) {
+            if(refCode.equals(shoppingItemsListAll.get(ndx).getRefCode())) {
+                dataList.add(shoppingItemsListAll.get(ndx));
+            }
+        }
+        return dataList;
+    }
+
+    /**
+     * Utility method to get ref item data from the database and create a master list to be used as
+     * the backing (in memory) data for the list item pages to display.
+     */
+    private void getAllData() {
+        shoppingItemsListAll = new ShoppingItemsList("");
+        Cursor cursor = Database.getInstance().getAllReferenceItems();
+        while(cursor.moveToNext()) {
+            ShoppingItemsListItem sili = new ShoppingItemsListItem(
+                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
+                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
+                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),
+                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL))
+            );
+            shoppingItemsListAll.add(sili);
+        }
+    }
+
+    private ShoppingItemsList shoppingItemsListAll;
     private String[] pageTitles;
 }

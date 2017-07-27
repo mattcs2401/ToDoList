@@ -12,6 +12,7 @@ public class ShoppingItemsList implements Parcelable {
 
     public ShoppingItemsList(String identifier) {
         this.identifier = identifier;
+        shoppingItemsList = new ArrayList<>();
     }
 
     public void add(ShoppingItemsListItem shoppingItemsListItem) {
