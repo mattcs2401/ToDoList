@@ -137,24 +137,6 @@ public class Database {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_ALL, new String[] {"N"});
     }
 
-    public Cursor getReferenceItems(ShoppingItemFragment.PageType pageType) {
-
-        String type = null;
-
-        switch(pageType) {
-            case GENRL:
-                type = Resources.getInstance().getStringArray(R.array.shopping_item_types)[0].split(":")[0];
-                break;
-            case FANDV:
-                type = Resources.getInstance().getStringArray(R.array.shopping_item_types)[1].split(":")[0];
-                break;
-            case MANDF:
-                type = Resources.getInstance().getStringArray(R.array.shopping_item_types)[2].split(":")[0];
-                break;
-        }
-        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, new String[] {"N", type});
-    }
-
     /**
      * Get the number of records for a table.
      * @param tableName The table to check.

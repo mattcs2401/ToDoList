@@ -31,7 +31,7 @@ public class ShoppingItemViewHolder extends ParentViewHolder {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">
     public CheckBox getCbShoppingItem() { return cbShoppingItem; }
-    public TextView gettvShoppingItem() { return tvShoppingItem; }
+    public TextView getTvShoppingItem() { return tvShoppingItem; }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Private vars">

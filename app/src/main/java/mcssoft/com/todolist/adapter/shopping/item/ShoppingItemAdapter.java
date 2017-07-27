@@ -1,17 +1,13 @@
 package mcssoft.com.todolist.adapter.shopping.item;
 
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.model.items.ShoppingItemsList;
 
 public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHolder> {
 
@@ -29,54 +25,75 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
 
     @Override
     public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
-        cursor.moveToPosition(position);
-        // TODO - use the metadata here.
-        if(cursor.getString(idValSelNdx).equals("Y")) {
+//        cursor.moveToPosition(position);
+//        // TODO - use the metadata here.
+//        if(cursor.getString(idValSelNdx).equals("Y")) {
+//            holder.getCbShoppingItem().setChecked(true);
+//        } else {
+//            holder.getCbShoppingItem().setChecked(false);
+//        }
+//        holder.getTvShoppingItem().setText(cursor.getString(idValNdx));
+        if(shoppingItemsList.get(position).getRefSelect().equals("Y")) {
             holder.getCbShoppingItem().setChecked(true);
         } else {
             holder.getCbShoppingItem().setChecked(false);
         }
-        holder.gettvShoppingItem().setText(cursor.getString(idValNdx));
+        holder.getTvShoppingItem().setText(shoppingItemsList.get(position).getRefValue());
     }
 
-    @Override
-    public long getItemId(int position) {
-        cursor.moveToPosition(position);
-        return cursor.getLong(idColNdx);
-    }
+//    @Override
+//    public long getItemId(int position) {
+//        cursor.moveToPosition(position);
+//        return cursor.getLong(idColNdx);
+//    }
 
     @Override
     public int getItemCount() {
-        if(cursor != null) {
-            return cursor.getCount();
-        } else {
-            return 0;
-        }
+        return shoppingItemsList.size();
+//        if(cursor != null) {
+//            return cursor.getCount();
+//        } else {
+//            return 0;
+//        }
     }
 
     public void setOnItemClickListener(IItemClickListener iclistener) {
         this.icListener = iclistener;
     }
 
-    public Cursor getCursor() { return cursor; }
+//    public Cursor getCursor() { return cursor; }
 
-    public void swapCursor(Cursor cursor) {
-        if((cursor != null) && (cursor.getCount() > 0)) {
-            this.cursor = cursor;
-            cursor.moveToFirst();
-            idColNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
-            idTypNdx = cursor.getColumnIndex(Schema.REF_ITEM_DESC);
-            idValNdx = cursor.getColumnIndex(Schema.REF_ITEM_VALUE);
-            idValSelNdx = cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL);
-            notifyDataSetChanged();
-        }
+    public void setData(ShoppingItemsList shoppingItemsList) {
+        this.shoppingItemsList = shoppingItemsList;
+        notifyDataSetChanged();
     }
 
-    private Cursor cursor;                  // backing data.
-    private int idColNdx;
-    private int idTypNdx;
-    private int idValNdx;
-    private int idValSelNdx;
+    public void setCheck(int position, boolean setCheck) {
+        if(setCheck) {
+            shoppingItemsList.get(position).setRefSelect("Y");
+        } else {
+            shoppingItemsList.get(position).setRefSelect("N");
+        }
+        notifyItemChanged(position);
+    }
+//    public void swapCursor(Cursor cursor) {
+//        if((cursor != null) && (cursor.getCount() > 0)) {
+//            this.cursor = cursor;
+//            cursor.moveToFirst();
+//            idColNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
+//            idTypNdx = cursor.getColumnIndex(Schema.REF_ITEM_DESC);
+//            idValNdx = cursor.getColumnIndex(Schema.REF_ITEM_VALUE);
+//            idValSelNdx = cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL);
+//            notifyDataSetChanged();
+//        }
+//    }
+
+//    private Cursor cursor;                  // backing data.
+//    private int idColNdx;
+//    private int idTypNdx;
+//    private int idValNdx;
+//    private int idValSelNdx;
     private ShoppingItemViewHolder svh;
     private IItemClickListener icListener;
+    private ShoppingItemsList shoppingItemsList;
 }

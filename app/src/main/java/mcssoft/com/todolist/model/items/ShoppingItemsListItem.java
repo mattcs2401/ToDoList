@@ -36,7 +36,7 @@ public class ShoppingItemsListItem {
         this.refValue = refValue;
     }
 
-    public String isRefSelect() {
+    public String getRefSelect() {
         return refSelect;
     }
 

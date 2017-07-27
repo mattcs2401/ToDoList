@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import java.util.ArrayList;
-
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
@@ -27,12 +25,11 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        ShoppingItemFragment sf = new ShoppingItemFragment();
+        ShoppingItemFragment shoppingItemFragment = new ShoppingItemFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
         bundle.putParcelable(Resources.getInstance().getString(R.string.bundle_data_key), getData(position));
-        sf.setArguments(bundle);
-        return sf;
+        shoppingItemFragment.setArguments(bundle);
+        return shoppingItemFragment;
     }
 
     @Override
@@ -77,6 +74,6 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-    private ShoppingItemsList shoppingItemsListAll;
     private String[] pageTitles;
+    private ShoppingItemsList shoppingItemsListAll;
 }
