@@ -14,6 +14,7 @@
 
     <!-- Bundle keys. -->
     <string name="bundle_key">bundle_key</string>
+    <string name="bundle_data_key">bundle_data_key</string>
     <string name="list_type_key">list_type_key</string>
     <string name="list_type_shopping_key">list_type_shopping_key</string>
     <string name="list_type_general_key">list_type_general_key</string>

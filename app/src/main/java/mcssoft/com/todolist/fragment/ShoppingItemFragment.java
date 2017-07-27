@@ -93,7 +93,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
                 cursor = Database.getInstance().getReferenceItems(PageType.MANDF);
                 break;
         }
-        setShoppingsItemList(cursor)
+        setShoppingsItemList(cursor);
     }
 
     private ShoppingItemsList setShoppingsItemList(Cursor cursor) {

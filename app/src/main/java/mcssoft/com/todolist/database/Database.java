@@ -133,6 +133,10 @@ public class Database {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_SEL, new String[] {"Y"});
     }
 
+    public Cursor getAllReferenceItems() {
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_ALL, new String[] {"N"});
+    }
+
     public Cursor getReferenceItems(ShoppingItemFragment.PageType pageType) {
 
         String type = null;
