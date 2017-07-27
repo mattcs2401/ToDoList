@@ -99,7 +99,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void clearValuesFromSave() {
         Database.getInstance().unCheckReferenceItems();
-
     }
 
     private void writeNewShoppingList() {
@@ -145,15 +144,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
         viewPager.setAdapter(pagerAdapter);
     }
-
-//    private void setTabLayout() {
-//        String[] pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-//        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[0]));
-//        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[1]));
-//        tabLayout.addTab(tabLayout.newTab().setText(pageTitles[2]));
-//        tabLayout.setupWithViewPager(viewPager);
-//    }
     //</editor-fold>
 
     private String listItemType;

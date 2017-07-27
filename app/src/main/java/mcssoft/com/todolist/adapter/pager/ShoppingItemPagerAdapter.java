@@ -42,13 +42,13 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         return Resources.getInstance().getInteger(R.integer.num_shopping_item_pages);
     }
 
-    private ShoppingItemsList getData(int position) {
-        // TODO - there is redundant processing here.
+    private ShoppingItemsList getData(int pageNo) {
         int size = shoppingItemsListAll.size();
-        String refCode = pageTitles[position].split(":")[0];
+        String refCode = pageTitles[pageNo].split(":")[0];
         ShoppingItemsList dataList = new ShoppingItemsList(refCode);
 
         for(int ndx = 0; ndx < size; ndx++) {
+            // TODO - there is redundant processing here.
             if(refCode.equals(shoppingItemsListAll.get(ndx).getRefCode())) {
                 dataList.add(shoppingItemsListAll.get(ndx));
             }
@@ -65,6 +65,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         Cursor cursor = Database.getInstance().getAllReferenceItems();
         while(cursor.moveToNext()) {
             ShoppingItemsListItem sili = new ShoppingItemsListItem(
+                cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID)),
                 cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
                 cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
                 cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),

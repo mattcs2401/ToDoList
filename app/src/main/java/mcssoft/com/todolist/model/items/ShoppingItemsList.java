@@ -2,7 +2,6 @@ package mcssoft.com.todolist.model.items;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 
 /**

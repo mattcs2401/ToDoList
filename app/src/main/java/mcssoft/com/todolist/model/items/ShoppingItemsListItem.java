@@ -5,11 +5,20 @@ package mcssoft.com.todolist.model.items;
  */
 public class ShoppingItemsListItem {
 
-    public ShoppingItemsListItem(String refCode, String refDesc, String refValue, String refSelect) {
+    public ShoppingItemsListItem(int refId, String refCode, String refDesc, String refValue, String refSelect) {
+        this.refId = refId;
         this.refCode = refCode;
         this.refDesc = refDesc;
         this.refValue = refValue;
         this.refSelect = refSelect;
+    }
+
+    public int getRefId() {
+        return refId;
+    }
+
+    public void setRefId(int refId) {
+        this.refId = refId;
     }
 
     public String getRefCode() {
@@ -44,6 +53,7 @@ public class ShoppingItemsListItem {
         this.refSelect = refSelect;
     }
 
+    private int refId;
     private String refCode;
     private String refDesc;
     private String refValue;

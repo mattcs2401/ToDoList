@@ -53,8 +53,8 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void setShoppingAdapter() {
-        adapter = new ShoppingItemAdapter();
         String key = Resources.getInstance().getString(R.string.bundle_data_key);
+        adapter = new ShoppingItemAdapter();
         adapter.setData((ShoppingItemsList) getArguments().getParcelable(key));
         adapter.setOnItemClickListener(this);
      }

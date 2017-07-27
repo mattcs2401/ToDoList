@@ -11,8 +11,6 @@ import mcssoft.com.todolist.model.items.ShoppingItemsList;
 
 public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHolder> {
 
-    public ShoppingItemAdapter() {}
-
     @Override
     public ShoppingItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -25,14 +23,6 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
 
     @Override
     public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
-//        cursor.moveToPosition(position);
-//        // TODO - use the metadata here.
-//        if(cursor.getString(idValSelNdx).equals("Y")) {
-//            holder.getCbShoppingItem().setChecked(true);
-//        } else {
-//            holder.getCbShoppingItem().setChecked(false);
-//        }
-//        holder.getTvShoppingItem().setText(cursor.getString(idValNdx));
         if(shoppingItemsList.get(position).getRefSelect().equals("Y")) {
             holder.getCbShoppingItem().setChecked(true);
         } else {
@@ -41,27 +31,14 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
         holder.getTvShoppingItem().setText(shoppingItemsList.get(position).getRefValue());
     }
 
-//    @Override
-//    public long getItemId(int position) {
-//        cursor.moveToPosition(position);
-//        return cursor.getLong(idColNdx);
-//    }
-
     @Override
     public int getItemCount() {
         return shoppingItemsList.size();
-//        if(cursor != null) {
-//            return cursor.getCount();
-//        } else {
-//            return 0;
-//        }
     }
 
     public void setOnItemClickListener(IItemClickListener iclistener) {
         this.icListener = iclistener;
     }
-
-//    public Cursor getCursor() { return cursor; }
 
     public void setData(ShoppingItemsList shoppingItemsList) {
         this.shoppingItemsList = shoppingItemsList;
@@ -76,24 +53,8 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
         }
         notifyItemChanged(position);
     }
-//    public void swapCursor(Cursor cursor) {
-//        if((cursor != null) && (cursor.getCount() > 0)) {
-//            this.cursor = cursor;
-//            cursor.moveToFirst();
-//            idColNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
-//            idTypNdx = cursor.getColumnIndex(Schema.REF_ITEM_DESC);
-//            idValNdx = cursor.getColumnIndex(Schema.REF_ITEM_VALUE);
-//            idValSelNdx = cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL);
-//            notifyDataSetChanged();
-//        }
-//    }
 
-//    private Cursor cursor;                  // backing data.
-//    private int idColNdx;
-//    private int idTypNdx;
-//    private int idValNdx;
-//    private int idValSelNdx;
     private ShoppingItemViewHolder svh;
     private IItemClickListener icListener;
-    private ShoppingItemsList shoppingItemsList;
+    private ShoppingItemsList shoppingItemsList; // backing data.
 }
