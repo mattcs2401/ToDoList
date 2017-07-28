@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Database;
@@ -27,6 +28,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         ShoppingItemFragment shoppingItemFragment = new ShoppingItemFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
         bundle.putParcelable(Resources.getInstance().getString(R.string.bundle_data_key), getData(position));
         shoppingItemFragment.setArguments(bundle);
         return shoppingItemFragment;

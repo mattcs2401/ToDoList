@@ -29,6 +29,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        pageNo = getArguments().getInt(Resources.getInstance().getString(R.string.bundle_key));
         setShoppingAdapter();     // set adapter associated with the recycler view.
         setRecyclerView(rootView);// set the recycler view.
     }
@@ -41,6 +42,8 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
      */
     @Override
     public void onItemClick(View view, int position) {
+        // from shopping item view holder.
+        // TODO - interface back to EditActivity with pageNo, position boolean isChecked.
         if(view instanceof CheckBox) {
             if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
                 adapter.setCheck(position, true);
@@ -70,6 +73,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     }
     //</editor-fold>
 
+    private int pageNo;
     private View rootView;
     private ShoppingItemAdapter adapter;
 }
