@@ -5,12 +5,12 @@ package mcssoft.com.todolist.model.items;
  */
 public class ShoppingItemsListItem {
 
-    public ShoppingItemsListItem(int refId, String refCode, String refDesc, String refValue, String refSelect) {
+    public ShoppingItemsListItem(int refId, String refCode, String refDesc, String refValue, boolean selected) {
         this.refId = refId;
         this.refCode = refCode;
         this.refDesc = refDesc;
         this.refValue = refValue;
-        this.refSelect = refSelect;
+        this.selected = selected;
     }
 
     public int getRefId() {
@@ -45,22 +45,21 @@ public class ShoppingItemsListItem {
         this.refValue = refValue;
     }
 
-    public String getRefSelect() {
-        return refSelect;
+    public boolean getSelected() {
+        return selected;
     }
 
-    public void setRefSelect(String refSelect) {
-        this.refSelect = refSelect;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
-    private int refId;
-    private String refCode;
-    private String refDesc;
-    private String refValue;
-    private String refSelect;
+    private int refId;       // reference item identifier.
+    private String refCode;  // reference item code.
+    private String refDesc;  // reference item description.
+    private String refValue; // reference item value.
+    private boolean selected;// reference item selected.
 
 }
 //    public static final String REF_ITEM_CODE    = "REF_CODE";    // e.g. GENRL, FANDV etc.
 //    public static final String REF_ITEM_DESC    = "REF_DESC";    // e.g. GENRL, Fruit&Veg etc
 //    public static final String REF_ITEM_VALUE   = "REF_VALUE";   // e.g. Bread
-//    public static final String REF_ITEM_VAL_SEL = "REF_SELECT";  // Y or N, item selected in UI

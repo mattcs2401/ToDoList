@@ -23,7 +23,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
 
     @Override
     public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
-        if(shoppingItemsList.get(position).getRefSelect().equals("Y")) {
+        if(shoppingItemsList.get(position).getSelected()) {
             holder.getCbShoppingItem().setChecked(true);
         } else {
             holder.getCbShoppingItem().setChecked(false);
@@ -47,9 +47,9 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
 
     public void setCheck(int position, boolean setCheck) {
         if(setCheck) {
-            shoppingItemsList.get(position).setRefSelect("Y");
+            shoppingItemsList.get(position).setSelected(true);
         } else {
-            shoppingItemsList.get(position).setRefSelect("N");
+            shoppingItemsList.get(position).setSelected(false);
         }
         notifyItemChanged(position);
     }

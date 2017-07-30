@@ -25,9 +25,11 @@ public class Schema {
     public static final String DROP_TABLE_REF_ITEM =
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_REF_ITEM + ";";
 
+    public static final String REF_ITEM_ARCHV_NO = REF_ITEM_ARCHV + "=N AND ";
+
     public static final String WHERE_REF_ITEM_ALL = REF_ITEM_ARCHV + "=?";
-    public static final String WHERE_REF_ITEM_CODE = REF_ITEM_ARCHV + "=? AND " + REF_ITEM_CODE + "=?";
-    public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ROWID + "=?";
+    public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ARCHV_NO + REF_ITEM_ROWID + "=?";
+    public static final String WHERE_REF_ITEM_CODE = REF_ITEM_ARCHV_NO + REF_ITEM_CODE + "=?";
     public static final String WHERE_REF_ITEM_ARCHV = REF_ITEM_ARCHV + "=?";
     //</editor-fold>
 
