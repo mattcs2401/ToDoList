@@ -72,19 +72,19 @@ public class Database {
         return getRecords(Schema.TABLE_GENERAL, null, Schema.WHERE_GENERAL_ARCHV, new String[] {"N"});
     }
 
-    /**
-     * Uncheck previously selected reference items.
-     * @return A count of the items unchecked.
-     */
-    public int unCheckReferenceItems() {
-        int rowId;
-        Cursor cursor = getReferenceItems();
-        while(cursor.moveToNext()) {
-            rowId = cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID));
-            setCheckReferenceItem(rowId, false);
-        }
-        return cursor.getCount();
-    }
+//    /**
+//     * Uncheck previously selected reference items.
+//     * @return A count of the items unchecked.
+//     */
+//    public int unCheckReferenceItems() {
+//        int rowId;
+//        Cursor cursor = getReferenceItems();
+//        while(cursor.moveToNext()) {
+//            rowId = cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID));
+//            setCheckReferenceItem(rowId, false);
+//        }
+//        return cursor.getCount();
+//    }
 
     /**
      * Get a record from the reference items.
@@ -109,9 +109,9 @@ public class Database {
         try {
             db.beginTransaction();
             if(check) {
-                cv.put(Schema.REF_ITEM_VAL_SEL, "Y");
+//                cv.put(Schema.REF_ITEM_VAL_SEL, "Y");
             } else {
-                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
+//                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
             }
             count = db.update(Schema.TABLE_REF_ITEM, cv, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
             db.setTransactionSuccessful();
@@ -123,14 +123,6 @@ public class Database {
             }
         }
         return count;
-    }
-
-    /**
-     * Get the reference items that have been checked (REF_ITEM.REF_ITEM_SEL_VAL="Y").
-     * @return A cursor over the checked items.
-     */
-    public Cursor getReferenceItems() {
-        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_SEL, new String[] {"Y"});
     }
 
     public Cursor getAllReferenceItems() {
@@ -235,8 +227,9 @@ public class Database {
      */
     public int createShoppingListItems(long rowId) {
         SQLiteDatabase db = dbHelper.getDatabase();
-        Cursor refCursor = Database.getInstance().getReferenceItems();
+//        Cursor refCursor = Database.getInstance().getReferenceItems();
 
+        Cursor refCursor = null;
         int refId;
         ContentValues cv;
 
@@ -286,7 +279,6 @@ public class Database {
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
-                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -310,7 +302,6 @@ public class Database {
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
-                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -331,7 +322,6 @@ public class Database {
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
-                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
                 db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){

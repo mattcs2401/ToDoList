@@ -71,8 +71,8 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
                 cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
                 cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
                 cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),
-                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VAL_SEL))
-            );
+                "N");
+
             shoppingItemsListAll.add(sili);
         }
     }

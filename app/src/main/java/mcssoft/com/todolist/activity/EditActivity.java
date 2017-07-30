@@ -81,9 +81,10 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
      * Get a list of all the selected shopping items.
      */
     private void collateValuesFromSave() {
+        int count = 0;
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-            int count = Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM,
-                    Schema.RAW_WHERE_REF_ITEM_SEL, new String[] {"Y"});
+//            count = Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM,
+//                    Schema.RAW_WHERE_REF_ITEM_SEL, new String[] {"Y"});
             if(count > 0) {
                 writeNewShoppingList();
             } else {
@@ -98,7 +99,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
      * Clear the check against all the previously selected shopping items.
      */
     private void clearValuesFromSave() {
-        Database.getInstance().unCheckReferenceItems();
+//        Database.getInstance().unCheckReferenceItems();
     }
 
     private void writeNewShoppingList() {

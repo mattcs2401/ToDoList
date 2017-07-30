@@ -10,10 +10,9 @@ public class Schema {
     public static final String TABLE_REF_ITEM   = "REF_ITEM";
     public static final String REF_ITEM_ROWID   = "_id";
     public static final String REF_ITEM_ARCHV   = "REF_ARCHV";   // archive flag.
-    public static final String REF_ITEM_CODE    = "REF_CODE";    // e.g. GENRL, FANDV etc.
-    public static final String REF_ITEM_DESC    = "REF_DESC";    // e.g. GENRL, Fruit&Veg etc
-    public static final String REF_ITEM_VALUE   = "REF_VALUE";   // e.g. Bread
-    public static final String REF_ITEM_VAL_SEL = "REF_SELECT";  // Y or N, item selected in UI
+    public static final String REF_ITEM_CODE    = "REF_CODE";    // e.g. FANDV.
+    public static final String REF_ITEM_DESC    = "REF_DESC";    // e.g. Fruit&Veg.
+    public static final String REF_ITEM_VALUE   = "REF_VALUE";   // e.g. Tomato.
 
     public static final String CREATE_TABLE_REF_ITEM = "CREATE TABLE "
             + TABLE_REF_ITEM   + " ("
@@ -21,16 +20,13 @@ public class Schema {
             + REF_ITEM_ARCHV   + " TEXT NOT NULL, "
             + REF_ITEM_CODE    + " TEXT NOT NULL, "
             + REF_ITEM_DESC    + " TEXT NOT NULL, "
-            + REF_ITEM_VALUE   + " TEXT NOT NULL, "
-            + REF_ITEM_VAL_SEL + " TEXT NOT NULL)";
+            + REF_ITEM_VALUE   + " TEXT NOT NULL)";
 
     public static final String DROP_TABLE_REF_ITEM =
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_REF_ITEM + ";";
 
     public static final String WHERE_REF_ITEM_ALL = REF_ITEM_ARCHV + "=?";
     public static final String WHERE_REF_ITEM_CODE = REF_ITEM_ARCHV + "=? AND " + REF_ITEM_CODE + "=?";
-    public static final String WHERE_REF_ITEM_SEL = REF_ITEM_VAL_SEL + "=?";
-    public static final String RAW_WHERE_REF_ITEM_SEL = " WHERE " + REF_ITEM_VAL_SEL + "=?";
     public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ROWID + "=?";
     public static final String WHERE_REF_ITEM_ARCHV = REF_ITEM_ARCHV + "=?";
     //</editor-fold>
