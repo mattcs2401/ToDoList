@@ -45,17 +45,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     private ShoppingItemsList getData(int pageNo) {
-        int size = shoppingItemsListAll.size();
-        String refCode = pageTitles[pageNo].split(":")[0];
-        ShoppingItemsList dataList = new ShoppingItemsList(refCode);
-
-        for(int ndx = 0; ndx < size; ndx++) {
-            // TODO - there is redundant processing here.
-            if(refCode.equals(shoppingItemsListAll.get(ndx).getRefCode())) {
-                dataList.add(shoppingItemsListAll.get(ndx));
-            }
-        }
-        return dataList;
+        return shoppingItemsListAll.get(pageTitles[pageNo].split(":")[0]);
     }
 
     /**
