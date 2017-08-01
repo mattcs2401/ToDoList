@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,8 +95,9 @@ public class EditActivity extends AppCompatActivity
                 int[] refIds = pagerAdapter.getShoppingListRefIds();
                 writeNewShoppingList(refIds);
             } else {
-                // TBA.
-                String bp = "";
+                // TODO - a dialog ? (i.e. continue or cancel)
+                Toast.makeText(this, "Nothing to save. No items selected.", Toast.LENGTH_SHORT).show();
+                finish();
             }
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             // TBA.
