@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemAdapter;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IShoppingListItemSelect;
 import mcssoft.com.todolist.model.items.ShoppingItemsList;
 import mcssoft.com.todolist.utility.Resources;
 
@@ -29,6 +30,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        iItemSelect = (IShoppingListItemSelect) getActivity();
         pageNo = getArguments().getInt(Resources.getInstance().getString(R.string.bundle_key));
         setShoppingAdapter();     // set adapter associated with the recycler view.
         setRecyclerView(rootView);// set the recycler view.
@@ -43,12 +45,13 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     @Override
     public void onItemClick(View view, int position) {
         // from shopping item view holder.
-        // TODO - interface back to EditActivity with pageNo, position boolean isChecked.
         if(view instanceof CheckBox) {
             if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
                 adapter.setCheck(position, true);
+                iItemSelect.iItemSelected(pageNo, position, true);
             } else {
                 adapter.setCheck(position, false);
+                iItemSelect.iItemSelected(pageNo, position, false);
             }
         }
     }
@@ -76,4 +79,5 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     private int pageNo;
     private View rootView;
     private ShoppingItemAdapter adapter;
+    private IShoppingListItemSelect iItemSelect;
 }

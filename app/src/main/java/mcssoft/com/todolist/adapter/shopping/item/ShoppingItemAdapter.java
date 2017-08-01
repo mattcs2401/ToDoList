@@ -9,6 +9,10 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.model.items.ShoppingItemsList;
 
+/**
+ * Class that represents the adapter behind a fragment (page) of the shopping item view pager.
+ * The backing data in the adapter is a sub-set of all the possible shopping list items.
+ */
 public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHolder> {
 
     @Override

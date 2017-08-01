@@ -53,13 +53,9 @@ public class ShoppingItemsListItem {
         this.selected = selected;
     }
 
-    private int refId;       // reference item identifier.
+    private int refId;       // reference item identifier (database row id).
     private String refCode;  // reference item code.
     private String refDesc;  // reference item description.
     private String refValue; // reference item value.
     private boolean selected;// reference item selected.
-
 }
-//    public static final String REF_ITEM_CODE    = "REF_CODE";    // e.g. GENRL, FANDV etc.
-//    public static final String REF_ITEM_DESC    = "REF_DESC";    // e.g. GENRL, Fruit&Veg etc
-//    public static final String REF_ITEM_VALUE   = "REF_VALUE";   // e.g. Bread

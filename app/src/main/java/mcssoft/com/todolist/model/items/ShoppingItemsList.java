@@ -27,10 +27,14 @@ public class ShoppingItemsList implements Parcelable {
     //<editor-fold defaultstate="collapsed" desc="Region: List actions">
     /**
      * Add a shopping list item to the shopping list.
-     * @param shoppingItemsListItem The shopping list item.
+     * @param sili The shopping list item.
      */
-    public void add(ShoppingItemsListItem shoppingItemsListItem) {
-        shoppingItemsList.add(shoppingItemsListItem);
+    public void add(ShoppingItemsListItem sili) {
+        shoppingItemsList.add(sili);
+    }
+
+    public void remove(ShoppingItemsListItem sili) {
+        shoppingItemsList.remove(sili);
     }
 
     /**

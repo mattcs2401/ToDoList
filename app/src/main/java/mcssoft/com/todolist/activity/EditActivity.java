@@ -1,7 +1,6 @@
 package mcssoft.com.todolist.activity;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -17,14 +16,16 @@ import java.util.List;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.database.Schema;
+import mcssoft.com.todolist.interfaces.IShoppingListItemSelect;
+import mcssoft.com.todolist.model.items.ShoppingItemsList;
 import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
  * Class to Add, Edit, or Delete a To Do item.
  */
-public class EditActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditActivity extends AppCompatActivity
+        implements View.OnClickListener, IShoppingListItemSelect {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,13 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Interface">
+    @Override
+    public void iItemSelected(int pagNo, int position, boolean isChecked) {
+        pagerAdapter.buildShoppingList(pagNo, position, isChecked);
+    }
+    //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -73,7 +81,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void finalise() {
         collateValuesFromSave();
-        clearValuesFromSave();
+        pagerAdapter.clearShoppingList();
         finish();
     }
 
@@ -81,11 +89,10 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
      * Get a list of all the selected shopping items.
      */
     private void collateValuesFromSave() {
-        int count = 0;
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-//            count = Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM,
-//                    Schema.RAW_WHERE_REF_ITEM_SEL, new String[] {"Y"});
-            if(count > 0) {
+            ShoppingItemsList shoppingList = pagerAdapter.getShoppingList();
+
+            if(shoppingList.size() > 0) {
                 writeNewShoppingList();
             } else {
                 String bp = "";
@@ -93,13 +100,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             String bp = "";
         }
-    }
-
-    /**
-     * Clear the check against all the previously selected shopping items.
-     */
-    private void clearValuesFromSave() {
-//        Database.getInstance().unCheckReferenceItems();
     }
 
     private void writeNewShoppingList() {
