@@ -80,6 +80,19 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         return shoppingItemsList;
     }
 
+    /**
+     * Get the identifiers of the selected shopping items.
+     * @return The identifiers.
+     */
+    public int[] getShoppingListRefIds() {
+        int size = shoppingItemsList.size();
+        int[] refIds = new int[size];
+        for(int ndx = 0; ndx < size; ndx++) {
+            refIds[ndx] = shoppingItemsList.get(ndx).getRefId();
+        }
+        return refIds;
+    }
+
     public void clearShoppingList() {
         shoppingItemsList = null;
         shoppingItemsList = new ShoppingItemsList(null);

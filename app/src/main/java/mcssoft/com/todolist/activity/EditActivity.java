@@ -90,19 +90,20 @@ public class EditActivity extends AppCompatActivity
      */
     private void collateValuesFromSave() {
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-            ShoppingItemsList shoppingList = pagerAdapter.getShoppingList();
-
-            if(shoppingList.size() > 0) {
-                writeNewShoppingList();
+            if(pagerAdapter.getShoppingList().size() > 0) {
+                int[] refIds = pagerAdapter.getShoppingListRefIds();
+                writeNewShoppingList(refIds);
             } else {
+                // TBA.
                 String bp = "";
             }
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+            // TBA.
             String bp = "";
         }
     }
 
-    private void writeNewShoppingList() {
+    private void writeNewShoppingList(int[] refIds) {
         List<String> colVals = new ArrayList<>();
         DateTime dateTime = new DateTime();
 
@@ -111,7 +112,7 @@ public class EditActivity extends AppCompatActivity
         colVals.add("TBA");                                // list name.
 
         long rowId = Database.getInstance().createShoppingList(colVals);
-        Database.getInstance().createShoppingListItems(rowId);
+        Database.getInstance().createShoppingListItems(rowId, refIds);
     }
     //</editor-fold>
 

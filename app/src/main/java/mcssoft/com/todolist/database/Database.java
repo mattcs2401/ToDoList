@@ -225,23 +225,19 @@ public class Database {
      * @param rowId The rowid of the shopping list to associate with,
      * @return The count of shopping list items.
      */
-    public int createShoppingListItems(long rowId) {
-        SQLiteDatabase db = dbHelper.getDatabase();
-//        Cursor refCursor = Database.getInstance().getReferenceItems();
-
-        Cursor refCursor = null;
-        int refId;
+    public int createShoppingListItems(long rowId, int[] refIds) {
         ContentValues cv;
+        int size = refIds.length;
+        SQLiteDatabase db = dbHelper.getDatabase();
 
-        while(refCursor.moveToNext()) {
+        for(int ndx = 0; ndx < size; ndx++) {
             cv = new ContentValues();
-            refId = refCursor.getInt(refCursor.getColumnIndex(Schema.REF_ITEM_ROWID));
 
             try {
                 db.beginTransaction();
                 cv.put(Schema.SLIST_ITEM_SLIST_ID, rowId);
                 cv.put(Schema.SLIST_ITEM_ARCHV, "N");
-                cv.put(Schema.SLIST_ITEM_REF_ID, refId);
+                cv.put(Schema.SLIST_ITEM_REF_ID, refIds[ndx]);
                 db.insertOrThrow(Schema.TABLE_SLIST_ITEM, null, cv);
                 db.setTransactionSuccessful();
             } catch(Exception ex) {
@@ -250,8 +246,7 @@ public class Database {
                 db.endTransaction();
             }
         }
-
-        return refCursor.getCount();
+        return refIds.length;
     }
 
     /**
