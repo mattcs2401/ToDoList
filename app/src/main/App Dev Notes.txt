@@ -7,4 +7,8 @@ In no particular order.
 -> Can we simplify the models ?
    - to help reduce in memory overhead.
 
+-> What sort of preferences do we want ?
 
+-> Maitenance
+   - add new shopping list items.
+   - edit/change a shopping list item.

@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             finish();
-//            Snackbar.make(getCurrentFocus(),
-//                    Resources.getInstance().getString(R.string.app_home_screen), Snackbar.LENGTH_LONG).show();
         }
     }
 
