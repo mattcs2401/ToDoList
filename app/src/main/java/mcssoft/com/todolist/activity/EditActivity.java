@@ -9,16 +9,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
+import mcssoft.com.todolist.fragment.dialog.NothingSelectedFragment;
+import mcssoft.com.todolist.interfaces.INothingSelected;
 import mcssoft.com.todolist.interfaces.IShoppingListItemSelect;
-import mcssoft.com.todolist.model.items.ShoppingItemsList;
 import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
@@ -26,7 +27,7 @@ import mcssoft.com.todolist.utility.Resources;
  * Class to Add, Edit, or Delete a To Do item.
  */
 public class EditActivity extends AppCompatActivity
-        implements View.OnClickListener, IShoppingListItemSelect {
+        implements View.OnClickListener, IShoppingListItemSelect, INothingSelected {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,14 @@ public class EditActivity extends AppCompatActivity
     public void iItemSelected(int pagNo, int position, boolean isChecked) {
         pagerAdapter.buildShoppingList(pagNo, position, isChecked);
     }
+
+    @Override
+    public void iNoSelect(boolean value) {
+        if(!value) {
+            finish();
+        }
+    }
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
@@ -83,7 +92,6 @@ public class EditActivity extends AppCompatActivity
     private void finalise() {
         collateValuesFromSave();
         pagerAdapter.clearShoppingList();
-        finish();
     }
 
     /**
@@ -96,8 +104,9 @@ public class EditActivity extends AppCompatActivity
                 writeNewShoppingList(refIds);
             } else {
                 // TODO - a dialog ? (i.e. continue or cancel)
-                Toast.makeText(this, "Nothing to save. No items selected.", Toast.LENGTH_SHORT).show();
-                finish();
+//                Toast.makeText(this, "Nothing to save. No items selected.", Toast.LENGTH_SHORT).show();
+                showNoSelectDialog();
+//                finish();
             }
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             // TBA.
@@ -115,6 +124,11 @@ public class EditActivity extends AppCompatActivity
 
         long rowId = Database.getInstance().createShoppingList(colVals);
         Database.getInstance().createShoppingListItems(rowId, refIds);
+    }
+
+    private void showNoSelectDialog() {
+        NothingSelectedFragment nsf = new NothingSelectedFragment();
+        nsf.show(getFragmentManager(), "nothing_selected_dialog_tag");
     }
     //</editor-fold>
 

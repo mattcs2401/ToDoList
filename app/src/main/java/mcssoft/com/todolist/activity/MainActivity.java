@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void showListSelectDialog() {
         ListSelectFragment lsf = new ListSelectFragment();
-        lsf.show(getFragmentManager(), "");
+        lsf.show(getFragmentManager(), "list_select_dialog_tag");
     }
 
     private void doNewShoppingList() {

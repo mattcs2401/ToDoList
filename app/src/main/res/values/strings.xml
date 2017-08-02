@@ -35,12 +35,17 @@
     <!-- Button text. -->
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="btn_continue">Continue</string>
 
     <!-- List select dialog. -->
     <string name="rb_list_select_shopping">Shopping</string>
     <string name="rb_list_select_general">General</string>
     <string name="list_select_title">List Type</string>
     <string name="list_select_message">Choose the type of list to create.</string>
+
+    <!-- Nothing selected dialog. -->
+    <string name="nothing_selected_title">Nothing Selected</string>
+    <string name="nothing_selected_message">No shopping items selected.\n\nContinue to create a shopping list ?</string>
 
     <!-- Shopping details dialog. -->
     <string name="sl_details_dialog_title">Shopping List Details</string>
