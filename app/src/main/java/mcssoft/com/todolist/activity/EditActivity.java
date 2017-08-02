@@ -12,7 +12,6 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
@@ -73,9 +72,7 @@ public class EditActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.id_edit_save:
-                // collate values that are checked in the shopping list items table.
                 finalise();
-                //return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -103,10 +100,7 @@ public class EditActivity extends AppCompatActivity
                 int[] refIds = pagerAdapter.getShoppingListRefIds();
                 writeNewShoppingList(refIds);
             } else {
-                // TODO - a dialog ? (i.e. continue or cancel)
-//                Toast.makeText(this, "Nothing to save. No items selected.", Toast.LENGTH_SHORT).show();
-                showNoSelectDialog();
-//                finish();
+                showNothingSelectedDialog();
             }
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             // TBA.
@@ -126,9 +120,9 @@ public class EditActivity extends AppCompatActivity
         Database.getInstance().createShoppingListItems(rowId, refIds);
     }
 
-    private void showNoSelectDialog() {
+    private void showNothingSelectedDialog() {
         NothingSelectedFragment nsf = new NothingSelectedFragment();
-        nsf.show(getFragmentManager(), "nothing_selected_dialog_tag");
+        nsf.show(getFragmentManager(), null);
     }
     //</editor-fold>
 

@@ -23,12 +23,9 @@ public class Database {
         dbHelper = new DatabaseHelper(context);
     }
 
-    public static synchronized Database getInstance(Context context) {
-        if(!instanceExists()) {
-            instance = new Database(context);
-            dbHelper = new DatabaseHelper(context);
-        }
-        return instance;
+    public static synchronized void setInstance(Context context) {
+        instance = new Database(context);
+        dbHelper = new DatabaseHelper(context);
     }
 
     public static synchronized Database getInstance() {

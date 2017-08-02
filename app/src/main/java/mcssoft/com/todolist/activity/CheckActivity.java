@@ -1,6 +1,7 @@
 package mcssoft.com.todolist.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,9 +20,9 @@ public class CheckActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_check);            // this likely won't be seen.
-
-        Resources.getInstance(getApplicationContext());    // set the Resources singleton.
-        Database.getInstance(getApplicationContext());     // set the database singleton.
+        Context context = getApplicationContext();
+        Resources.setInstance(context);          // set the Resources singleton.
+        Database.setInstance(context);           // set the database singleton.
 
         // check if default values exist.
         if(Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM, null, null) < 1) {
@@ -33,7 +34,15 @@ public class CheckActivity extends Activity {
     protected void onStart() {
         super.onStart();
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, NEW_MAIN, null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == NEW_MAIN) {
+            // user has pressed back from ActivityMain.
+            finish();
+        }
     }
 
     @Override
@@ -42,4 +51,6 @@ public class CheckActivity extends Activity {
         Database.getInstance().destroy();
         Resources.getInstance().destroy();
     }
+
+    private static int NEW_MAIN = 1;
 }

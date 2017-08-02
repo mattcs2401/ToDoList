@@ -19,11 +19,8 @@ public class Resources {
      * @param context The current context.
      * @return An instance of MeetingResources.
      */
-    public static synchronized Resources getInstance(Context context) {
-        if(!instanceExists()) {
-            instance = new Resources(context);
-        }
-        return instance;
+    public static synchronized void setInstance(Context context) {
+        instance = new Resources(context);
     }
 
     /**

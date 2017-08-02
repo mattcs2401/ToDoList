@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == NEW_SHOPPING) {
             setAdapter();    // essentially trigger reload main view.
         }
@@ -83,8 +82,9 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         else {
-            Snackbar.make(getCurrentFocus(),
-                    Resources.getInstance().getString(R.string.app_home_screen), Snackbar.LENGTH_LONG).show();
+            finish();
+//            Snackbar.make(getCurrentFocus(),
+//                    Resources.getInstance().getString(R.string.app_home_screen), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void showListSelectDialog() {
         ListSelectFragment lsf = new ListSelectFragment();
-        lsf.show(getFragmentManager(), "list_select_dialog_tag");
+        lsf.show(getFragmentManager(), null);
     }
 
     private void doNewShoppingList() {

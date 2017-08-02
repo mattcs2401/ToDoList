@@ -1,0 +1,10 @@
+---------------------
+App Development Notes
+---------------------
+
+In no particular order.
+
+-> Can we simplify the models ?
+   - to help reduce in memory overhead.
+
+
