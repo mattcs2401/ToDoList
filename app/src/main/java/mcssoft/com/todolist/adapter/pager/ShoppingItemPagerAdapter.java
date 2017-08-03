@@ -19,6 +19,8 @@ import mcssoft.com.todolist.utility.Resources;
 
 public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
 
+    // TODO - need something that says this is for a new shopping list, or editing one.
+
     public ShoppingItemPagerAdapter(FragmentManager fragmentManager, Context context) {
         super(fragmentManager);
         shoppingItemsList = new ShoppingItemsList(null);

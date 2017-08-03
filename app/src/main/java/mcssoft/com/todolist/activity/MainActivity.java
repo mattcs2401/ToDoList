@@ -1,10 +1,8 @@
 package mcssoft.com.todolist.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,8 +16,6 @@ import android.view.MenuItem;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.MainPagerAdapter;
-import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
-import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.fragment.dialog.ListSelectFragment;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.interfaces.IListSelect;
@@ -47,6 +43,12 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        String bp = ";";
+        // TBA
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
@@ -69,8 +71,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == NEW_SHOPPING) {
-            setAdapter();    // essentially trigger reload main view.
+        switch (requestCode) {
+            case NEW_SHOPPING:
+            case EDIT_SHOPPING:
+                setAdapter();     // essentially trigger reload main view.
         }
     }
     //</editor-fold>
@@ -119,17 +123,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        String bp = ";";
         if(view instanceof FloatingActionButton) {
             // Launch dialog for user to select new list type.
             showListSelectDialog();
         }
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        String bp = ";";
-        // TBA
     }
     //</editor-fold>
 
@@ -150,6 +147,20 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
         startActivityForResult(intent, NEW_SHOPPING);
     }
+
+/*    private void doEditShoppingList(int position) {
+        // set list type as shopping.
+        Bundle bundle = new Bundle();
+        bundle.putString(Resources.getInstance().getString(R.string.list_type_key),
+                Resources.getInstance().getString(R.string.list_type_shopping));
+        // set the position of the item to edit.
+        bundle.putInt(Resources.getInstance().getString(R.string.list_edit_position_key), position);
+        // set action as edit.
+        Intent intent = new Intent(this, EditActivity.class);
+        intent.setAction(Resources.getInstance().getString(R.string.list_edit_action_key));
+        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
+        startActivityForResult(intent, EDIT_SHOPPING);
+    }*/
 
     private void doNewGeneralList() {
         // TBA.
@@ -189,6 +200,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final int NEW_SHOPPING = 1;   // request code.
     private static final int NEW_GENERAL = 2;    // "       "
+    private static final int EDIT_SHOPPING = 3;  // "       "
     //</editor-fold>
 }
 

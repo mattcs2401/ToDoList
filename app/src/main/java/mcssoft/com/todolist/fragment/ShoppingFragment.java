@@ -1,5 +1,6 @@
 package mcssoft.com.todolist.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,16 +15,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.activity.EditActivity;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.fragment.dialog.ShoppingDetailsFragment;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemLongClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
 
 public class ShoppingFragment extends Fragment
-        implements IItemClickListener, View.OnClickListener {
+        implements IItemClickListener, IItemLongClickListener, View.OnClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -40,7 +43,6 @@ public class ShoppingFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         setCursor();        // generate backing data.
         setShoppingAdapter();     // set adapter associated with the recycler view.
         setRecyclerView(rootView);// set the recycler view.
@@ -73,6 +75,11 @@ public class ShoppingFragment extends Fragment
                 showShoppingDetails(dbRowId);
                 break;
         }
+    }
+
+    @Override
+    public void onItemLongClick(View view, int posiiton) {
+        doEditShoppingList(posiiton, getDbRowId(posiiton));
     }
     //</editor-fold>
 
@@ -109,6 +116,7 @@ public class ShoppingFragment extends Fragment
             adapter.setMetaData(Database.getInstance().getShoppingMetaData());
         }
         adapter.setOnItemClickListener(this);
+        adapter.setOnItemLongClickListener(this);
      }
 
     private void setRecyclerView(View view) {
@@ -141,7 +149,24 @@ public class ShoppingFragment extends Fragment
         sdf.setArguments(args);
         sdf.show(getActivity().getFragmentManager(), null);
     }
+
+    private void doEditShoppingList(int position, int dbRowId) {
+        /* Edit function here as Fragment is instantiated from the PagerAdapter, not the MainActivity.*/
+        // set list type as shopping.
+        Bundle bundle = new Bundle();
+        bundle.putString(Resources.getInstance().getString(R.string.list_type_key),
+                Resources.getInstance().getString(R.string.list_type_shopping));
+        // set the position of the item to edit.
+        bundle.putInt(Resources.getInstance().getString(R.string.list_edit_position_key), position);
+        bundle.putInt(Resources.getInstance().getString(R.string.list_edit_rowid_key), dbRowId);
+        // set action as edit.
+        Intent intent = new Intent(getActivity(), EditActivity.class);
+        intent.setAction(Resources.getInstance().getString(R.string.list_edit_action_key));
+        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
+        startActivityForResult(intent, 3);
+    }
     //</editor-fold>
+
 
     private int dbRowId;
     private int position;

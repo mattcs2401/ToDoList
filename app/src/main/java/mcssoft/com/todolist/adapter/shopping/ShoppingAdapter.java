@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemLongClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
 public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
@@ -28,7 +29,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
                 return new ShoppingViewHolder(view);
             case SHOPPING_VIEW:
                 view = inflater.inflate(R.layout.shopping_row, parent, false);
-                return new ShoppingViewHolder(view, icListener);
+                return new ShoppingViewHolder(view, icListener, ilcListener);
         }
         return null;
     }
@@ -83,6 +84,10 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         this.icListener = iclistener;
     }
 
+    public void setOnItemLongClickListener(IItemLongClickListener ilclistener) {
+        this.ilcListener = ilclistener;
+    }
+
     public void setEmptyView(boolean isEmptyView) {
         this.isEmptyView = isEmptyView;
     }
@@ -106,14 +111,15 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         this.metaData = metaData;
     }
 
-    private Cursor cursor;                  // backing data
-    private int idColNdx;                   // SLIST.ROWID
-    private int idDateNdx;                  // SLIST.DATE
-    private int idNameNdx;                  // SLIST.NAME
-    private int idNdx;                      // SLIST.ID
-    private boolean isEmptyView;            // flag, nothing to show.
-    private ArrayList<int[]> metaData;      // shopping list meta data.
-    private IItemClickListener icListener;  // interface listener.
+    private Cursor cursor;                       // backing data
+    private int idColNdx;                        // SLIST.ROWID
+    private int idDateNdx;                       // SLIST.DATE
+    private int idNameNdx;                       // SLIST.NAME
+    private int idNdx;                           // SLIST.ID
+    private boolean isEmptyView;                 // flag, nothing to show.
+    private ArrayList<int[]> metaData;           // shopping list meta data.
+    private IItemClickListener icListener;       // interface click listener.
+    private IItemLongClickListener ilcListener;  // interface long click listener.
 
     private static final int EMPTY_VIEW = 0;
     private static final int SHOPPING_VIEW = 1;

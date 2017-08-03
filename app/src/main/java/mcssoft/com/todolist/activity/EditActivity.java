@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,8 @@ public class EditActivity extends AppCompatActivity
             // add a new item to a list.
             addListItem();
         } else if (action.equals(Resources.getInstance().getString(R.string.list_edit_action_key))) {
-            // TBA.
+//            Toast.makeText(this, "In EditActivity", Toast.LENGTH_SHORT).show();
+            editListItem();
         } else if(action.equals(Resources.getInstance().getString(R.string.list_delete_action_key))) {
             // TBA.
         }
@@ -129,10 +131,22 @@ public class EditActivity extends AppCompatActivity
             setContentView(R.layout.cv_shopping);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_shopping));
             setAdapter();
-//            setTabLayout();
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             setContentView(R.layout.cv_general);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_general));
+            // TBA - remainder.
+        }
+    }
+
+    private void editListItem() {
+        if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
+            setContentView(R.layout.cv_shopping);
+            setActionBar(Resources.getInstance().getString(R.string.toolbar_title_edit_shopping));
+            setAdapter();
+        } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+            setContentView(R.layout.cv_general);
+            setActionBar(Resources.getInstance().getString(R.string.toolbar_title_edit_general));
+            // TBA - remainder.
         }
     }
     //</editor-fold>
@@ -151,7 +165,7 @@ public class EditActivity extends AppCompatActivity
     private void setAdapter() {
         pagerAdapter = new ShoppingItemPagerAdapter(getSupportFragmentManager(), this);
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
-        viewPager.setAdapter(pagerAdapter);
+//        viewPager.setAdapter(pagerAdapter);
     }
     //</editor-fold>
 

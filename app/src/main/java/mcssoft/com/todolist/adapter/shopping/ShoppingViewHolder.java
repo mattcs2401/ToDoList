@@ -7,9 +7,11 @@ import android.widget.TextView;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemLongClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
-public class ShoppingViewHolder extends ParentViewHolder implements View.OnClickListener {
+public class ShoppingViewHolder extends ParentViewHolder
+        implements View.OnClickListener, View.OnLongClickListener {
 
 
     public ShoppingViewHolder(View view) {
@@ -18,7 +20,7 @@ public class ShoppingViewHolder extends ParentViewHolder implements View.OnClick
         tvEmpty.setText(Resources.getInstance().getString(R.string.nothing_to_show));
     }
 
-    public ShoppingViewHolder(View view, IItemClickListener iclistener) {
+    public ShoppingViewHolder(View view, IItemClickListener iclistener, IItemLongClickListener ilclIstener) {
         super(view);
         tvTitle = (TextView) view.findViewById(R.id.id_tv_shopping_title);
         tvDate = (TextView) view.findViewById(R.id.id_tv_date);
@@ -30,7 +32,9 @@ public class ShoppingViewHolder extends ParentViewHolder implements View.OnClick
         ivDelete.setOnClickListener(this);
         ivExpand.setOnClickListener(this);
         this.icListener = iclistener;
+        this.ilclIstener = ilclIstener;
         view.setOnClickListener(this);
+        view.setOnLongClickListener(this);
     }
 
     /**
@@ -40,6 +44,12 @@ public class ShoppingViewHolder extends ParentViewHolder implements View.OnClick
     @Override
     public void onClick(View view) {
         icListener.onItemClick(view, getAdapterPosition());
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        ilclIstener.onItemLongClick(view, getAdapterPosition());
+        return true;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">
@@ -61,5 +71,6 @@ public class ShoppingViewHolder extends ParentViewHolder implements View.OnClick
     private ImageView ivExpand;
     private ImageView ivDelete;
     private IItemClickListener icListener;
+    private IItemLongClickListener ilclIstener;
     //</editor-fold>
 }
