@@ -87,18 +87,11 @@ public class EditActivity extends AppCompatActivity
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void finalise() {
-        collateValuesFromSave();
-        pagerAdapter.clearShoppingList();
-    }
-
-    /**
-     * Get a list of all the selected shopping items.
-     */
-    private void collateValuesFromSave() {
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
             if(pagerAdapter.getShoppingList().size() > 0) {
-                int[] refIds = pagerAdapter.getShoppingListRefIds();
-                writeNewShoppingList(refIds);
+                writeNewShoppingList(pagerAdapter.getShoppingListRefIds());
+                clearShoppingListData();
+                finish();
             } else {
                 showNothingSelectedDialog();
             }
@@ -106,6 +99,10 @@ public class EditActivity extends AppCompatActivity
             // TBA.
             String bp = "";
         }
+    }
+
+    private void clearShoppingListData() {
+        pagerAdapter.clearShoppingList();
     }
 
     private void writeNewShoppingList(int[] refIds) {
