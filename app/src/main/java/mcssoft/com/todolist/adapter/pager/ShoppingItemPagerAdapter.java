@@ -21,7 +21,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
 
     // TODO - need something that says this is for a new shopping list, or editing one.
 
-    public ShoppingItemPagerAdapter(FragmentManager fragmentManager, Context context) {
+    public ShoppingItemPagerAdapter(FragmentManager fragmentManager) { //}, Context context) {
         super(fragmentManager);
         shoppingItemsList = new ShoppingItemsList(null);
         pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);

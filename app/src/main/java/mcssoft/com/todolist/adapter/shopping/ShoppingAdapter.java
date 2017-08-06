@@ -119,7 +119,8 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     private boolean isEmptyView;                 // flag, nothing to show.
     private ArrayList<int[]> metaData;           // shopping list meta data.
     private IItemClickListener icListener;       // interface click listener.
-    private IItemLongClickListener ilcListener;  // interface long click listener.
+    private IItemLongClickListener ilcListener;  // interface long
+    // click listener.
 
     private static final int EMPTY_VIEW = 0;
     private static final int SHOPPING_VIEW = 1;

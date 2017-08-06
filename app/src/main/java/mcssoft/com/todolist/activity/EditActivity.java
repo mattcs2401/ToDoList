@@ -163,9 +163,9 @@ public class EditActivity extends AppCompatActivity
     }
 
     private void setAdapter() {
-        pagerAdapter = new ShoppingItemPagerAdapter(getSupportFragmentManager(), this);
+        pagerAdapter = new ShoppingItemPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
-//        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(pagerAdapter);
     }
     //</editor-fold>
 
