@@ -81,7 +81,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Schema.REF_ITEM_ARCHV,
             Schema.REF_ITEM_CODE,
             Schema.REF_ITEM_DESC,
-            Schema.REF_ITEM_VALUE
+            Schema.REF_ITEM_VALUE,
+            Schema.REF_ITEM_SEL
         };
     }
 

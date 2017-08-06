@@ -7,20 +7,22 @@ public class Schema {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Table REF_ITEM">
     // A record in this table represent a single reference item.
-    public static final String TABLE_REF_ITEM   = "REF_ITEM";
-    public static final String REF_ITEM_ROWID   = "_id";
-    public static final String REF_ITEM_ARCHV   = "REF_ARCHV";   // archive flag.
-    public static final String REF_ITEM_CODE    = "REF_CODE";    // e.g. FANDV.
-    public static final String REF_ITEM_DESC    = "REF_DESC";    // e.g. Fruit&Veg.
-    public static final String REF_ITEM_VALUE   = "REF_VALUE";   // e.g. Tomato.
+    public static final String TABLE_REF_ITEM = "REF_ITEM";
+    public static final String REF_ITEM_ROWID = "_id";
+    public static final String REF_ITEM_ARCHV = "REF_ARCHV";   // archive flag.
+    public static final String REF_ITEM_CODE  = "REF_CODE";    // e.g. FANDV.
+    public static final String REF_ITEM_DESC  = "REF_DESC";    // e.g. Fruit&Veg.
+    public static final String REF_ITEM_VALUE = "REF_VALUE";   // e.g. Tomato.
+    public static final String REF_ITEM_SEL   = "REF_SEL";     // flag, value selected for a list.
 
     public static final String CREATE_TABLE_REF_ITEM = "CREATE TABLE "
-            + TABLE_REF_ITEM   + " ("
-            + REF_ITEM_ROWID   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + REF_ITEM_ARCHV   + " TEXT NOT NULL, "
-            + REF_ITEM_CODE    + " TEXT NOT NULL, "
-            + REF_ITEM_DESC    + " TEXT NOT NULL, "
-            + REF_ITEM_VALUE   + " TEXT NOT NULL)";
+            + TABLE_REF_ITEM + " ("
+            + REF_ITEM_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + REF_ITEM_ARCHV + " TEXT NOT NULL, "
+            + REF_ITEM_CODE  + " TEXT NOT NULL, "
+            + REF_ITEM_DESC  + " TEXT NOT NULL, "
+            + REF_ITEM_VALUE + " TEXT NOT NULL, "
+            + REF_ITEM_SEL   + " TEXT NOT NULL)";
 
     public static final String DROP_TABLE_REF_ITEM =
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_REF_ITEM + ";";
@@ -29,6 +31,7 @@ public class Schema {
 
     public static final String WHERE_REF_ITEM_ALL = REF_ITEM_ARCHV + "=?";
     public static final String WHERE_REF_ITEM_ROWID = REF_ITEM_ARCHV_NO + REF_ITEM_ROWID + "=?";
+    public static final String WHERE_REF_ITEM_SEL = REF_ITEM_SEL + "=?";
     public static final String WHERE_REF_ITEM_CODE = REF_ITEM_ARCHV_NO + REF_ITEM_CODE + "=?";
     public static final String WHERE_REF_ITEM_ARCHV = REF_ITEM_ARCHV + "=?";
     //</editor-fold>

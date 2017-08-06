@@ -23,30 +23,40 @@ public class Database {
         dbHelper = new DatabaseHelper(context);
     }
 
+    /**
+     * Set the database singleton instance. This must be called before getInstance().
+     * @param context The current context.
+     */
     public static synchronized void setInstance(Context context) {
         instance = new Database(context);
         dbHelper = new DatabaseHelper(context);
     }
 
+    /**
+     * Get the current database instance. Must be called in conjunction with any other methode,
+     * e.g. Database.getInstance().methodName();
+     * @return The curreent database instance.
+     */
     public static synchronized Database getInstance() {
         return instance;
     }
-
-    public static boolean instanceExists() {
-        return instance != null ? true : false;
-    }
     //</editor-fold>
 
+    /**
+     * Get all the items associated with a shopping list.
+     * @param dbRowId The database row id reference of the shopping list.
+     * @return A cursor over all the items.
+     */
     public Cursor getShopping(int dbRowId) {
         return getRecordsRaw(Schema.QUERY_RAW_GET_SHOPPING, new String[] {Integer.toString(dbRowId)});
     }
 
+    /**
+     * Get all shopping lists (less the items that comprise an individual shopping list).
+     * @return A cursor over the shopping lists.
+     */
     public Cursor getAllShopping() {
-        Cursor cursor = getRecords(Schema.TABLE_SLIST, null, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
-//        Bundle bundle = new Bundle();
-//        bundle.putStringArrayList(Resources.getInstance().getString(R.string.bundle_key), getShoppingAndItemCount());
-//        cursor.respond(bundle);
-        return cursor;
+        return getRecords(Schema.TABLE_SLIST, null, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
     }
 
     /**
@@ -65,38 +75,41 @@ public class Database {
         return idsList;
     }
 
+    /**
+     * Get all the items of type General.
+     * @return A cursor over the items.
+     */
     public Cursor getAllGeneral() {
         return getRecords(Schema.TABLE_GENERAL, null, Schema.WHERE_GENERAL_ARCHV, new String[] {"N"});
     }
 
-//    /**
-//     * Uncheck previously selected reference items.
-//     * @return A count of the items unchecked.
-//     */
-//    public int unCheckReferenceItems() {
-//        int rowId;
-//        Cursor cursor = getReferenceItems();
-//        while(cursor.moveToNext()) {
-//            rowId = cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID));
-//            setCheckReferenceItem(rowId, false);
-//        }
-//        return cursor.getCount();
-//    }
-
     /**
-     * Get a record from the reference items.
-     * @param dbRowId The row id.
-     * @return The reference item record.
+     * Uncheck previously selected reference items.
+     * @return A count of the items unchecked.
      */
-    public Cursor getReferenceItem(int dbRowId) {
-        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
+    public int unCheckReferenceItems() {
+        int rowId;
+        Cursor cursor = getCheckedReferenceItems();
+        while(cursor.moveToNext()) {
+            rowId = cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID));
+            setCheckReferenceItem(rowId, false);
+        }
+        return cursor.getCount();
     }
 
     /**
-     * Set the the REF_ITEM_VAL_SEL column as N ot Y (i.e. check or uncheck);
-     * @param dbRowId The row id of the SL item.
-     * @param check True - set Y, else set N.
-     * @return 1 if the row updated *(checked or unchecked).
+     * Get all checked reference items.
+     * @return A cursor over the checked items.
+     */
+    public Cursor getCheckedReferenceItems() {
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_SEL, new String[] {"Y"});
+    }
+
+    /**
+     * Set the the REF_ITEM_SEL column as N ot Y (i.e. checked or unchecked);
+     * @param dbRowId The row id of the reference item.
+     * @param check True set Y, else set N.
+     * @return 1 if the row updated (checked or unchecked).
      */
     public int setCheckReferenceItem(int dbRowId, boolean check) {
         int count = -1;
@@ -106,9 +119,9 @@ public class Database {
         try {
             db.beginTransaction();
             if(check) {
-//                cv.put(Schema.REF_ITEM_VAL_SEL, "Y");
+                cv.put(Schema.REF_ITEM_SEL, "Y");
             } else {
-//                cv.put(Schema.REF_ITEM_VAL_SEL, "N");
+                cv.put(Schema.REF_ITEM_SEL, "N");
             }
             count = db.update(Schema.TABLE_REF_ITEM, cv, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
             db.setTransactionSuccessful();
@@ -122,6 +135,10 @@ public class Database {
         return count;
     }
 
+    /**
+     * Get all the reference items.
+     * @return A cursor over the items.
+     */
     public Cursor getAllReferenceItems() {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_ALL, new String[] {"N"});
     }
@@ -254,7 +271,7 @@ public class Database {
         String code;
         String desc;
         String[] itemTypes = Resources.getInstance().getStringArray(R.array.shopping_item_types);
-        List<String[]> allDefaults = mcssoft.com.todolist.utility.Resources.getInstance().getAllDefaults();
+        List<String[]> allDefaults = Resources.getInstance().getAllDefaults();
 
         SQLiteDatabase db = dbHelper.getDatabase();
         ContentValues cv = new ContentValues();
@@ -271,6 +288,7 @@ public class Database {
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
+                cv.put(Schema.REF_ITEM_SEL, "N");
                 db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -299,7 +317,9 @@ public class Database {
             } catch(SQLException ex){
                 Log.d(context.getClass().getCanonicalName(), ex.getMessage());
             } finally{
-                db.endTransaction();
+                if(db != null) {
+                    db.endTransaction();
+                }
             }
         }
 
@@ -319,11 +339,11 @@ public class Database {
             } catch(SQLException ex){
                 Log.d(context.getClass().getCanonicalName(), ex.getMessage());
             } finally{
-                db.endTransaction();
+                if(db != null) {
+                    db.endTransaction();
+                }
             }
         }
-
-//        dbHelper.close();
         // TODO - item type OTHER not done.
     }
 
@@ -354,6 +374,9 @@ public class Database {
         } catch(Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {
+            if(db != null) {
+                db.endTransaction();
+            }
             return cursor;
         }
     }
@@ -367,7 +390,9 @@ public class Database {
         } catch (Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {
-            db.endTransaction();
+            if(db != null) {
+                db.endTransaction();
+            }
             return cursor;
         }
     }
