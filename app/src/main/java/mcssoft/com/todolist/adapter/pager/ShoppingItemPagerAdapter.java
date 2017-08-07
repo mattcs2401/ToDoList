@@ -25,7 +25,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         super(fragmentManager);
         shoppingItemsList = new ShoppingItemsList(null);
         pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
-        getAllData();
+//        getAllData();
     }
 
     @Override
@@ -33,9 +33,13 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         ShoppingItemFragment shoppingItemFragment = new ShoppingItemFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
-        bundle.putParcelable(Resources.getInstance().getString(R.string.bundle_data_key), getData(position));
+        bundle.putParcelable(Resources.getInstance().getString(R.string.bundle_data_key), getData((String) getPageCode(position)));
         shoppingItemFragment.setArguments(bundle);
         return shoppingItemFragment;
+    }
+
+    public CharSequence getPageCode(int position) {
+        return pageTitles[position].split(":")[0];
     }
 
     @Override
@@ -57,21 +61,21 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
     public void buildShoppingList(int pageNo, int position, boolean isChecked) {
         // get the 'equivalent' shopping list item from the main list.
         ShoppingItemsListItem temp = null;
-        ArrayList<ShoppingItemsListItem> sil = getData(pageNo).get();
-
-        for(ShoppingItemsListItem sili : sil) {
-        // TODO - lot of redundant processing if selected items have a high adapter position number.
-            temp = sil.get(position);
-            if(temp.getRefId() == sili.getRefId()) {
-                if(isChecked) {
-                    shoppingItemsList.add(sili);
-                    break;
-                } else {
-                    shoppingItemsList.remove(sili);
-                    break;
-                }
-            }
-        }
+//        ArrayList<ShoppingItemsListItem> sil = getData(pageNo).get();
+//
+//        for(ShoppingItemsListItem sili : sil) {
+//        // TODO - lot of redundant processing if selected items have a high adapter position number.
+//            temp = sil.get(position);
+//            if(temp.getRefId() == sili.getRefId()) {
+//                if(isChecked) {
+//                    shoppingItemsList.add(sili);
+//                    break;
+//                } else {
+//                    shoppingItemsList.remove(sili);
+//                    break;
+//                }
+//            }
+//        }
     }
 
     /**
@@ -100,36 +104,52 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         shoppingItemsList = new ShoppingItemsList(null);
     }
 
-    /**
-     * Get the backing data for a shopping items page.
-     * @param pageNo The page number.
-     * @return The list of items.
-     */
-    private ShoppingItemsList getData(int pageNo) {
-        return shoppingItemsListAll.get(pageTitles[pageNo].split(":")[0]);
-    }
+//    /**
+//     * Get the backing data for a shopping items page.
+//     * @param pageNo The page number.
+//     * @return The list of items.
+//     */
+//    private ShoppingItemsList getData(int pageNo) {
+//        return shoppingItemsListAll.get(pageTitles[pageNo].split(":")[0]);
+//    }
 
-    /**
-     * Get ref item data from the database and create a master list to be used as the backing
-     * (in memory) data for the shopping item pages to display.
-     */
-    private void getAllData() {
-        shoppingItemsListAll = new ShoppingItemsList("");
-        Cursor cursor = Database.getInstance().getAllReferenceItems();
+    private ShoppingItemsList getData(String pageCode) {
+        ShoppingItemsList shoppingItemsList = new ShoppingItemsList("");
+        Cursor cursor = Database.getInstance().getAllReferenceItems(pageCode);
         while(cursor.moveToNext()) {
             ShoppingItemsListItem sili = new ShoppingItemsListItem(
-                cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID)),
-                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
-                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
-                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),
-                false);
+                    cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID)),
+                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
+                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
+                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),
+                    false);
 
-            shoppingItemsListAll.add(sili);
+            shoppingItemsList.add(sili);
         }
+        return shoppingItemsList;
     }
+
+//    /**
+//     * Get ref item data from the database and create a master list to be used as the backing
+//     * (in memory) data for the shopping item pages to display.
+//     */
+//    private void getAllData() {
+//        shoppingItemsListAll = new ShoppingItemsList("");
+//        Cursor cursor = Database.getInstance().getAllReferenceItems();
+//        while(cursor.moveToNext()) {
+//            ShoppingItemsListItem sili = new ShoppingItemsListItem(
+//                cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID)),
+//                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
+//                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
+//                cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),
+//                false);
+//
+//            shoppingItemsListAll.add(sili);
+//        }
+//    }
 
     private String[] pageTitles;
     private ShoppingItemsList shoppingItemsList;      // the current list of shopping items.
-    private ShoppingItemsList shoppingItemsListAll;   // the 'master' list of all possible shopping
+//    private ShoppingItemsList shoppingItemsListAll;   // the 'master' list of all possible shopping
                                                       // list items.
 }

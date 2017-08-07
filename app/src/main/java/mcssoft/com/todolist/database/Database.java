@@ -146,6 +146,10 @@ public class Database {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_ALL, new String[] {"N"});
     }
 
+    public Cursor getAllReferenceItems(String pageCode) {
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, new String[] {pageCode});
+    }
+
     /**
      * Get the number of records for a table.
      * @param tableName The table to check.
@@ -315,6 +319,7 @@ public class Database {
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
+                cv.put(Schema.REF_ITEM_SEL, "N");
                 db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -337,6 +342,7 @@ public class Database {
                 cv.put(Schema.REF_ITEM_CODE, code);
                 cv.put(Schema.REF_ITEM_DESC, desc);
                 cv.put(Schema.REF_ITEM_VALUE, val);
+                cv.put(Schema.REF_ITEM_SEL, "N");
                 db.insertOrThrow(tableName, null, cv);
                 db.setTransactionSuccessful();
             } catch(SQLException ex){
@@ -374,6 +380,7 @@ public class Database {
             db.beginTransaction();
             cursor = db.query(tableName, projection, whereClause, selArgs, null, null, null);
         } catch(Exception ex) {
+
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {
             if(db != null) {
