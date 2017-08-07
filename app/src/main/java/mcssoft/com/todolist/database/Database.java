@@ -283,11 +283,11 @@ public class Database {
         SQLiteDatabase db = dbHelper.getDatabase();
         ContentValues cv = new ContentValues();
 
-        String[] general = allDefaults.get(0);
+        String[] type = allDefaults.get(0);
         code = itemTypes[0].split(":")[0];
         desc = itemTypes[0].split(":")[1];
 
-        for (String val : general) {
+        for (String val : type) {
 
             try {
                 db.beginTransaction();
@@ -307,11 +307,11 @@ public class Database {
             }
         }
 
-        general = allDefaults.get(1);
+        type = allDefaults.get(1);
         code = itemTypes[1].split(":")[0];
         desc = itemTypes[1].split(":")[1];
 
-        for (String val : general) {
+        for (String val : type) {
 
             try {
                 db.beginTransaction();
@@ -331,11 +331,11 @@ public class Database {
             }
         }
 
-        general = allDefaults.get(2);
+        type = allDefaults.get(2);
         code = itemTypes[2].split(":")[0];
         desc = itemTypes[2].split(":")[1];
 
-        for (String val : general) {
+        for (String val : type) {
             try {
                 db.beginTransaction();
                 cv.put(Schema.REF_ITEM_ARCHV, "N");
