@@ -126,7 +126,9 @@ public class Database {
             } else {
                 cv.put(Schema.REF_ITEM_SEL, "N");
             }
-            count = db.update(Schema.TABLE_REF_ITEM, cv, Schema.WHERE_REF_ITEM_ROWID, new String[] {Integer.toString(dbRowId)});
+            count = db.update(Schema.TABLE_REF_ITEM, cv, Schema.WHERE_REF_ITEM_ROWID,
+                    new String[] {Integer.toString(dbRowId), "N"});
+
             db.setTransactionSuccessful();
         } catch(Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -147,7 +149,7 @@ public class Database {
     }
 
     public Cursor getAllReferenceItems(String pageCode) {
-        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, new String[] {pageCode});
+        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, new String[] {pageCode, "N"});
     }
 
     /**
@@ -380,7 +382,6 @@ public class Database {
             db.beginTransaction();
             cursor = db.query(tableName, projection, whereClause, selArgs, null, null, null);
         } catch(Exception ex) {
-
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {
             if(db != null) {

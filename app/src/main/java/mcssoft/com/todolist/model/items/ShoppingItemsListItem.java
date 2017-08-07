@@ -5,12 +5,12 @@ package mcssoft.com.todolist.model.items;
  */
 public class ShoppingItemsListItem {
 
-    public ShoppingItemsListItem(int refId, String refCode, String refDesc, String refValue, boolean selected) {
+    public ShoppingItemsListItem(int refId, String refCode, String refDesc, String refValue, String refSelect) {
         this.refId = refId;
         this.refCode = refCode;
         this.refDesc = refDesc;
         this.refValue = refValue;
-        this.selected = selected;
+        this.refSelect = refSelect;
     }
 
     public int getRefId() {
@@ -45,17 +45,17 @@ public class ShoppingItemsListItem {
         this.refValue = refValue;
     }
 
-    public boolean getSelected() {
-        return selected;
+    public String getRefSelect() {
+        return refSelect;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public void setRefSelect(String refSelect) {
+        this.refSelect = refSelect;
     }
 
-    private int refId;       // reference item identifier (database row id).
-    private String refCode;  // reference item code.
-    private String refDesc;  // reference item description.
-    private String refValue; // reference item value.
-    private boolean selected;// reference item selected.
+    private int refId;            // reference item identifier (database row id).
+    private String refCode;       // reference item code.
+    private String refDesc;       // reference item description.
+    private String refValue;      // reference item value.
+    private String refSelect;     // reference item select.
 }

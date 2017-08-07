@@ -31,7 +31,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
+    public String getPageTitle(int position) {
         String title = null;
         switch(position) {
             case SHOPPING:
