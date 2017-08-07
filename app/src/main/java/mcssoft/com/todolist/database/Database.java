@@ -65,7 +65,10 @@ public class Database {
      */
     public ArrayList<int[]> getShoppingMetaData() {
         ArrayList<int[]> idsList = new ArrayList<>();
-        Cursor ids = getRecords(Schema.TABLE_SLIST, new String[] {Schema.SLIST_ROWID}, Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
+        // get the shopping list(s).
+        Cursor ids = getRecords(Schema.TABLE_SLIST, new String[] {Schema.SLIST_ROWID},
+                Schema.WHERE_SLIST_ARCHV, new String[] {"N"});
+        // get the count of associated shopping list items.
         while(ids.moveToNext()) {
             int rowId = ids.getInt(ids.getColumnIndexOrThrow(Schema.SLIST_ROWID));
             Cursor cursor = getShopping(rowId);
@@ -355,13 +358,13 @@ public class Database {
     private Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
 
         // sanity checks.
+        if(projection == null) {
+            projection = getProjection(tableName);
+        }
         if(whereClause == null) {
             selArgs = null;
         } else if(selArgs == null) {
             whereClause = null;
-        }
-        if(projection == null) {
-            projection = getProjection(tableName);
         }
 
         Cursor cursor = null;
@@ -370,7 +373,6 @@ public class Database {
         try {
             db.beginTransaction();
             cursor = db.query(tableName, projection, whereClause, selArgs, null, null, null);
-            db.endTransaction();
         } catch(Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
         } finally {

@@ -76,7 +76,6 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         if(isEmptyView) {
             return EMPTY_VIEW;
         }
-        //return super.getItemViewType(position);  // this returns 0.
         return SHOPPING_VIEW;
     }
 
@@ -92,9 +91,9 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         this.isEmptyView = isEmptyView;
     }
 
-    public Cursor getCursor() { return cursor; }
+    public Cursor getData() { return cursor; }
 
-    public void swapCursor(Cursor cursor) {
+    public void setData(Cursor cursor) {
         if(cursor == null || cursor.getCount() < 1) {
             isEmptyView = true;
         } else {
@@ -107,6 +106,11 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         notifyDataSetChanged();
     }
 
+    /**
+     * Use a small amount of in memory data to lessen the amount of processing within each call to
+     * onBindViewHolder().
+     * @param metaData (any list member) [0] database row id, [1] count of associated shopping items.
+     */
     public void setMetaData(ArrayList<int[]> metaData) {
         this.metaData = metaData;
     }

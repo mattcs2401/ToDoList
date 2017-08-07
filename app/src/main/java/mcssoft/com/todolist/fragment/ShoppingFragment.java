@@ -43,9 +43,12 @@ public class ShoppingFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setCursor();        // generate backing data.
-        setShoppingAdapter();     // set adapter associated with the recycler view.
-        setRecyclerView(rootView);// set the recycler view.
+        // set the backing data.
+        cursor = Database.getInstance().getAllShopping();
+        // set adapter associated with the recycler view.
+        setShoppingAdapter();
+        // set the recycler view.
+        setRecyclerView(rootView);
     }
     //</editor-fold>
 
@@ -65,7 +68,7 @@ public class ShoppingFragment extends Fragment
                 Database.getInstance().archiveShoppingList(dbRowId, true);
                 doSnackBarDelete(view);
                 //adapter.notifyItemRemoved(position);
-                adapter.swapCursor(Database.getInstance().getAllShopping());
+                adapter.setData(Database.getInstance().getAllShopping());
                 break;
             case R.id.id_iv_expand:
                 Toast.makeText(getActivity(), "Expand not implemted yet.", Toast.LENGTH_SHORT).show();
@@ -89,7 +92,7 @@ public class ShoppingFragment extends Fragment
         if(view.getId() == R.id.snackbar_action) {
             Database.getInstance().archiveShoppingList(dbRowId, false);
             doSnackBarRestore(view);
-            adapter.swapCursor(Database.getInstance().getAllShopping());
+            adapter.setData(Database.getInstance().getAllShopping());
         }
     }
     //</editor-fold>
@@ -97,13 +100,9 @@ public class ShoppingFragment extends Fragment
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private int getDbRowId(int position) {
         adapter.getItemId(position);
-        Cursor cursor = adapter.getCursor();
+        Cursor cursor = adapter.getData();
         int dbRowId = cursor.getInt(cursor.getColumnIndex(Schema.SLIST_ROWID));
         return dbRowId;
-    }
-
-    private void setCursor() {
-        cursor = Database.getInstance().getAllShopping();
     }
 
     private void setShoppingAdapter() {
@@ -112,7 +111,7 @@ public class ShoppingFragment extends Fragment
             adapter.setEmptyView(true);
         } else {
             adapter.setEmptyView(false);
-            adapter.swapCursor(cursor);
+            adapter.setData(cursor);
             adapter.setMetaData(Database.getInstance().getShoppingMetaData());
         }
         adapter.setOnItemClickListener(this);
