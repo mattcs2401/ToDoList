@@ -13,7 +13,8 @@
     <string name="date_time_format_compacted">yyyyMMddHHmmss</string>
 
     <!-- Bundle keys. -->
-    <string name="bundle_key">bundle_key</string>
+    <string name="bundle_pagenumber_key">bundle_key</string>
+    <string name="bundle_pagecode_key">bundle_key</string>
     <string name="bundle_data_key">bundle_data_key</string>
     <string name="list_type_key">list_type_key</string>
     <string name="list_type_shopping_key">list_type_shopping_key</string>

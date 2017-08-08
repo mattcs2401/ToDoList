@@ -13,9 +13,8 @@ import android.widget.CheckBox;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemAdapter;
+import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
-import mcssoft.com.todolist.interfaces.IShoppingListItemSelect;
-import mcssoft.com.todolist.model.items.ShoppingItemsList;
 import mcssoft.com.todolist.utility.Resources;
 
 
@@ -30,8 +29,9 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        iItemSelect = (IShoppingListItemSelect) getActivity();
-        pageNo = getArguments().getInt(Resources.getInstance().getString(R.string.bundle_key));
+
+        pageCode = getArguments().getString(Resources.getInstance().getString(R.string.bundle_pagecode_key));
+
         setShoppingAdapter();     // set adapter associated with the recycler view.
         setRecyclerView(rootView);// set the recycler view.
     }
@@ -48,10 +48,8 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
         if(view instanceof CheckBox) {
             if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
                 adapter.setCheck(position, true);
-                iItemSelect.iItemSelected(pageNo, position, true);
             } else {
                 adapter.setCheck(position, false);
-                iItemSelect.iItemSelected(pageNo, position, false);
             }
         }
     }
@@ -59,9 +57,8 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void setShoppingAdapter() {
-        String key = Resources.getInstance().getString(R.string.bundle_data_key);
         adapter = new ShoppingItemAdapter();
-        adapter.setData((ShoppingItemsList) getArguments().getParcelable(key));
+        adapter.setData(Database.getInstance().getAllReferenceItems(pageCode));
         adapter.setOnItemClickListener(this);
      }
 
@@ -76,8 +73,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     }
     //</editor-fold>
 
-    private int pageNo;
     private View rootView;
+    private String pageCode;
     private ShoppingItemAdapter adapter;
-    private IShoppingListItemSelect iItemSelect;
 }

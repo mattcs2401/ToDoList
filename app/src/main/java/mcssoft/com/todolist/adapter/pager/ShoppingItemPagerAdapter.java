@@ -1,13 +1,10 @@
 package mcssoft.com.todolist.adapter.pager;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
-import java.util.ArrayList;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Database;
@@ -23,7 +20,6 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
 
     public ShoppingItemPagerAdapter(FragmentManager fragmentManager) { //}, Context context) {
         super(fragmentManager);
-        shoppingItemsList = new ShoppingItemsList(null);
         pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
     }
 
@@ -31,15 +27,9 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         ShoppingItemFragment shoppingItemFragment = new ShoppingItemFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(Resources.getInstance().getString(R.string.bundle_key), position);
-        ShoppingItemsList shoppingItemsList = getData((String) getPageCode(position));
-        bundle.putParcelable(Resources.getInstance().getString(R.string.bundle_data_key), shoppingItemsList);
+        bundle.putString(Resources.getInstance().getString(R.string.bundle_pagecode_key), getPageCode(position));
         shoppingItemFragment.setArguments(bundle);
         return shoppingItemFragment;
-    }
-
-    public String getPageCode(int position) {
-        return pageTitles[position].split(":")[0];
     }
 
     @Override
@@ -52,74 +42,9 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
         return Resources.getInstance().getInteger(R.integer.num_shopping_item_pages);
     }
 
-    /**
-     * Create/update the current shopping list.
-     * @param pageNo The page number of the shopping itens page.
-     * @param position The page's adapter position.
-     * @param isChecked True if the shopping list item selected.
-     */
-    public void buildShoppingList(int pageNo, int position, boolean isChecked) {
-        // get the 'equivalent' shopping list item from the main list.
-        ShoppingItemsListItem temp = null;
-//        ArrayList<ShoppingItemsListItem> sil = getData(pageNo).get();
-//
-//        for(ShoppingItemsListItem sili : sil) {
-//        // TODO - lot of redundant processing if selected items have a high adapter position number.
-//            temp = sil.get(position);
-//            if(temp.getRefId() == sili.getRefId()) {
-//                if(isChecked) {
-//                    shoppingItemsList.add(sili);
-//                    break;
-//                } else {
-//                    shoppingItemsList.remove(sili);
-//                    break;
-//                }
-//            }
-//        }
-    }
-
-    /**
-     * Get the current shopping list.
-     * @return The shopping list.
-     */
-    public ShoppingItemsList getShoppingList() {
-        return shoppingItemsList;
-    }
-
-    /**
-     * Get the identifiers of the selected shopping items.
-     * @return The identifiers.
-     */
-    public int[] getShoppingListRefIds() {
-        int size = shoppingItemsList.size();
-        int[] refIds = new int[size];
-        for(int ndx = 0; ndx < size; ndx++) {
-            refIds[ndx] = shoppingItemsList.get(ndx).getRefId();
-        }
-        return refIds;
-    }
-
-    public void clearShoppingList() {
-        shoppingItemsList = null;
-        shoppingItemsList = new ShoppingItemsList(null);
-    }
-
-    private ShoppingItemsList getData(String pageCode) {
-        ShoppingItemsList shoppingItemsList = new ShoppingItemsList("");
-        Cursor cursor = Database.getInstance().getAllReferenceItems(pageCode);
-        while(cursor.moveToNext()) {
-            ShoppingItemsListItem sili = new ShoppingItemsListItem(
-                    cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID)),
-                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
-                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
-                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),
-                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_SEL)));
-
-            shoppingItemsList.add(sili);
-        }
-        return shoppingItemsList;
+    public String getPageCode(int position) {
+        return pageTitles[position].split(":")[0];
     }
 
     private String[] pageTitles;
-    private ShoppingItemsList shoppingItemsList;      // the current list of shopping items.
 }

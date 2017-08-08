@@ -1,13 +1,17 @@
 package mcssoft.com.todolist.adapter.shopping.item;
 
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import mcssoft.com.todolist.database.Database;
+import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.model.items.ShoppingItemsList;
+import mcssoft.com.todolist.model.items.ShoppingItemsListItem;
 
 /**
  * Class that represents the adapter behind a fragment (page) of the shopping item view pager.
@@ -44,21 +48,41 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
         this.icListener = iclistener;
     }
 
-    public void setData(ShoppingItemsList shoppingItemsList) {
-        this.shoppingItemsList = shoppingItemsList;
+    public void setData(Cursor cursor) {
+        this.cursor = cursor;
+        shoppingItemsList = setModelData();
         notifyDataSetChanged();
     }
 
     public void setCheck(int position, boolean setCheck) {
+        int dbRowId = shoppingItemsList.get(position).getRefId();
         if(setCheck) {
             shoppingItemsList.get(position).setRefSelect("Y");
+            Database.getInstance().setCheckReferenceItem(dbRowId, true);
         } else {
             shoppingItemsList.get(position).setRefSelect("N");
+            Database.getInstance().setCheckReferenceItem(dbRowId, false);
         }
         notifyItemChanged(position);
     }
 
+    private ShoppingItemsList setModelData() {
+        ShoppingItemsList shoppingItemsList = new ShoppingItemsList("");
+        while(cursor.moveToNext()) {
+            ShoppingItemsListItem sili = new ShoppingItemsListItem(
+                    cursor.getInt(cursor.getColumnIndex(Schema.REF_ITEM_ROWID)),
+                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_CODE)),
+                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_DESC)),
+                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_VALUE)),
+                    cursor.getString(cursor.getColumnIndex(Schema.REF_ITEM_SEL)));
+
+            shoppingItemsList.add(sili);
+        }
+        return shoppingItemsList;
+    }
+
+    private Cursor cursor;
     private ShoppingItemViewHolder svh;
     private IItemClickListener icListener;
-    private ShoppingItemsList shoppingItemsList; // backing data.
+    private ShoppingItemsList shoppingItemsList; // backing (in memory) data.
 }

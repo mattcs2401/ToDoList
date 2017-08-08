@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity
         // set action as add.
         Intent intent = new Intent(this, EditActivity.class);
         intent.setAction(Resources.getInstance().getString(R.string.list_add_action_key));
-        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
+        intent.putExtra(Resources.getInstance().getString(R.string.bundle_pagenumber_key), bundle);
         startActivityForResult(intent, NEW_SHOPPING);
     }
 

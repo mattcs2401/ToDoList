@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.fragment.dialog.NothingSelectedFragment;
 import mcssoft.com.todolist.interfaces.INothingSelected;
-import mcssoft.com.todolist.interfaces.IShoppingListItemSelect;
 import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
@@ -27,13 +25,13 @@ import mcssoft.com.todolist.utility.Resources;
  * Class to Add, Edit, or Delete a To Do item.
  */
 public class EditActivity extends AppCompatActivity
-        implements View.OnClickListener, IShoppingListItemSelect, INothingSelected {
+        implements View.OnClickListener, INothingSelected {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         String action = getIntent().getAction();
-        Bundle bundle = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
+        Bundle bundle = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_pagenumber_key));
         listItemType = bundle.getString(Resources.getInstance().getString(R.string.list_type_key));
 
         if(action.equals(Resources.getInstance().getString(R.string.list_add_action_key))) {
@@ -56,25 +54,23 @@ public class EditActivity extends AppCompatActivity
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     @Override
-    public void iItemSelected(int pagNo, int position, boolean isChecked) {
-        pagerAdapter.buildShoppingList(pagNo, position, isChecked);
-    }
-
-    @Override
     public void iNoSelect(boolean value) {
         if(!value) {
             finish();
         }
     }
-
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                // back via action bar.
+                finalise(false);
+                break;
             case R.id.id_edit_save:
-                finalise();
+                finalise(true);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -82,29 +78,36 @@ public class EditActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if(view instanceof FloatingActionButton) {
-            finalise();
+            finalise(true);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finalise(false);
+    }
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
-    private void finalise() {
-        if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-            if(pagerAdapter.getShoppingList().size() > 0) {
-                writeNewShoppingList(pagerAdapter.getShoppingListRefIds());
-                clearShoppingListData();
-                finish();
-            } else {
-                showNothingSelectedDialog();
+    private void finalise(boolean action) {
+        if(!action) {
+            uncheckReferenceItems();
+            finish();
+        } else {
+            if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
+//            if(pagerAdapter.getShoppingList().size() > 0) {
+//                writeNewShoppingList(pagerAdapter.getShoppingListRefIds());
+//                clearShoppingListData();
+//                finish();
+//            } else {
+//                showNothingSelectedDialog();
+//            }
+            } else if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+                // TBA.
+                String bp = "";
             }
-        } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
-            // TBA.
-            String bp = "";
         }
-    }
-
-    private void clearShoppingListData() {
-        pagerAdapter.clearShoppingList();
     }
 
     private void writeNewShoppingList(int[] refIds) {
@@ -125,7 +128,7 @@ public class EditActivity extends AppCompatActivity
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Region: List actions">
+    //<editor-fold defaultstate="collapsed" desc="Region: List actions (Add, Edit etc)">
     private void addListItem() {
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
             setContentView(R.layout.cv_shopping);
@@ -166,6 +169,10 @@ public class EditActivity extends AppCompatActivity
         pagerAdapter = new ShoppingItemPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
         viewPager.setAdapter(pagerAdapter);
+    }
+
+    private void uncheckReferenceItems() {
+        Database.getInstance().unCheckReferenceItems();
     }
     //</editor-fold>
 
