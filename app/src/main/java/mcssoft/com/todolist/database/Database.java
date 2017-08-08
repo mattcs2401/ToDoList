@@ -140,14 +140,6 @@ public class Database {
         return count;
     }
 
-    /**
-     * Get all the reference items.
-     * @return A cursor over the items.
-     */
-    public Cursor getAllReferenceItems() {
-        return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_ALL, new String[] {"N"});
-    }
-
     public Cursor getAllReferenceItems(String pageCode) {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, new String[] {pageCode, "N"});
     }

@@ -61,18 +61,50 @@ public class Schema {
     //<editor-fold defaultstate="collapsed" desc="Region: Table GENERAL">
     public static final String TABLE_GENERAL = "GENERAL";
     public static final String GENERAL_ROWID = "_id";
-    public static final String GENERAL_ARCHV = "GEN_ARCHV"; // archive flag.
+    public static final String GENERAL_ARCHV = "GEN_ARCHV";     // archive flag.
+    public static final String GENERAL_ID    = "GENERAL_ID";    // id (compacted date YYYYMMDDHHMM).
+    public static final String GENERAL_NAME  = "GENERAL_NAME";  // name.
+    public static final String GENERAL_DATE  = "GENERAL_DATE";  // date created DD/MM/YYYY HH:MI
+
 
     public static final String CREATE_TABLE_GENERAL = "CREATE TABLE "
             + TABLE_GENERAL + " ("
             + GENERAL_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GENERAL_ARCHV + " TEXT NOT NULL" + ")";
+            + GENERAL_ARCHV + " TEXT NOT NULL, "
+            + GENERAL_ID    + " TEXt NOT NULL, "
+            + GENERAL_NAME  + " TEXT NOT NULL, "
+            + GENERAL_DATE  + " TEXt NOT NULL)";
 
     public static final String DROP_TABLE_GENERAL =
             "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_GENERAL + ";";
 
     public static final String WHERE_GENERAL_ROWID = GENERAL_ROWID + "=?";
     public static final String WHERE_GENERAL_ARCHV = GENERAL_ARCHV + "=?";
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Table GEN_ITEM">
+    public static final String TABLE_GEN_ITEM   = "GEN_ITEM";
+    public static final String GEN_ITEM_ROWID   = "_id";
+    public static final String GEN_ITEM_ARCHV   = "GEN_ARCHV";  // archive flag.
+    public static final String GEN_ITEM_ID      = "GEN_ID";     // id (compacted date YYYYMMDDHHMM).
+    public static final String GEN_ITEM_GENERAL = "GENERAL_ID"; // table GENERAL id.
+    public static final String GEN_ITEM_SLIST   = "SLIST_ID";  //  table SLIST id.
+    public static final String GEN_ITEM_TEXT    = "GEN_TEXT";  //  item's text.
+
+    public static final String CREATE_TABLE_GEN_ITEM = "CREATE TABLE "
+            + TABLE_GEN_ITEM   + " ("
+            + GEN_ITEM_ROWID   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + GEN_ITEM_ARCHV   + " TEXT NOT NULL, "
+            + GEN_ITEM_ID      + " TEXt NOT NULL, "
+            + GEN_ITEM_GENERAL + " TEXT NOT NULL, "
+            + GEN_ITEM_SLIST   + " TEXt, "
+            + GEN_ITEM_TEXT    + " TEXT NOT NULL)";
+
+    public static final String DROP_TABLE_GEN_ITEM =
+            "DROP TABLE IF EXISTS " + DATABASE_NAME + "." + TABLE_GEN_ITEM + ";";
+
+    public static final String WHERE_GEN_ITEM_ROWID = GEN_ITEM_ROWID + "=?";
+    public static final String WHERE_GEN_ITEM_ARCHV = GEN_ITEM_ARCHV + "=?";
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Table SLIST_ITEM">

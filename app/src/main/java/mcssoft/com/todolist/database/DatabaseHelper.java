@@ -21,11 +21,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             sqLiteDb.execSQL(Schema.DROP_TABLE_SLIST);
             sqLiteDb.execSQL(Schema.DROP_TABLE_SLIST_ITEM);
             sqLiteDb.execSQL(Schema.DROP_TABLE_GENERAL);
+            sqLiteDb.execSQL(Schema.DROP_TABLE_GEN_ITEM);
             sqLiteDb.execSQL(Schema.DROP_TABLE_REF_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_REF_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_SLIST);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_SLIST_ITEM);
             sqLiteDb.execSQL(Schema.CREATE_TABLE_GENERAL);
+            sqLiteDb.execSQL(Schema.CREATE_TABLE_GEN_ITEM);
             sqLiteDb.setTransactionSuccessful();
         } catch(SQLException ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());
@@ -42,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public enum Projection {
-        RefItemSchema, SListSchema, SListItemSchema, GeneralSchema
+        RefItemSchema, SListSchema, SListItemSchema, GeneralSchema, GenItemSchema
     }
 
     public static String [] getProjection(Projection p) {
@@ -59,6 +61,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 break;
             case GeneralSchema:
                 projection = getGeneralProjection();
+                break;
+            case GenItemSchema:
+                projection = getGenItemProjection();
                 break;
         }
         return  projection;
@@ -108,7 +113,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String[] getGeneralProjection() {
         return new String[] {
             Schema.GENERAL_ROWID,
-            Schema.GENERAL_ARCHV
+            Schema.GENERAL_ARCHV,
+            Schema.GENERAL_ID,
+            Schema.GENERAL_NAME,
+            Schema.GENERAL_DATE
+        };
+    }
+
+    private static String[] getGenItemProjection() {
+        return new String[] {
+                Schema.GEN_ITEM_ROWID,
+                Schema.GEN_ITEM_ARCHV,
+                Schema.GEN_ITEM_ID,
+                Schema.GEN_ITEM_GENERAL,    // GENERAL.GENERAL_ID.
+                Schema.GEN_ITEM_SLIST,      // SLIST.SLIST_ID.
+                Schema.GEN_ITEM_TEXT
         };
     }
 
