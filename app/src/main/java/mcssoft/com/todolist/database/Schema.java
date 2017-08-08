@@ -96,6 +96,7 @@ public class Schema {
 
     public static final String WHERE_SLIST_ITEM_ROWID = SLIST_ITEM_ROWID + "=?";
     public static final String WHERE_SLIST_ITEM__ARCHV = SLIST_ITEM_ARCHV + "=?";
+    public static final String WHERE_SLIST_ITEM_SLIST_ID = SLIST_ID + "=?";
     //</editor-fold>
 
     // Raw query

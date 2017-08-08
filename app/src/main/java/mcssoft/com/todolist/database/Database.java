@@ -231,7 +231,37 @@ public class Database {
                 cv.put(Schema.SLIST_ARCHV, "N");
             }
             count = db.update(Schema.TABLE_SLIST, cv, Schema.WHERE_SLIST_ROWID, new String[] {Integer.toString(dbRowId)});
-            // TODO - update associated shopping list item records.
+            db.setTransactionSuccessful();
+        } catch(Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            if(db != null) {
+                db.endTransaction();
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Set the archive flag on a shopping list item entry. This should be called in conjunction with
+     * archiveShoppingList().
+     * @param dbRowId The row id in the database (SLIST table).
+     * @param archive True==archive, False==un-archive.
+     * @return The count of items updated.
+     */
+    public int archiveShoppingListItem(int dbRowId, boolean archive) {
+        int count = -1;
+        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = dbHelper.getDatabase();
+
+        try {
+            db.beginTransaction();
+            if(archive) {
+                cv.put(Schema.SLIST_ITEM_ARCHV, "Y");
+            } else {
+                cv.put(Schema.SLIST_ITEM_ARCHV, "N");
+            }
+            count = db.update(Schema.TABLE_SLIST_ITEM, cv, Schema.WHERE_SLIST_ITEM_SLIST_ID, new String[] {Integer.toString(dbRowId)});
             db.setTransactionSuccessful();
         } catch(Exception ex) {
             Log.d(context.getClass().getCanonicalName(), ex.getMessage());

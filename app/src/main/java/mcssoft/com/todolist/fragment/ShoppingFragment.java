@@ -66,8 +66,8 @@ public class ShoppingFragment extends Fragment
             case R.id.id_iv_delete:
                 // TBA - confirm delete dialog / or snqackbar with undo button.
                 Database.getInstance().archiveShoppingList(dbRowId, true);
+                Database.getInstance().archiveShoppingListItem(dbRowId, true);
                 doSnackBarDelete(view);
-                //adapter.notifyItemRemoved(position);
                 adapter.setData(Database.getInstance().getAllShopping());
                 break;
             case R.id.id_iv_expand:
@@ -91,6 +91,7 @@ public class ShoppingFragment extends Fragment
     public void onClick(View view) {
         if(view.getId() == R.id.snackbar_action) {
             Database.getInstance().archiveShoppingList(dbRowId, false);
+            Database.getInstance().archiveShoppingListItem(dbRowId, false);
             doSnackBarRestore(view);
             adapter.setData(Database.getInstance().getAllShopping());
         }
