@@ -18,7 +18,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
 
     // TODO - need something that says this is for a new shopping list, or editing a list.
 
-    public ShoppingItemPagerAdapter(FragmentManager fragmentManager) { //}, Context context) {
+    public ShoppingItemPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
         pageTitles = Resources.getInstance().getStringArray(R.array.shopping_item_types);
     }
@@ -27,7 +27,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         ShoppingItemFragment shoppingItemFragment = new ShoppingItemFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Resources.getInstance().getString(R.string.bundle_pagecode_key), getPageCode(position));
+        bundle.putString(Resources.getInstance().getString(R.string.bundle_pagecode_key), pageTitles[position].split(":")[0]);
         shoppingItemFragment.setArguments(bundle);
         return shoppingItemFragment;
     }
@@ -40,10 +40,6 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return Resources.getInstance().getInteger(R.integer.num_shopping_item_pages);
-    }
-
-    public String getPageCode(int position) {
-        return pageTitles[position].split(":")[0];
     }
 
     private String[] pageTitles;
