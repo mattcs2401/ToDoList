@@ -1,5 +1,6 @@
 package mcssoft.com.todolist.activity;
 
+import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import java.util.List;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
+import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.fragment.dialog.NothingSelectedFragment;
 import mcssoft.com.todolist.interfaces.INothingSelected;
 import mcssoft.com.todolist.utility.DateTime;
@@ -96,13 +98,14 @@ public class EditActivity extends AppCompatActivity
             finish();
         } else {
             if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-//            if(pagerAdapter.getShoppingList().size() > 0) {
-//                writeNewShoppingList(pagerAdapter.getShoppingListRefIds());
-//                clearShoppingListData();
-//                finish();
-//            } else {
-//                showNothingSelectedDialog();
-//            }
+                Cursor cursor = Database.getInstance().getCheckedReferenceItems();
+                if(cursor.getCount() > 0) {
+                    writeNewShoppingList(getRefIds(cursor));
+                    uncheckReferenceItems();
+                    finish();
+                } else {
+                    showNothingSelectedDialog();
+                }
             } else if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
                 // TBA.
                 String bp = "";
@@ -120,6 +123,20 @@ public class EditActivity extends AppCompatActivity
 
         long rowId = Database.getInstance().createShoppingList(colVals);
         Database.getInstance().createShoppingListItems(rowId, refIds);
+    }
+
+    private int[] getRefIds(Cursor cursor) {
+        int size = cursor.getCount();
+        int[] refIds = new int[size]; //cursor.getCount()];
+        int colNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
+        int ndx = 0;
+        while(cursor.moveToNext()) {
+            if (ndx < size) {
+                refIds[ndx] = cursor.getInt(colNdx);
+                ndx++;
+            }
+        }
+        return refIds;
     }
 
     private void showNothingSelectedDialog() {
