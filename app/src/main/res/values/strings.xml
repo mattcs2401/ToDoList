@@ -13,7 +13,7 @@
     <string name="date_time_format_compacted">yyyyMMddHHmmss</string>
 
     <!-- Bundle keys. -->
-    <string name="bundle_pagenumber_key">bundle_key</string>
+    <string name="bundle_key">bundle_key</string>
     <string name="bundle_pagecode_key">bundle_key</string>
     <string name="bundle_data_key">bundle_data_key</string>
     <string name="list_type_key">list_type_key</string>
@@ -33,9 +33,9 @@
 
     <!-- Toolabr titles. -->
     <string name="toolbar_title_new_shopping">New Shopping List</string>
-    <string name="toolbar_title_new_general">New General Item.</string>
+    <string name="toolbar_title_new_general">New General List</string>
     <string name="toolbar_title_edit_shopping">Edit Shopping List</string>
-    <string name="toolbar_title_edit_general">Edit General Item.</string>
+    <string name="toolbar_title_edit_general">Edit General List.</string>
 
     <!-- Button text. -->
     <string name="btn_ok">OK</string>

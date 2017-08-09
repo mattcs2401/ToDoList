@@ -162,7 +162,7 @@ public class ShoppingFragment extends Fragment
         // set action as edit.
         Intent intent = new Intent(getActivity(), EditActivity.class);
         intent.setAction(Resources.getInstance().getString(R.string.list_edit_action_key));
-        intent.putExtra(Resources.getInstance().getString(R.string.bundle_pagenumber_key), bundle);
+        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
         startActivityForResult(intent, 3);
     }
     //</editor-fold>

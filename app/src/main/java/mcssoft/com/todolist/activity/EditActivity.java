@@ -33,7 +33,7 @@ public class EditActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         String action = getIntent().getAction();
-        Bundle bundle = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_pagenumber_key));
+        Bundle bundle = getIntent().getBundleExtra(Resources.getInstance().getString(R.string.bundle_key));
         listItemType = bundle.getString(Resources.getInstance().getString(R.string.list_type_key));
 
         if(action.equals(Resources.getInstance().getString(R.string.list_add_action_key))) {
