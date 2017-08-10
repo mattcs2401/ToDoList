@@ -150,6 +150,7 @@ public class EditActivity extends AppCompatActivity
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
             setContentView(R.layout.cv_shopping);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_shopping));
+            setFABListener();
             setAdapter();
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             setContentView(R.layout.cv_general);
@@ -178,8 +179,10 @@ public class EditActivity extends AppCompatActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(title);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.id_fab);
-        fab.setOnClickListener(this);
+    }
+
+    private void setFABListener() {
+        ((FloatingActionButton) findViewById(R.id.id_fab)).setOnClickListener(this);
     }
 
     private void setAdapter() {

@@ -30,11 +30,6 @@ public class ShoppingFragment extends Fragment
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment, container, false);
         return rootView;

@@ -20,19 +20,7 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 
 public class GeneralFragment extends Fragment implements IItemClickListener {
 
-    public GeneralFragment() { }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        args = getArguments();
-//        if(args == null) {
-//            pageNo = 0;
-//        } else {
-//            pageNo = args.getInt(Resources.getInstance().getString(R.string.bundle_key));
-//        }
-    }
-
+    //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment, container, false);
@@ -43,10 +31,12 @@ public class GeneralFragment extends Fragment implements IItemClickListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setCursor();        // generate backing data.
-        setGeneralAdapter();     // set adapter associated with the recycler view.
-        setRecyclerView(rootView);// set the recycler view.
+        args = getArguments();    // TBA.
+        setData();                // set backing data.
+        setAdapter();             // set adapter associated with the recycler view.
+        setRecyclerView(rootView);
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**
@@ -56,19 +46,11 @@ public class GeneralFragment extends Fragment implements IItemClickListener {
      */
     @Override
     public void onItemClick(View view, int position) {
-        int dbRowId = -1;
-//        if(view instanceof CheckBox) {
-//            // mimmick the checkbox check/uncheck on the underlying record.
-//            dbRowId = getDbRowId(position);
-//            if(((CheckBox) view.findViewById(R.id.id_cb_shopping_item)).isChecked()) {
-//                Database.getInstance().setCheckReferenceItem(dbRowId, true);
-//            } else {
-//                Database.getInstance().setCheckReferenceItem(dbRowId, false);
-//            }
-//        }
+        String tba = "TBA";
     }
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private int getDbRowId(int position) {
         adapter.getItemId(position);
         Cursor cursor = adapter.getCursor();
@@ -76,17 +58,17 @@ public class GeneralFragment extends Fragment implements IItemClickListener {
         return dbRowId;
     }
 
-    private void setCursor() {
+    private void setData() {
         cursor = Database.getInstance().getAllGeneral();
     }
 
-    private void setGeneralAdapter() {
+    private void setAdapter() {
         adapter = new GeneralAdapter();
         if(cursor == null || cursor.getCount() < 1) {
             adapter.setEmptyView(true);
         } else {
             adapter.setEmptyView(false);
-            adapter.swapCursor(cursor);
+            adapter.setData(cursor);
         }
         adapter.setOnItemClickListener(this);
      }
@@ -100,8 +82,8 @@ public class GeneralFragment extends Fragment implements IItemClickListener {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
+    //</editor-fold>
 
-//    private int pageNo;
     private Bundle args;
     private Cursor cursor;
     private View rootView;

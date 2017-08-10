@@ -72,7 +72,7 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
 
     public Cursor getCursor() { return cursor; }
 
-    public void swapCursor(Cursor cursor) {
+    public void setData(Cursor cursor) {
             this.cursor = cursor;
             cursor.moveToFirst();
             idColNdx = cursor.getColumnIndex(Schema.SLIST_ROWID);
