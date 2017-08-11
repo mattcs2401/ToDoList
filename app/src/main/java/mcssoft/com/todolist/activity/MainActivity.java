@@ -16,34 +16,14 @@ import android.view.MenuItem;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.MainPagerAdapter;
-import mcssoft.com.todolist.fragment.dialog.ListSelectFragment;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
-import mcssoft.com.todolist.interfaces.IListSelect;
 import mcssoft.com.todolist.utility.Resources;
 
 public class MainActivity extends AppCompatActivity
-        implements IListSelect, IItemClickListener, View.OnClickListener,
+        implements IItemClickListener, View.OnClickListener,
                    NavigationView.OnNavigationItemSelectedListener   {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
-    /**
-     * Interface return on user selecting the type of list to create (from dialog).
-     * @param value The radio button id.
-     */
-    @Override
-    public void iSelected(int value) {
-        switch(value) {
-            // GENRL type list.
-            case R.id.id_rb_list_select_general:
-                doNewGeneralList();
-                break;
-            // Shopping type list.
-            case R.id.id_rb_list_select_shopping:
-                doNewShoppingList();
-                break;
-        }
-    }
-
     @Override
     public void onItemClick(View view, int position) {
         String bp = ";";
@@ -124,18 +104,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if(view instanceof FloatingActionButton) {
-            // Launch dialog for user to select new list type.
-            showListSelectDialog();
+            String pageTitle = pagerAdapter.getPageTitle(viewPager.getCurrentItem());
+            if(pageTitle.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
+                doNewShoppingList();
+            } else if (pageTitle.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+                doNewGeneralList();
+            }
         }
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
-    private void showListSelectDialog() {
-        ListSelectFragment lsf = new ListSelectFragment();
-        lsf.show(getFragmentManager(), null);
-    }
-
     private void doNewShoppingList() {
         // set list type as shopping.
         Bundle bundle = new Bundle();
