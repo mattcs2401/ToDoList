@@ -18,7 +18,7 @@ import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 
 
-public class GeneralFragment extends Fragment implements IItemClickListener {
+public class GeneralListFragment extends Fragment implements IItemClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override

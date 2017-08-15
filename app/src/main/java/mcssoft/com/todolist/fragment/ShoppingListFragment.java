@@ -25,7 +25,7 @@ import mcssoft.com.todolist.interfaces.IItemLongClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
 
-public class ShoppingFragment extends Fragment
+public class ShoppingListFragment extends Fragment
         implements IItemClickListener, IItemLongClickListener, View.OnClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">

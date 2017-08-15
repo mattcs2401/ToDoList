@@ -1,15 +1,13 @@
 package mcssoft.com.todolist.adapter.pager;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.fragment.GeneralFragment;
-import mcssoft.com.todolist.fragment.ShoppingFragment;
-import mcssoft.com.todolist.fragment.ShoppingItemFragment;
+import mcssoft.com.todolist.fragment.GeneralListFragment;
+import mcssoft.com.todolist.fragment.ShoppingListFragment;
 import mcssoft.com.todolist.utility.Resources;
 
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
@@ -23,9 +21,9 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case SHOPPING:
-                return new ShoppingFragment();
+                return new ShoppingListFragment();
             case GENERAL:
-                return new GeneralFragment();
+                return new GeneralListFragment();
         }
         return null;
     }
