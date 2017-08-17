@@ -32,8 +32,8 @@
     <string name="list_type_general">General</string>
 
     <!-- Toolabr titles. -->
-    <string name="toolbar_title_new_shopping">New Shopping List</string>
-    <string name="toolbar_title_new_general">New General List</string>
+    <string name="toolbar_title_new_shopping">New Shopping List Item</string>
+    <string name="toolbar_title_new_general">New General List Item</string>
     <string name="toolbar_title_edit_shopping">Edit Shopping List</string>
     <string name="toolbar_title_edit_general">Edit General List.</string>
 

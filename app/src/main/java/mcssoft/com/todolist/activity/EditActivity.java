@@ -18,6 +18,7 @@ import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
+import mcssoft.com.todolist.fragment.GeneralItemFragment;
 import mcssoft.com.todolist.fragment.dialog.NothingSelectedFragment;
 import mcssoft.com.todolist.interfaces.INothingSelected;
 import mcssoft.com.todolist.utility.DateTime;
@@ -155,7 +156,12 @@ public class EditActivity extends AppCompatActivity
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             setContentView(R.layout.cv_general);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_general));
-            // TBA - remainder.
+            // testing.
+
+            GeneralItemFragment gif = new GeneralItemFragment();
+            Bundle args = new Bundle();
+            gif.setArguments(args);
+            getFragmentManager().beginTransaction().add(R.id.container,gif).commit();
         }
     }
 
