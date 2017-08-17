@@ -7,7 +7,6 @@
 
     <!-- General text. -->
     <string name="nothing_to_show">Nothing to show at this time.</string>
-    <string name="app_home_screen">Unable to go back. This is the app\'s home screen.</string>
     <string name="date_format">dd/MM/yyyy</string>
     <string name="date_time_format">dd/MM/yyyy HH:mm</string>
     <string name="date_time_format_compacted">yyyyMMddHHmmss</string>
@@ -41,6 +40,10 @@
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_continue">Continue</string>
+
+    <!-- GeneraItemFragment assorted text. -->
+    <string name="gif_name_label">Name or Label</string>
+    <string name="gif_name_label_hint">Enter a name or label for this General item.</string>
 
     <!-- List select dialog. -->
     <string name="rb_list_select_shopping">Shopping</string>

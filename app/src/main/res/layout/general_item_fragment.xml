@@ -8,27 +8,28 @@
     android:id="@+id/container">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/id_tv_nameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Name/Label"
+        android:text="@string/gif_name_label"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:textColor="@android:color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/id_et_nameLabel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:hint="@string/gif_name_label_hint"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_tv_nameLabel"
+        android:inputType="textCapSentences|textAutoCorrect" />
 </android.support.constraint.ConstraintLayout>

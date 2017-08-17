@@ -19,7 +19,8 @@ import mcssoft.com.todolist.adapter.pager.MainPagerAdapter;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
-public class MainActivity extends AppCompatActivity
+public class
+MainActivity extends AppCompatActivity
         implements IItemClickListener, View.OnClickListener,
                    NavigationView.OnNavigationItemSelectedListener   {
 
