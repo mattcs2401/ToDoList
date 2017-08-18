@@ -23,7 +23,7 @@
             android:name=".activity.EditActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".activity.MainActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activity.MaintActivity"
             android:theme="@style/AppTheme.NoActionBar"

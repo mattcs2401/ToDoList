@@ -27,9 +27,17 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:hint="@string/gif_name_label_hint"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:inputType="textCapSentences|textAutoCorrect"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_tv_nameLabel"
-        android:inputType="textCapSentences|textAutoCorrect" />
+        app:layout_constraintTop_toBottomOf="@+id/id_tv_nameLabel">
+        <requestFocus />
+    </EditText>
 </android.support.constraint.ConstraintLayout>
+<!--
+  Notes:
+  Remove underline in EtidText - android:background="@null"
+-->
