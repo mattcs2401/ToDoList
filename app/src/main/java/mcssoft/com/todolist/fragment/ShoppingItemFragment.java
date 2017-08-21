@@ -7,6 +7,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -19,6 +22,13 @@ import mcssoft.com.todolist.utility.Resources;
 
 
 public class ShoppingItemFragment extends Fragment implements IItemClickListener {
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +45,25 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
         setShoppingAdapter();     // set adapter associated with the recycler view.
         setRecyclerView(rootView);// set the recycler view.
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_shopping_item, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.id_shopping_item_save:
+                // TBA
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**

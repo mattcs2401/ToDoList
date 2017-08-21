@@ -27,8 +27,7 @@ import mcssoft.com.todolist.utility.Resources;
 /**
  * Class to Add, Edit, or Delete a To Do item.
  */
-public class EditActivity extends AppCompatActivity
-        implements View.OnClickListener, INothingSelected {
+public class EditActivity extends AppCompatActivity implements INothingSelected {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +48,6 @@ public class EditActivity extends AppCompatActivity
         String bpo = "";
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_edit, menu);
-        return true;
-    }
-
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     @Override
     public void iNoSelect(boolean value) {
@@ -69,27 +62,21 @@ public class EditActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // back via action bar.
-                finalise(false);
+                // back is via action bar back navigation.
+                if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
+                    finalise(false);
+                } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+                    // TBA
+                }
                 break;
-            case R.id.id_edit_save:
-                finalise(true);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view instanceof FloatingActionButton) {
-            finalise(true);
-        }
     }
 
     @Override
     public void onBackPressed() {
         finalise(false);
     }
-
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
@@ -151,7 +138,7 @@ public class EditActivity extends AppCompatActivity
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
             setContentView(R.layout.cv_shopping);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_shopping));
-            setFABListener();
+//            setFABListener();
             setAdapter();
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             setContentView(R.layout.cv_general);
@@ -187,9 +174,9 @@ public class EditActivity extends AppCompatActivity
         actionBar.setTitle(title);
     }
 
-    private void setFABListener() {
-        ((FloatingActionButton) findViewById(R.id.id_fab)).setOnClickListener(this);
-    }
+//    private void setFABListener() {
+//        ((FloatingActionButton) findViewById(R.id.id_fab)).setOnClickListener(this);
+//    }
 
     private void setAdapter() {
         pagerAdapter = new ShoppingItemPagerAdapter(getSupportFragmentManager());

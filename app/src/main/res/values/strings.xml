@@ -44,6 +44,7 @@
     <!-- GeneraItemFragment assorted text. -->
     <string name="gif_name_label">Name or Label</string>
     <string name="gif_name_label_hint">Enter a name or label for this General item.</string>
+    <string name="gif_item_label">Items</string>
 
     <!-- List select dialog. -->
     <string name="rb_list_select_shopping">Shopping</string>

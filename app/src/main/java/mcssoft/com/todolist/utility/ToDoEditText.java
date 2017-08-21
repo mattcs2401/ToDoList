@@ -33,7 +33,6 @@ public class ToDoEditText extends AppCompatEditText {
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // TBA.
-            String bp = "";
             onImeBack.onImeBack(this);
         } else if (keyCode == KeyEvent.KEYCODE_MENU) {
             // so menus don't show when soft keyboard showing.
