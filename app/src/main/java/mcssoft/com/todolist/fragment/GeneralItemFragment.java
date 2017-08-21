@@ -14,10 +14,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.interfaces.BackPressedListener;
 import mcssoft.com.todolist.utility.Resources;
+import mcssoft.com.todolist.utility.ToDoEditText;
 
 public class GeneralItemFragment extends Fragment
-        implements View.OnClickListener, View.OnKeyListener, View.OnTouchListener { //}, View.OnFocusChangeListener { //} {
+        implements View.OnClickListener, View.OnKeyListener, BackPressedListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -29,59 +31,72 @@ public class GeneralItemFragment extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        nameLabelEdit = (EditText) rootView.findViewById(R.id.id_et_nameLabel);
+        nameLabelEdit = (ToDoEditText) rootView.findViewById(R.id.id_et_nameLabel);
         nameLabelEdit.setOnClickListener(this);
         nameLabelEdit.setOnKeyListener(this);
+        nameLabelEdit.setBackPressedListener(this);
+        if(nameLabelEdit.getText().length() < 1) {
+            nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
+        }
 //        nameLabelEdit.setOnTouchListener(this);
-//        nameLabelEdit.setCursorVisible(false);
-//        nameLabelEdit.setFocusable(true);
         args = getArguments();
     }
     //</editor-fold>
 
-
+    //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public void onClick(View view) {
-//        if(view instanceof FloatingActionButton) {
-        String bp = "";
-//        }
         if(view instanceof EditText) {
-
             nameLabelEdit.setCursorVisible(true);
-//            showSoftKeyboard(view);
-        }
-
-    }
-
-    public void showSoftKeyboard(View view) {
-        if (view.requestFocus()) {
-            InputMethodManager imm = (InputMethodManager)
-                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+            nameLabelEdit.setHint("");
         }
     }
 
     @Override
     public boolean onKey(View view, int keyCode, KeyEvent event) {
-        if( keyCode == KeyEvent.KEYCODE_ENTER ) {
-//            if( event.getAction() == KeyEvent.ACTION_DOWN ) {
-                nameLabelEdit.setCursorVisible(false);
-                InputMethodManager imm = (InputMethodManager)
-                        getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//            }
-            return true;
+        boolean retVal = false;
+        if(keyCode == KeyEvent.KEYCODE_ENTER) {
+            nameLabelEdit.setCursorVisible(false);
+            hideKeyboard(view);
+            if(getTextLength((ToDoEditText) view) < 1) {
+                setHint((ToDoEditText) view);
+            }
+            retVal = true;
         }
-        return false;
+        return retVal;
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-//        nameLabelEdit.setCursorVisible(true);
-        return false;
+    public void onImeBack(ToDoEditText toDoEditText) {
+        // Back key pressed while softkeyboard still showing.
+        if(getTextLength(toDoEditText) < 1) {
+            setHint(toDoEditText);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Utility">
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager)
+                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private EditText nameLabelEdit;
+    private int getTextLength(ToDoEditText toDoEditText) {
+        return toDoEditText.getEditableText().length();
+    }
+
+    private void setHint(ToDoEditText toDoEditText) {
+        int id = toDoEditText.getId();
+        switch (id) {
+            case R.id.id_et_nameLabel:
+                nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
+                break;
+        }
+    }
+    //</editor-fold>
+
+    private ToDoEditText nameLabelEdit;
     private Bundle args;
     private View rootView;
 
