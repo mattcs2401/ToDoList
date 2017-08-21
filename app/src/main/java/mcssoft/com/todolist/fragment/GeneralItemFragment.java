@@ -56,7 +56,7 @@ public class GeneralItemFragment extends Fragment
     public boolean onKey(View view, int keyCode, KeyEvent event) {
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER) {
-            nameLabelEdit.setCursorVisible(false);
+            ((ToDoEditText) view).setCursorVisible(false);
             hideKeyboard(view);
             if(getTextLength((ToDoEditText) view) < 1) {
                 setHint((ToDoEditText) view);
