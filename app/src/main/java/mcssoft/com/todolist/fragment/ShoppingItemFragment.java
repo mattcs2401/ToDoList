@@ -98,6 +98,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
         if(cursor.getCount() > 0) {
             writeNewShoppingList(getRefIds(cursor));
             uncheckReferenceItems();
+            getActivity().finish();
         } else {
             Snackbar.make(rootView, Resources.getInstance()
                     .getString(R.string.snackbar_nothing_selected), Snackbar.LENGTH_SHORT).show();
@@ -118,7 +119,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
 
     private int[] getRefIds(Cursor cursor) {
         int size = cursor.getCount();
-        int[] refIds = new int[size]; //cursor.getCount()];
+        int[] refIds = new int[size];
         int colNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
         int ndx = 0;
         while(cursor.moveToNext()) {

@@ -73,9 +73,12 @@ public class GeneralItemFragment extends Fragment
 
     @Override
     public void onClick(View view) {
-        if(view instanceof EditText) {
-            nameLabelEdit.setCursorVisible(true);
-            nameLabelEdit.setHint("");
+        int id = view.getId();
+        switch (id) {
+            case R.id.id_et_nameLabel:
+                nameLabelEdit.setCursorVisible(true);
+                nameLabelEdit.setHint("");
+                break;
         }
     }
 
@@ -99,6 +102,7 @@ public class GeneralItemFragment extends Fragment
         if(getTextLength(toDoEditText) < 1) {
             setHint(toDoEditText);
         }
+        toDoEditText.setCursorVisible(false);
     }
     //</editor-fold>
 
