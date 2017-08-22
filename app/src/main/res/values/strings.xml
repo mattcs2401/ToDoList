@@ -52,10 +52,6 @@
     <string name="list_select_title">List Type</string>
     <string name="list_select_message">Choose the type of list to create.</string>
 
-    <!-- Nothing selected dialog. -->
-    <string name="nothing_selected_title">Nothing Selected</string>
-    <string name="nothing_selected_message">No shopping items selected.\n\nContinue to create a shopping list ?</string>
-
     <!-- Shopping details dialog. -->
     <string name="sl_details_dialog_title">Shopping List Details</string>
 
@@ -63,6 +59,7 @@
     <string name="snackbar_item_removed">Item removed</string>
     <string name="snackbar_item_undo">UNDO</string>
     <string name="snackbar_item_restored">Item restored</string>
+    <string name="snackbar_nothing_selected">Nothing selected</string>
 
     <!-- Shopping items. -->
     <string-array name="shopping_items_general_default">

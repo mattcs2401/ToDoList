@@ -1,7 +1,9 @@
 package mcssoft.com.todolist.fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemAdapter;
 import mcssoft.com.todolist.database.Database;
+import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.INothingSelected;
+import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
 
@@ -58,7 +66,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.id_shopping_item_save:
-                // TBA
+                finalise();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -85,6 +93,47 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
+    private void finalise() {
+        Cursor cursor = Database.getInstance().getCheckedReferenceItems();
+        if(cursor.getCount() > 0) {
+            writeNewShoppingList(getRefIds(cursor));
+            uncheckReferenceItems();
+        } else {
+            Snackbar.make(rootView, Resources.getInstance()
+                    .getString(R.string.snackbar_nothing_selected), Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void writeNewShoppingList(int[] refIds) {
+        List<String> colVals = new ArrayList<>();
+        DateTime dateTime = new DateTime();
+
+        colVals.add(dateTime.getCompactedDateTime());      // list identifier.
+        colVals.add(dateTime.getFormattedDate(false));     // list date.
+        colVals.add("TBA");                                // list name.
+
+        long rowId = Database.getInstance().createShoppingList(colVals);
+        Database.getInstance().createShoppingListItems(rowId, refIds);
+    }
+
+    private int[] getRefIds(Cursor cursor) {
+        int size = cursor.getCount();
+        int[] refIds = new int[size]; //cursor.getCount()];
+        int colNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
+        int ndx = 0;
+        while(cursor.moveToNext()) {
+            if (ndx < size) {
+                refIds[ndx] = cursor.getInt(colNdx);
+                ndx++;
+            }
+        }
+        return refIds;
+    }
+
+    private void uncheckReferenceItems() {
+        Database.getInstance().unCheckReferenceItems();
+    }
+
     private void setShoppingAdapter() {
         adapter = new ShoppingItemAdapter();
         adapter.setData(Database.getInstance().getAllReferenceItems(pageCode));

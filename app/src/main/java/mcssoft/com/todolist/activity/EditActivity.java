@@ -1,33 +1,22 @@
 package mcssoft.com.todolist.activity;
 
-import android.database.Cursor;
-import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.fragment.GeneralItemFragment;
-import mcssoft.com.todolist.fragment.dialog.NothingSelectedFragment;
-import mcssoft.com.todolist.interfaces.INothingSelected;
-import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
  * Class to Add, Edit, or Delete a To Do item.
  */
-public class EditActivity extends AppCompatActivity implements INothingSelected {
+public class EditActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +36,6 @@ public class EditActivity extends AppCompatActivity implements INothingSelected 
         }
         String bpo = "";
     }
-
-    //<editor-fold defaultstate="collapsed" desc="Region: Interface">
-    @Override
-    public void iNoSelect(boolean value) {
-        if(!value) {
-            finish();
-        }
-    }
-    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
@@ -82,54 +62,11 @@ public class EditActivity extends AppCompatActivity implements INothingSelected 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void finalise(boolean action) {
         if(!action) {
-            uncheckReferenceItems();
+            Database.getInstance().unCheckReferenceItems();
             finish();
         } else {
-            if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-                Cursor cursor = Database.getInstance().getCheckedReferenceItems();
-                if(cursor.getCount() > 0) {
-                    writeNewShoppingList(getRefIds(cursor));
-                    uncheckReferenceItems();
-                    finish();
-                } else {
-                    showNothingSelectedDialog();
-                }
-            } else if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
-                // TBA.
-                String bp = "";
-            }
+            // TBA.
         }
-    }
-
-    private void writeNewShoppingList(int[] refIds) {
-        List<String> colVals = new ArrayList<>();
-        DateTime dateTime = new DateTime();
-
-        colVals.add(dateTime.getCompactedDateTime());      // list identifier.
-        colVals.add(dateTime.getFormattedDate(false));     // list date.
-        colVals.add("TBA");                                // list name.
-
-        long rowId = Database.getInstance().createShoppingList(colVals);
-        Database.getInstance().createShoppingListItems(rowId, refIds);
-    }
-
-    private int[] getRefIds(Cursor cursor) {
-        int size = cursor.getCount();
-        int[] refIds = new int[size]; //cursor.getCount()];
-        int colNdx = cursor.getColumnIndex(Schema.REF_ITEM_ROWID);
-        int ndx = 0;
-        while(cursor.moveToNext()) {
-            if (ndx < size) {
-                refIds[ndx] = cursor.getInt(colNdx);
-                ndx++;
-            }
-        }
-        return refIds;
-    }
-
-    private void showNothingSelectedDialog() {
-        NothingSelectedFragment nsf = new NothingSelectedFragment();
-        nsf.show(getFragmentManager(), null);
     }
     //</editor-fold>
 
@@ -138,17 +75,15 @@ public class EditActivity extends AppCompatActivity implements INothingSelected 
         if (listItemType.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
             setContentView(R.layout.cv_shopping);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_shopping));
-//            setFABListener();
             setAdapter();
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             setContentView(R.layout.cv_general);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_general));
-            // testing.
-
             GeneralItemFragment gif = new GeneralItemFragment();
             Bundle args = new Bundle();
             gif.setArguments(args);
-            getFragmentManager().beginTransaction().add(R.id.container,gif).commit();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.id_gif_container, gif, "tag_shopping_item_fragment").commit();
         }
     }
 
@@ -174,18 +109,10 @@ public class EditActivity extends AppCompatActivity implements INothingSelected 
         actionBar.setTitle(title);
     }
 
-//    private void setFABListener() {
-//        ((FloatingActionButton) findViewById(R.id.id_fab)).setOnClickListener(this);
-//    }
-
     private void setAdapter() {
         pagerAdapter = new ShoppingItemPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.id_pager_container);
         viewPager.setAdapter(pagerAdapter);
-    }
-
-    private void uncheckReferenceItems() {
-        Database.getInstance().unCheckReferenceItems();
     }
     //</editor-fold>
 

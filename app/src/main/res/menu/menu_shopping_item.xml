@@ -5,6 +5,6 @@
     <item
         android:id="@+id/id_shopping_item_save"
         android:orderInCategory="100"
-        android:title="Save"
-        app:showAsAction="never" />
+        android:title="Save" />
+        <!--app:showAsAction="never" />-->
 </menu>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<group android:id="@+id/id_new_listing"-->
+           <!--android:checkableBehavior="single">-->
+        <item
+            android:id="@+id/id_new_shopping_list"
+            android:icon="@drawable/ic_list_black"
+            android:title="Menu 1" />
+        <item
+            android:id="@+id/id_new_general_list"
+            android:icon="@drawable/ic_list_black"
+            android:title="Menu 2" />
+    <!--</group>-->
+    <!--<group android:id="@+id/id_list_maintenance"-->
+           <!--android:checkableBehavior="single">-->
+        <item
+            android:id="@+id/id_list_maint"
+            android:icon="@drawable/ic_build_black"
+            android:title="Menu 3" />
+    <!--</group>-->
+</menu>

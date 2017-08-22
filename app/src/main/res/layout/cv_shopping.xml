@@ -43,4 +43,6 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
     </android.support.v4.view.ViewPager>
 
+    <include layout="@layout/layout_bottom_nav" />
+
 </android.support.design.widget.CoordinatorLayout>
