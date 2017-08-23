@@ -2,9 +2,7 @@ package mcssoft.com.todolist.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,23 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.MainPagerAdapter;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
 public class
 MainActivity extends AppCompatActivity
-        implements IItemClickListener, NavigationView.OnNavigationItemSelectedListener {
-
-    //<editor-fold defaultstate="collapsed" desc="Region: Interface">
-    @Override
-    public void onItemClick(View view, int position) {
-        String bp = ";";
-        // TBA
-    }
-    //</editor-fold>
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -38,7 +28,7 @@ MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-        initialiseBaseUI(); // toolbar, fab, nav drawer etc.
+        initialiseBaseUI(); // toolbar, nav drawer etc.
         setAdapter();
     }
 
@@ -74,7 +64,8 @@ MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.id_preference_settings:
-                return true;
+                Toast.makeText(this, "Preferences not implemented yet.", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.id_menu_add:
                 String pageTitle = pagerAdapter.getPageTitle(viewPager.getCurrentItem());
                 if(pageTitle.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
@@ -123,19 +114,19 @@ MainActivity extends AppCompatActivity
         startActivityForResult(intent, NEW_SHOPPING);
     }
 
-/*    private void doEditShoppingList(int position) {
+    private void doEditShoppingList(int position) {
         // set list type as shopping.
-        Bundle bundle = new Bundle();
-        bundle.putString(Resources.getInstance().getString(R.string.list_type_key),
-                Resources.getInstance().getString(R.string.list_type_shopping));
-        // set the position of the item to edit.
-        bundle.putInt(Resources.getInstance().getString(R.string.list_edit_position_key), position);
-        // set action as edit.
-        Intent intent = new Intent(this, EditActivity.class);
-        intent.setAction(Resources.getInstance().getString(R.string.list_edit_action_key));
-        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
-        startActivityForResult(intent, EDIT_SHOPPING);
-    }*/
+//        Bundle bundle = new Bundle();
+//        bundle.putString(Resources.getInstance().getString(R.string.list_type_key),
+//                Resources.getInstance().getString(R.string.list_type_shopping));
+//        // set the position of the item to edit.
+//        bundle.putInt(Resources.getInstance().getString(R.string.list_edit_position_key), position);
+//        // set action as edit.
+//        Intent intent = new Intent(this, EditActivity.class);
+//        intent.setAction(Resources.getInstance().getString(R.string.list_edit_action_key));
+//        intent.putExtra(Resources.getInstance().getString(R.string.bundle_key), bundle);
+//        startActivityForResult(intent, EDIT_SHOPPING);
+    }
 
     private void doNewGeneralList() {
         // set list type as shopping.

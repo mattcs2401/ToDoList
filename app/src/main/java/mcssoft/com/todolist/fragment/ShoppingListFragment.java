@@ -27,12 +27,13 @@ import mcssoft.com.todolist.interfaces.IItemClickListener;
 import mcssoft.com.todolist.interfaces.IItemLongClickListener;
 import mcssoft.com.todolist.utility.Resources;
 
-
+/**
+ * Class that displays the list of shopping items.
+ */
 public class ShoppingListFragment extends Fragment
         implements IItemClickListener, IItemLongClickListener, View.OnClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

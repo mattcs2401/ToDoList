@@ -24,11 +24,12 @@ import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
-import mcssoft.com.todolist.interfaces.INothingSelected;
 import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
-
+/**
+ * Class that is a single shopping item.
+ */
 public class ShoppingItemFragment extends Fragment implements IItemClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
