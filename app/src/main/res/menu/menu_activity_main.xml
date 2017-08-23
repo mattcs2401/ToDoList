@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/id_menu_add"
+        android:icon="@drawable/ic_add_circle_white_36"
+        android:title="@string/menu_add_list_member"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/id_preference_settings"
         android:orderInCategory="100"
         android:title="@string/preference_settings"

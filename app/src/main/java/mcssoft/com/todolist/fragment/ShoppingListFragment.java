@@ -10,6 +10,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -29,6 +32,13 @@ public class ShoppingListFragment extends Fragment
         implements IItemClickListener, IItemLongClickListener, View.OnClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment, container, false);
@@ -45,6 +55,19 @@ public class ShoppingListFragment extends Fragment
         // set the recycler view.
         setRecyclerView(rootView);
     }
+
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        // this is called before onPrepareOptionsMenu, only called once.
+//        String bp = "";
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+
+//    @Override
+//    public void onPrepareOptionsMenu(Menu menu) {
+//        // this called everytime you click the menu.
+//        super.onPrepareOptionsMenu(menu);
+//    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
@@ -161,7 +184,6 @@ public class ShoppingListFragment extends Fragment
         startActivityForResult(intent, 3);
     }
     //</editor-fold>
-
 
     private int dbRowId;
     private int position;

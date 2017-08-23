@@ -21,8 +21,7 @@ import mcssoft.com.todolist.utility.Resources;
 
 public class
 MainActivity extends AppCompatActivity
-        implements IItemClickListener, View.OnClickListener,
-                   NavigationView.OnNavigationItemSelectedListener   {
+        implements IItemClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     @Override
@@ -76,6 +75,14 @@ MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.id_preference_settings:
                 return true;
+            case R.id.id_menu_add:
+                String pageTitle = pagerAdapter.getPageTitle(viewPager.getCurrentItem());
+                if(pageTitle.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
+                    doNewShoppingList();
+                } else if (pageTitle.equals(Resources.getInstance().getString(R.string.list_type_general))) {
+                    doNewGeneralList();
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -100,18 +107,6 @@ MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view instanceof FloatingActionButton) {
-            String pageTitle = pagerAdapter.getPageTitle(viewPager.getCurrentItem());
-            if(pageTitle.equals(Resources.getInstance().getString(R.string.list_type_shopping))) {
-                doNewShoppingList();
-            } else if (pageTitle.equals(Resources.getInstance().getString(R.string.list_type_general))) {
-                doNewGeneralList();
-            }
-        }
     }
     //</editor-fold>
 
@@ -166,9 +161,6 @@ MainActivity extends AppCompatActivity
     private void initialiseBaseUI() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, 0, 0); // R.string.navigation_drawer_open, R.string.navigation_drawer_close);

@@ -3,13 +3,16 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="preference_settings">Preferences</string>
 
     <!-- General text. -->
     <string name="nothing_to_show">Nothing to show at this time.</string>
     <string name="date_format">dd/MM/yyyy</string>
     <string name="date_time_format">dd/MM/yyyy HH:mm</string>
     <string name="date_time_format_compacted">yyyyMMddHHmmss</string>
+
+    <!-- Menu text. -->
+    <string name="menu_add_list_member">Add List Member</string>
+    <string name="preference_settings">Preferences</string>
 
     <!-- Bundle keys. -->
     <string name="bundle_key">bundle_key</string>
