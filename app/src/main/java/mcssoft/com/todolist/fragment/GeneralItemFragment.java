@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.interfaces.BackPressedListener;
@@ -62,7 +63,12 @@ public class GeneralItemFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.id_general_item_save:
-                // TBA
+                if(getTextLength(nameLabelEdit) < 1) {
+                    Toast.makeText(getActivity(), "General item must have a name or label.", Toast.LENGTH_SHORT).show();
+                    setCursorAndHint(true);
+                } else {
+                    Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.id_general_item_add_sub_item:
                 // TBA
@@ -73,11 +79,9 @@ public class GeneralItemFragment extends Fragment
 
     @Override
     public void onClick(View view) {
-        int id = view.getId();
-        switch (id) {
+        switch (view.getId()) {
             case R.id.id_et_nameLabel:
-                nameLabelEdit.setCursorVisible(true);
-                nameLabelEdit.setHint("");
+                setCursorAndHint(true);
                 break;
         }
     }
@@ -90,6 +94,8 @@ public class GeneralItemFragment extends Fragment
             hideKeyboard(view);
             if(getTextLength((ToDoEditText) view) < 1) {
                 setHint((ToDoEditText) view);
+            } else {
+                // TBA
             }
             retVal = true;
         }
@@ -107,6 +113,16 @@ public class GeneralItemFragment extends Fragment
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
+    private void setCursorAndHint(boolean visible) {
+        if(visible) {
+            nameLabelEdit.setCursorVisible(true);
+            nameLabelEdit.setHint("");
+        } else {
+            nameLabelEdit.setCursorVisible(false);
+            nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
+        }
+    }
+
     private void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager)
                 getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -118,8 +134,7 @@ public class GeneralItemFragment extends Fragment
     }
 
     private void setHint(ToDoEditText toDoEditText) {
-        int id = toDoEditText.getId();
-        switch (id) {
+        switch (toDoEditText.getId()) {
             case R.id.id_et_nameLabel:
                 nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
                 break;
