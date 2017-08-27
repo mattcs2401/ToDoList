@@ -20,9 +20,8 @@ public class CheckActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_check);            // this likely won't be seen.
-        Context context = getApplicationContext();
-        Resources.setInstance(context);          // set the Resources singleton.
-        Database.setInstance(context);           // set the database singleton.
+        Resources.setInstance(getApplicationContext());    // set the Resources singleton.
+        Database.setInstance(getApplicationContext());     // set the Database singleton.
 
         // check if default values exist.
         if(Database.getInstance().getTableRowCount(Schema.TABLE_REF_ITEM, null, null) < 1) {

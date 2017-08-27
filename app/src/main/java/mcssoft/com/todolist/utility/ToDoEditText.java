@@ -1,9 +1,9 @@
 package mcssoft.com.todolist.utility;
 
-import android.content.Context;
-import android.support.v7.widget.AppCompatEditText;
-import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.support.v7.widget.AppCompatEditText;
 
 import mcssoft.com.todolist.interfaces.BackPressedListener;
 
@@ -31,24 +31,21 @@ public class ToDoEditText extends AppCompatEditText {
 
     @Override
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        boolean retVal = false;
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // TBA.
-            onImeBack.onImeBack(this);
+            if(listener != null) {
+                listener.onImeBack(this);
+            }
         } else if (keyCode == KeyEvent.KEYCODE_MENU) {
             // so menus don't show when soft keyboard showing.
-            return true;
+            retVal = true;
         }
-        return false;
+        return retVal;
     }
 
     public void setBackPressedListener(BackPressedListener listener) {
-        onImeBack = listener;
+        this.listener = listener;
     }
 
-    private BackPressedListener onImeBack;
+    private BackPressedListener listener = null;
 }
-/*
-- Idea from: https://gist.github.com/xzzz9097/b5c630aa29b511a90b4f
-             http://findnerd.com/list/view/How-to-detect-Android-Softkeyboard/11645/
-- Implement interface ?
-*/
