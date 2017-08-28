@@ -46,7 +46,7 @@
 
     <!-- GeneraItemFragment assorted text. -->
     <string name="gif_name_label">Name or Label</string>
-    <string name="gif_name_label_hint">Enter a name or label for this General item.</string>
+    <string name="gif_name_label_hint">Enter a label for this General item.</string>
     <string name="gif_item_label">Items</string>
 
     <!-- List select dialog. -->
@@ -57,6 +57,9 @@
 
     <!-- Shopping details dialog. -->
     <string name="sl_details_dialog_title">Shopping List Details</string>
+
+    <!-- General Item value. -->
+    <string name="giv_dialog_title">General Item Value</string>
 
     <!-- Snackbar text. -->
     <string name="snackbar_item_removed">Item removed</string>

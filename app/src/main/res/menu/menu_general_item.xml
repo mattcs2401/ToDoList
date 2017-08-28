@@ -8,8 +8,8 @@
         android:title="Save"
         app:showAsAction="never" />
     <item
-        android:id="@+id/id_general_item_add_sub_item"
+        android:id="@+id/id_general_item_add_value"
         android:orderInCategory="10"
-        android:title="Add Sub-item"
+        android:title="Add Value"
         app:showAsAction="never" />
 </menu>

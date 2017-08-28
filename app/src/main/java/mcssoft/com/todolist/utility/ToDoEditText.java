@@ -1,9 +1,11 @@
 package mcssoft.com.todolist.utility;
 
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatEditText;
+import android.view.inputmethod.InputMethodManager;
 
 import mcssoft.com.todolist.interfaces.BackPressedListener;
 
@@ -15,17 +17,19 @@ public class ToDoEditText extends AppCompatEditText {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Constructors">
     /* Note: Need to override these otherwise app crashes. */
-
     public ToDoEditText(Context context) {
         super(context);
+        this.context = context;
     }
 
     public ToDoEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
     }
 
     public ToDoEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
     }
     //</editor-fold>
 
@@ -47,5 +51,31 @@ public class ToDoEditText extends AppCompatEditText {
         this.listener = listener;
     }
 
+    public void setCursorAndHint(boolean visible, @Nullable String hint) {
+        if(visible) {
+            this.setCursorVisible(true);
+            this.setHint(BLANK);
+        } else {
+            this.setCursorVisible(false);
+            if(hint != null) {
+                this.setHint(hint);
+            } else {
+                setHint(BLANK);
+            }
+        }
+    }
+
+    public int getTextLength() {
+        return this.length();
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager)
+                context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+    }
+
+    private Context context;
+    private static final String BLANK = "";
     private BackPressedListener listener = null;
 }

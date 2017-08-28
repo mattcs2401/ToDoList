@@ -82,7 +82,8 @@ public class EditActivity extends AppCompatActivity {
             GeneralItemFragment gif = new GeneralItemFragment();
             Bundle args = new Bundle();
             gif.setArguments(args);
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
+            //getFragmentManager().beginTransaction()
                     .add(R.id.id_gif_container, gif, "tag_shopping_item_fragment").commit();
         }
     }
