@@ -31,10 +31,10 @@ public class GeneralItemValue extends DialogFragment implements DialogInterface.
 
         AlertDialog.Builder ab = new AlertDialog.Builder(getActivity(), AlertDialog.THEME_HOLO_LIGHT);
         ab.setView(rootView)
-                .setTitle(Resources.getInstance().getString(R.string.giv_dialog_title))
-          .setMessage("Add a new value to the General item.")
-//          .setNegativeButton(Resources.getInstance().getString(R.string.btn_cancel), this)
-                .setPositiveButton(Resources.getInstance().getString(R.string.btn_ok), this);
+          .setTitle(Resources.getInstance().getString(R.string.giv_dialog_title))
+          .setMessage(Resources.getInstance().getString(R.string.giv_dialog_message))
+          .setNegativeButton(Resources.getInstance().getString(R.string.btn_cancel), this)
+          .setPositiveButton(Resources.getInstance().getString(R.string.btn_ok), this);
 
         return ab.create();
     }
