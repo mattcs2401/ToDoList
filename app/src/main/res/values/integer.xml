@@ -2,4 +2,5 @@
 <resources>
     <integer name="num_main_pages">2</integer>
     <integer name="num_shopping_item_pages">3</integer>
+    <integer name="min_label_length">6</integer>
 </resources>

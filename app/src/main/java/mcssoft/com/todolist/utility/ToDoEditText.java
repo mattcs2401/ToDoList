@@ -65,10 +65,6 @@ public class ToDoEditText extends AppCompatEditText {
         }
     }
 
-    public int getTextLength() {
-        return this.length();
-    }
-
     public void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager)
                 context.getSystemService(Context.INPUT_METHOD_SERVICE);

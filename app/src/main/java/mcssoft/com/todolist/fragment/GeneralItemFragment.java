@@ -53,22 +53,15 @@ public class GeneralItemFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.id_general_item_save:
-                if(nameLabelEdit.getTextLength() < 1) {
-                    Toast.makeText(getActivity(), "General item must have a label.", Toast.LENGTH_SHORT).show();
-                    nameLabelEdit.setCursorAndHint(true, null);
-                } else {
+                if(checkLength(false)) {
                     Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.id_general_item_add_value:
-//                if(nameLabelEdit.getTextLength() < 1) {
-//                    Toast.makeText(getActivity(), "General item must have a label.", Toast.LENGTH_SHORT).show();
-//                    nameLabelEdit.setCursorAndHint(true, null);
-//                } else {
+                if(checkLength(false)) {
                     GeneralItemValue giv = new GeneralItemValue();
-                    //FragmentManager fm = getActivity().getS
                     giv.show(getActivity().getSupportFragmentManager(), null);
-//                }
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -88,13 +81,11 @@ public class GeneralItemFragment extends Fragment
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER) {
             nameLabelEdit.setCursorVisible(false);
-            nameLabelEdit.hideKeyboard();
-            if(nameLabelEdit.getTextLength() < 1) {
-                nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
-            } else {
+            if(checkLength(false)) {
+                nameLabelEdit.hideKeyboard();
                 // TBA
+                retVal = true;
             }
-            retVal = true;
         }
         return retVal;
     }
@@ -102,10 +93,10 @@ public class GeneralItemFragment extends Fragment
     @Override
     public void onImeBack(ToDoEditText toDoEditText) {
         // Back key pressed while softkeyboard still showing.
-        if(nameLabelEdit.getTextLength() < 1) {
-            nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
-        }
-        toDoEditText.setCursorVisible(false);
+//        if(!checkLength(true)) {
+//            nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
+//            nameLabelEdit.hideKeyboard();
+//        toDoEditText.setCursorVisible(false);
     }
     //</editor-fold>
 
@@ -118,6 +109,20 @@ public class GeneralItemFragment extends Fragment
         if(nameLabelEdit.getText().length() < 1) {
             nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
         }
+    }
+
+    private boolean checkLength(boolean silent) {
+        boolean retVal = false;
+        if(nameLabelEdit.length() < 1) {
+            if(!silent) {Toast.makeText(getActivity(), "General item must have a label.", Toast.LENGTH_SHORT).show();}
+            nameLabelEdit.setCursorAndHint(true, Resources.getInstance().getString(R.string.gif_name_label_hint));
+        } else if (nameLabelEdit.length() < Resources.getInstance().getInteger(R.integer.min_label_length)) {
+            if(!silent) {Toast.makeText(getActivity(), "General item label must be a minimum of 6 characters.", Toast.LENGTH_SHORT).show();}
+            nameLabelEdit.setCursorVisible(true);
+        } else if(nameLabelEdit.length() >= Resources.getInstance().getInteger(R.integer.min_label_length)) {
+            retVal = true;
+        }
+        return retVal;
     }
     //</editor-fold>
 
