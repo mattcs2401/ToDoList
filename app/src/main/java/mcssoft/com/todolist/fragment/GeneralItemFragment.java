@@ -79,7 +79,8 @@ public class GeneralItemFragment extends Fragment
     @Override
     public boolean onKey(View view, int keyCode, KeyEvent event) {
         boolean retVal = false;
-        if(keyCode == KeyEvent.KEYCODE_ENTER) {
+        if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            // This will fire twice; ACTION_DOWN, then ACTION_UP. Only want to process on ACTION_DOWN.
             nameLabelEdit.setCursorVisible(false);
             if(checkLength()) {
                 nameLabelEdit.hideKeyboard();
@@ -93,10 +94,8 @@ public class GeneralItemFragment extends Fragment
     @Override
     public void onImeBack(ToDoEditText toDoEditText) {
         // Back key pressed while softkeyboard still showing.
-//        if(!checkLength(true)) {
-//            nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
-//            nameLabelEdit.hideKeyboard();
-//        toDoEditText.setCursorVisible(false);
+        // TODO - do we really need this.
+        String bp = "";
     }
     //</editor-fold>
 
@@ -129,6 +128,4 @@ public class GeneralItemFragment extends Fragment
     private Bundle args;
     private View rootView;
     private ToDoEditText nameLabelEdit;
-
-    private static final int SILENT = 0;
 }
