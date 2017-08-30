@@ -53,12 +53,12 @@ public class GeneralItemFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.id_general_item_save:
-                if(checkLength(false)) {
+                if(checkLength()) {
                     Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.id_general_item_add_value:
-                if(checkLength(false)) {
+                if(checkLength()) {
                     GeneralItemValue giv = new GeneralItemValue();
                     giv.show(getActivity().getSupportFragmentManager(), null);
                 }
@@ -81,7 +81,7 @@ public class GeneralItemFragment extends Fragment
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER) {
             nameLabelEdit.setCursorVisible(false);
-            if(checkLength(false)) {
+            if(checkLength()) {
                 nameLabelEdit.hideKeyboard();
                 // TBA
                 retVal = true;
@@ -111,13 +111,13 @@ public class GeneralItemFragment extends Fragment
         }
     }
 
-    private boolean checkLength(boolean silent) {
+    private boolean checkLength() {
         boolean retVal = false;
         if(nameLabelEdit.length() < 1) {
-            if(!silent) {Toast.makeText(getActivity(), "General item must have a label.", Toast.LENGTH_SHORT).show();}
+            Toast.makeText(getActivity(), Resources.getInstance().getString(R.string.gif_must_have_label), Toast.LENGTH_SHORT).show();
             nameLabelEdit.setCursorAndHint(true, Resources.getInstance().getString(R.string.gif_name_label_hint));
         } else if (nameLabelEdit.length() < Resources.getInstance().getInteger(R.integer.min_label_length)) {
-            if(!silent) {Toast.makeText(getActivity(), "General item label must be a minimum of 6 characters.", Toast.LENGTH_SHORT).show();}
+            Toast.makeText(getActivity(), Resources.getInstance().getString(R.string.gif_label_length), Toast.LENGTH_SHORT).show();
             nameLabelEdit.setCursorVisible(true);
         } else if(nameLabelEdit.length() >= Resources.getInstance().getInteger(R.integer.min_label_length)) {
             retVal = true;
@@ -129,4 +129,6 @@ public class GeneralItemFragment extends Fragment
     private Bundle args;
     private View rootView;
     private ToDoEditText nameLabelEdit;
+
+    private static final int SILENT = 0;
 }

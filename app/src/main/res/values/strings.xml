@@ -13,6 +13,9 @@
     <!-- Menu text. -->
     <string name="menu_add_list_member">Add List Member</string>
     <string name="preference_settings">Preferences</string>
+    <!-- Menu - general item. -->
+    <string name="menu_general_item_add">Add Value</string>
+    <string name="menu_general_item_save">Save Item</string>
 
     <!-- Bundle keys. -->
     <string name="bundle_key">bundle_key</string>
@@ -45,9 +48,11 @@
     <string name="btn_continue">Continue</string>
 
     <!-- GeneraItemFragment assorted text. -->
-    <string name="gif_name_label">Name or Label</string>
+    <string name="gif_name_label">Label</string>
     <string name="gif_name_label_hint">Enter a label for this General item.</string>
     <string name="gif_item_label">Items</string>
+    <string name="gif_must_have_label">General item must have a label.</string>
+    <string name="gif_label_length">General item label must be a minimum of 6 characters.</string>
 
     <!-- List select dialog. -->
     <string name="rb_list_select_shopping">Shopping</string>

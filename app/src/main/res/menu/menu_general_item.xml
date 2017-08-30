@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/id_general_item_save"
-        android:orderInCategory="100"
-        android:title="Save"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/id_general_item_add_value"
         android:orderInCategory="10"
-        android:title="Add Value"
+        android:title="@string/menu_general_item_add"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/id_general_item_save"
+        android:orderInCategory="100"
+        android:title="@string/menu_general_item_save"
         app:showAsAction="never" />
 </menu>
