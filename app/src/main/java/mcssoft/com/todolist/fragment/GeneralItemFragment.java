@@ -71,7 +71,7 @@ public class GeneralItemFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_et_nameLabel:
-                nameLabelEdit.setCursorAndHint(true, null);
+//                nameLabelEdit.setCursorAndHint(true, null);
                 break;
         }
     }
@@ -81,7 +81,7 @@ public class GeneralItemFragment extends Fragment
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
             // This will fire twice; ACTION_DOWN, then ACTION_UP. Only want to process on ACTION_DOWN.
-            nameLabelEdit.setCursorVisible(false);
+//            nameLabelEdit.setCursorVisible(false);
             if(checkLength()) {
                 nameLabelEdit.hideKeyboard();
                 // TBA
@@ -105,7 +105,7 @@ public class GeneralItemFragment extends Fragment
         nameLabelEdit.setOnClickListener(this);
         nameLabelEdit.setOnKeyListener(this);
         nameLabelEdit.setBackPressedListener(this);
-        if(nameLabelEdit.getText().length() < 1) {
+        if(nameLabelEdit.length() < 1) {
             nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
         }
     }
@@ -114,10 +114,10 @@ public class GeneralItemFragment extends Fragment
         boolean retVal = false;
         if(nameLabelEdit.length() < 1) {
             Toast.makeText(getActivity(), Resources.getInstance().getString(R.string.gif_must_have_label), Toast.LENGTH_SHORT).show();
-            nameLabelEdit.setCursorAndHint(true, Resources.getInstance().getString(R.string.gif_name_label_hint));
+//            nameLabelEdit.setCursorAndHint(true, Resources.getInstance().getString(R.string.gif_name_label_hint));
         } else if (nameLabelEdit.length() < Resources.getInstance().getInteger(R.integer.min_label_length)) {
             Toast.makeText(getActivity(), Resources.getInstance().getString(R.string.gif_label_length), Toast.LENGTH_SHORT).show();
-            nameLabelEdit.setCursorVisible(true);
+//            nameLabelEdit.setCursorVisible(true);
         } else if(nameLabelEdit.length() >= Resources.getInstance().getInteger(R.integer.min_label_length)) {
             retVal = true;
         }
