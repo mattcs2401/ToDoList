@@ -73,7 +73,7 @@ public class GeneralItemFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.id_et_input_name:
-
+                String bp = "";
                 break;
         }
     }
@@ -82,6 +82,7 @@ public class GeneralItemFragment extends Fragment
     public boolean onKey(View view, int keyCode, KeyEvent event) {
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            String bp = "";
             // This will fire twice; ACTION_DOWN, then ACTION_UP. Only want to process on ACTION_DOWN.
 //            inputName.setCursorVisible(false);
         }
@@ -96,7 +97,7 @@ public class GeneralItemFragment extends Fragment
         inputName = (EditText) rootView.findViewById(R.id.id_et_input_name);
 //        inputName.addTextChangedListener(new ToDoTextWatcher(inputName));
         inputName.setOnClickListener(this);
-//        inputName.setOnKeyListener(this);
+        inputName.setOnKeyListener(this);
 //        inputName.setBackPressedListener(this);
     }
 
