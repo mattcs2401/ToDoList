@@ -11,7 +11,6 @@ import android.view.View;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.utility.Resources;
-import mcssoft.com.todolist.utility.ToDoEditText;
 
 /**
  * Class to capture the value details entered for General Item.
@@ -55,5 +54,4 @@ public class GeneralItemValue extends DialogFragment implements DialogInterface.
     }
 
     private View rootView;
-    private ToDoEditText itemValueText;
 }

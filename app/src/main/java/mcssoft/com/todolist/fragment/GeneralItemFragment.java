@@ -1,8 +1,12 @@
 package mcssoft.com.todolist.fragment;
 
+import android.content.Context;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,16 +14,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.fragment.dialog.GeneralItemValue;
-import mcssoft.com.todolist.interfaces.BackPressedListener;
-import mcssoft.com.todolist.utility.Resources;
-import mcssoft.com.todolist.utility.ToDoEditText;
 
 public class GeneralItemFragment extends Fragment
-        implements View.OnClickListener, View.OnKeyListener, BackPressedListener {
+        implements View.OnClickListener, View.OnKeyListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -53,15 +55,15 @@ public class GeneralItemFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.id_general_item_save:
-                if(checkLength()) {
-                    Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
-                }
+//                if(checkLength()) {
+//                    Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
+//                }
                 break;
             case R.id.id_general_item_add_value:
-                if(checkLength()) {
-                    GeneralItemValue giv = new GeneralItemValue();
-                    giv.show(getActivity().getSupportFragmentManager(), null);
-                }
+//                if(checkLength()) {
+//                    GeneralItemValue giv = new GeneralItemValue();
+//                    giv.show(getActivity().getSupportFragmentManager(), null);
+//                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -70,8 +72,8 @@ public class GeneralItemFragment extends Fragment
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.id_et_nameLabel:
-//                nameLabelEdit.setCursorAndHint(true, null);
+            case R.id.id_et_input_name:
+
                 break;
         }
     }
@@ -81,51 +83,69 @@ public class GeneralItemFragment extends Fragment
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
             // This will fire twice; ACTION_DOWN, then ACTION_UP. Only want to process on ACTION_DOWN.
-//            nameLabelEdit.setCursorVisible(false);
-            if(checkLength()) {
-                nameLabelEdit.hideKeyboard();
-                // TBA
-                retVal = true;
-            }
+//            inputName.setCursorVisible(false);
         }
         return retVal;
-    }
-
-    @Override
-    public void onImeBack(ToDoEditText toDoEditText) {
-        // Back key pressed while softkeyboard still showing.
-        // TODO - do we really need this.
-        String bp = "";
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void initialise() {
-        nameLabelEdit = (ToDoEditText) rootView.findViewById(R.id.id_et_nameLabel);
-        nameLabelEdit.setOnClickListener(this);
-        nameLabelEdit.setOnKeyListener(this);
-        nameLabelEdit.setBackPressedListener(this);
-        if(nameLabelEdit.length() < 1) {
-            nameLabelEdit.setHint(Resources.getInstance().getString(R.string.gif_name_label_hint));
-        }
+        layoutInputName = (TextInputLayout) rootView.findViewById(R.id.id_input_layout_name);
+        layoutInputName.setHint("Name");
+        inputName = (EditText) rootView.findViewById(R.id.id_et_input_name);
+//        inputName.addTextChangedListener(new ToDoTextWatcher(inputName));
+        inputName.setOnClickListener(this);
+//        inputName.setOnKeyListener(this);
+//        inputName.setBackPressedListener(this);
     }
 
-    private boolean checkLength() {
-        boolean retVal = false;
-        if(nameLabelEdit.length() < 1) {
-            Toast.makeText(getActivity(), Resources.getInstance().getString(R.string.gif_must_have_label), Toast.LENGTH_SHORT).show();
-//            nameLabelEdit.setCursorAndHint(true, Resources.getInstance().getString(R.string.gif_name_label_hint));
-        } else if (nameLabelEdit.length() < Resources.getInstance().getInteger(R.integer.min_label_length)) {
-            Toast.makeText(getActivity(), Resources.getInstance().getString(R.string.gif_label_length), Toast.LENGTH_SHORT).show();
-//            nameLabelEdit.setCursorVisible(true);
-        } else if(nameLabelEdit.length() >= Resources.getInstance().getInteger(R.integer.min_label_length)) {
-            retVal = true;
+    private boolean validateName() {
+        if (inputName.getText().toString().trim().isEmpty()) {
+            layoutInputName.setError("Enter a name for this General item,");
+            requestFocus(inputName);
+            return false;
+        } else {
+            layoutInputName.setErrorEnabled(false);
         }
-        return retVal;
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: TextWatcher">
+    private class ToDoTextWatcher implements TextWatcher {
+
+        public ToDoTextWatcher(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            switch(view.getId()) {
+                case R.id.id_et_input_name:
+                    validateName();
+                    break;
+            }
+        }
+
+        private View view;
     }
     //</editor-fold>
 
     private Bundle args;
     private View rootView;
-    private ToDoEditText nameLabelEdit;
+    private EditText inputName;
+    private TextInputLayout layoutInputName;
 }
