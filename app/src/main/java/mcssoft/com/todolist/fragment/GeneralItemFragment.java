@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
 
@@ -56,7 +57,7 @@ public class GeneralItemFragment extends Fragment
         switch(item.getItemId()) {
             case R.id.id_general_item_save:
 //                if(checkLength()) {
-//                    Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
 //                }
                 break;
             case R.id.id_general_item_add_value:
@@ -82,8 +83,12 @@ public class GeneralItemFragment extends Fragment
     public boolean onKey(View view, int keyCode, KeyEvent event) {
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-            String bp = "";
             // This will fire twice; ACTION_DOWN, then ACTION_UP. Only want to process on ACTION_DOWN.
+            Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
+            if(validateName()) {
+                InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
 //            inputName.setCursorVisible(false);
         }
         return retVal;
@@ -95,7 +100,7 @@ public class GeneralItemFragment extends Fragment
         layoutInputName = (TextInputLayout) rootView.findViewById(R.id.id_input_layout_name);
         layoutInputName.setHint("Name");
         inputName = (EditText) rootView.findViewById(R.id.id_et_input_name);
-//        inputName.addTextChangedListener(new ToDoTextWatcher(inputName));
+        inputName.addTextChangedListener(new ToDoTextWatcher(inputName));
         inputName.setOnClickListener(this);
         inputName.setOnKeyListener(this);
 //        inputName.setBackPressedListener(this);
@@ -103,10 +108,15 @@ public class GeneralItemFragment extends Fragment
 
     private boolean validateName() {
         if (inputName.getText().toString().trim().isEmpty()) {
-            layoutInputName.setError("Enter a name for this General item,");
+            layoutInputName.setError("Enter a name for this General item.");
             requestFocus(inputName);
             return false;
-        } else {
+        } else if(inputName.getText().toString().trim().length() < 4) {
+            layoutInputName.setError("A name must be at least three characters.");
+            requestFocus(inputName);
+            return false;
+        }
+         else {
             layoutInputName.setErrorEnabled(false);
         }
         return true;
