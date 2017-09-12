@@ -48,11 +48,9 @@
     <string name="btn_continue">Continue</string>
 
     <!-- GeneraItemFragment assorted text. -->
-    <string name="gif_name_label">Label</string>
-    <string name="gif_name_label_hint">Enter a label for this General item.</string>
-    <string name="gif_item_label">Items</string>
-    <string name="gif_must_have_label">General item must have a label.</string>
-    <string name="gif_label_length">General item label must be a minimum of 6 characters.</string>
+    <string name="gif_name">Name</string>
+    <string name="gif_err_enter_name">Enter a name for this General item.</string>
+    <string name="gif_err_char_len">A name must be at least three characters.</string>
 
     <!-- List select dialog. -->
     <string name="rb_list_select_shopping">Shopping</string>

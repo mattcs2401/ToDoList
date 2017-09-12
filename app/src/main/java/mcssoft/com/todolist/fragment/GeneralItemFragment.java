@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.utility.Resources;
 
 public class GeneralItemFragment extends Fragment
         implements View.OnClickListener, View.OnKeyListener {
@@ -98,21 +99,21 @@ public class GeneralItemFragment extends Fragment
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private void initialise() {
         layoutInputName = (TextInputLayout) rootView.findViewById(R.id.id_input_layout_name);
-        layoutInputName.setHint("Name");
+        layoutInputName.setHint(Resources.getInstance().getString(R.string.gif_name));
         inputName = (EditText) rootView.findViewById(R.id.id_et_input_name);
         inputName.addTextChangedListener(new ToDoTextWatcher(inputName));
         inputName.setOnClickListener(this);
         inputName.setOnKeyListener(this);
-//        inputName.setBackPressedListener(this);
     }
 
     private boolean validateName() {
-        if (inputName.getText().toString().trim().isEmpty()) {
-            layoutInputName.setError("Enter a name for this General item.");
+        String name = inputName.getText().toString().trim();
+        if (name.isEmpty()) {
+            layoutInputName.setError(Resources.getInstance().getString(R.string.gif_err_enter_name));
             requestFocus(inputName);
             return false;
-        } else if(inputName.getText().toString().trim().length() < 4) {
-            layoutInputName.setError("A name must be at least three characters.");
+        } else if(name.length() < 4) {
+            layoutInputName.setError(Resources.getInstance().getString(R.string.gif_err_char_len));
             requestFocus(inputName);
             return false;
         }
