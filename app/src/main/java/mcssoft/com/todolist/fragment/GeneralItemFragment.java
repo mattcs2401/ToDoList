@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.fragment.dialog.GeneralItemValue;
 import mcssoft.com.todolist.utility.Resources;
 
 public class GeneralItemFragment extends Fragment
@@ -57,15 +58,15 @@ public class GeneralItemFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.id_general_item_save:
-//                if(checkLength()) {
+                if(validateName()) {
                     Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
-//                }
+                }
                 break;
             case R.id.id_general_item_add_value:
-//                if(checkLength()) {
-//                    GeneralItemValue giv = new GeneralItemValue();
-//                    giv.show(getActivity().getSupportFragmentManager(), null);
-//                }
+                if(validateName()) {
+                    GeneralItemValue giv = new GeneralItemValue();
+                    giv.show(getActivity().getSupportFragmentManager(), null);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
