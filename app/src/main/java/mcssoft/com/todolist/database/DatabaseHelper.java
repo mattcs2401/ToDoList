@@ -68,11 +68,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return  projection;
     }
+
     /**
      * Housekeeping activities.
      */
     public void close() {
-        if(sqLiteDatabase.isOpen()) {
+        if((sqLiteDatabase != null) && (sqLiteDatabase.isOpen())) {
             sqLiteDatabase.close();
         }
         if(context != null) {

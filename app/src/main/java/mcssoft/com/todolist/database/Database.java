@@ -381,8 +381,13 @@ public class Database {
     }
 
     public void destroy() {
+        if(dbHelper != null) {
+            dbHelper.close();
+        }
         dbHelper = null;
-        context = null;
+        if(context != null) {
+            context = null;
+        }
     }
 
     private Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
