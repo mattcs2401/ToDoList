@@ -23,8 +23,7 @@ import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.fragment.dialog.GeneralItemValue;
 import mcssoft.com.todolist.utility.Resources;
 
-public class GeneralItemFragment extends Fragment
-        implements View.OnClickListener, View.OnKeyListener {
+public class GeneralItemFragment extends Fragment implements TextWatcher, View.OnKeyListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -52,7 +51,7 @@ public class GeneralItemFragment extends Fragment
             // so doesn't retrigger and get added twice.
             isNameValid = false;
             // add in menu item.
-            menu.add(Menu.NONE, ADD_VALUE, Menu.FIRST, Resources.getInstance().getString(R.string.menu_general_item_add));
+            menu.add(Menu.NONE, ID_GI_ADD_VALUE, Menu.FIRST, Resources.getInstance().getString(R.string.menu_gi_add));
         }
         super.onPrepareOptionsMenu(menu);
     }
@@ -69,12 +68,12 @@ public class GeneralItemFragment extends Fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.id_general_item_save:
+            case R.id.id_gi_save:
                 if(validateName()) {
                     Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case ADD_VALUE:
+            case ID_GI_ADD_VALUE:
                 GeneralItemValue giv = new GeneralItemValue();
                 giv.show(getActivity().getSupportFragmentManager(), null);
                 break;
@@ -83,20 +82,10 @@ public class GeneralItemFragment extends Fragment
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.id_et_input_name:
-                String bp = "";
-                break;
-        }
-    }
-
-    @Override
     public boolean onKey(View view, int keyCode, KeyEvent event) {
         boolean retVal = false;
         if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
             // This will fire twice; ACTION_DOWN, then ACTION_UP. Only want to process on ACTION_DOWN.
-            Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
             if(validateName()) {
                 // hide the keyboard
                 InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -105,10 +94,22 @@ public class GeneralItemFragment extends Fragment
                 isNameValid = true;
                 getActivity().invalidateOptionsMenu();
             }
-//            inputName.setCursorVisible(false);
         }
         return retVal;
     }
+
+    //<editor-fold defaultstate="collapsed" desc="Region: TextWatcher">
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        validateName();
+    }
+    //</editor-fold>
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
@@ -116,8 +117,7 @@ public class GeneralItemFragment extends Fragment
         layoutInputName = (TextInputLayout) rootView.findViewById(R.id.id_input_layout_name);
         layoutInputName.setHint(Resources.getInstance().getString(R.string.gif_name));
         inputName = (EditText) rootView.findViewById(R.id.id_et_input_name);
-        inputName.addTextChangedListener(new ToDoTextWatcher(inputName));
-        inputName.setOnClickListener(this);
+        inputName.addTextChangedListener(this);
         inputName.setOnKeyListener(this);
     }
 
@@ -131,8 +131,7 @@ public class GeneralItemFragment extends Fragment
             layoutInputName.setError(Resources.getInstance().getString(R.string.gif_err_char_len));
             requestFocus(inputName);
             return false;
-        }
-         else {
+        } else {
             layoutInputName.setErrorEnabled(false);
         }
         return true;
@@ -145,37 +144,11 @@ public class GeneralItemFragment extends Fragment
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Region: TextWatcher">
-    private class ToDoTextWatcher implements TextWatcher {
-
-        public ToDoTextWatcher(View view) {
-            this.view = view;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            switch(view.getId()) {
-                case R.id.id_et_input_name:
-                    validateName();
-                    break;
-            }
-        }
-
-        private View view;
-    }
-    //</editor-fold>
-
     private Bundle args;
     private View rootView;
     private EditText inputName;
     private boolean isNameValid;
     private TextInputLayout layoutInputName;
 
-    private static final int ADD_VALUE = 0x01;
+    private static final int ID_GI_ADD_VALUE = 0x01;
 }

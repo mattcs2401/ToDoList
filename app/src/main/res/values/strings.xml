@@ -14,7 +14,7 @@
     <string name="menu_add_list_member">Add List Member</string>
     <string name="preference_settings">Preferences</string>
     <!-- Menu - general item. -->
-    <string name="menu_general_item_add">Add Value</string>
+    <string name="menu_gi_add">Add Value</string>
     <string name="menu_general_item_save">Save Item</string>
 
     <!-- Bundle keys. -->
