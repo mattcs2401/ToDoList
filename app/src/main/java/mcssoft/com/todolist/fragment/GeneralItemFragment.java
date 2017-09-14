@@ -31,6 +31,7 @@ public class GeneralItemFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        isNameValid = false;
     }
 
     @Override
@@ -43,6 +44,16 @@ public class GeneralItemFragment extends Fragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_general_item, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        if(isNameValid) {
+            menu.add(Menu.NONE, 1, Menu.FIRST, Resources.getInstance().getString(R.string.menu_general_item_add));
+            // so doesn't retrigger and get added twice.
+            isNameValid = false;
+        }
+        super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -62,11 +73,9 @@ public class GeneralItemFragment extends Fragment
                     Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.id_general_item_add_value:
-                if(validateName()) {
-                    GeneralItemValue giv = new GeneralItemValue();
-                    giv.show(getActivity().getSupportFragmentManager(), null);
-                }
+            case 1: //R.id.id_general_item_add_value:
+                GeneralItemValue giv = new GeneralItemValue();
+                giv.show(getActivity().getSupportFragmentManager(), null);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -88,8 +97,12 @@ public class GeneralItemFragment extends Fragment
             // This will fire twice; ACTION_DOWN, then ACTION_UP. Only want to process on ACTION_DOWN.
             Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
             if(validateName()) {
+                // hide the keyboard
                 InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                // force change in options menu.
+                isNameValid = true;
+                getActivity().invalidateOptionsMenu();
             }
 //            inputName.setCursorVisible(false);
         }
@@ -160,5 +173,6 @@ public class GeneralItemFragment extends Fragment
     private Bundle args;
     private View rootView;
     private EditText inputName;
+    private boolean isNameValid;
     private TextInputLayout layoutInputName;
 }
