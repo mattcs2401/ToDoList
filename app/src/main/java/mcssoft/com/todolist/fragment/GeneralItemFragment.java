@@ -49,9 +49,10 @@ public class GeneralItemFragment extends Fragment
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         if(isNameValid) {
-            menu.add(Menu.NONE, 1, Menu.FIRST, Resources.getInstance().getString(R.string.menu_general_item_add));
             // so doesn't retrigger and get added twice.
             isNameValid = false;
+            // add in menu item.
+            menu.add(Menu.NONE, ADD_VALUE, Menu.FIRST, Resources.getInstance().getString(R.string.menu_general_item_add));
         }
         super.onPrepareOptionsMenu(menu);
     }
@@ -73,7 +74,7 @@ public class GeneralItemFragment extends Fragment
                     Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case 1: //R.id.id_general_item_add_value:
+            case ADD_VALUE:
                 GeneralItemValue giv = new GeneralItemValue();
                 giv.show(getActivity().getSupportFragmentManager(), null);
                 break;
@@ -175,4 +176,6 @@ public class GeneralItemFragment extends Fragment
     private EditText inputName;
     private boolean isNameValid;
     private TextInputLayout layoutInputName;
+
+    private static final int ADD_VALUE = 0x01;
 }
