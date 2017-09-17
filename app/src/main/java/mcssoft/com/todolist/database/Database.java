@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.fragment.ShoppingItemFragment;
 import mcssoft.com.todolist.utility.Resources;
 
 public class Database {
@@ -42,6 +41,7 @@ public class Database {
     }
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Shopping">
     /**
      * Get all the items associated with a shopping list.
      * @param dbRowId The database row id reference of the shopping list.
@@ -142,39 +142,6 @@ public class Database {
 
     public Cursor getAllReferenceItems(String pageCode) {
         return getRecords(Schema.TABLE_REF_ITEM, null, Schema.WHERE_REF_ITEM_CODE, new String[] {pageCode, "N"});
-    }
-
-    /**
-     * Get the number of records for a table.
-     * @param tableName The table to check.
-     * @param args Optional aguments.
-     * @return The number of records.
-     */
-    public int getTableRowCount(String tableName, @Nullable String where, @Nullable String[] args) {
-        Cursor cursor = null;
-        SQLiteDatabase db = dbHelper.getDatabase();
-        try {
-            db.beginTransaction();
-            switch(tableName) {
-                case Schema.TABLE_REF_ITEM:
-                    if(where == null) {
-                        args = null;
-                        cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName, args);
-                    } else {
-                        cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName + where, args);
-                    }
-                    break;
-            }
-        } catch (Exception ex) {
-            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
-        } finally {
-            db.endTransaction();
-            if(cursor != null) {
-                return cursor.getCount();
-            } else {
-                return 0;
-            }
-        }
     }
 
     /**
@@ -293,6 +260,69 @@ public class Database {
         }
         return refIds.length;
     }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: General">
+    /**
+     * Write a new General Item.
+     * @param colVals [0]-id, [1]-date, [2]-name.
+     * @return The rowId of the newly inserted row, or -1,
+     */
+    public long createGeneralItem(List<String> colVals) {
+        long rowId = -1;
+        SQLiteDatabase db = dbHelper.getDatabase();
+        ContentValues cv = new ContentValues();
+
+        try {
+            db.beginTransaction();
+            cv.put(Schema.GENERAL_ID, colVals.get(0));
+            cv.put(Schema.GENERAL_ARCHV, "N");
+            cv.put(Schema.GENERAL_DATE, colVals.get(1));
+            cv.put(Schema.GENERAL_NAME, colVals.get(2));
+            rowId = db.insertOrThrow(Schema.TABLE_GENERAL, null, cv);
+            db.setTransactionSuccessful();
+        } catch(Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            db.endTransaction();
+        }
+        return rowId;
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Utility">
+    /**
+     * Get the number of records for a table.
+     * @param tableName The table to check.
+     * @param args Optional aguments.
+     * @return The number of records.
+     */
+    public int getTableRowCount(String tableName, @Nullable String where, @Nullable String[] args) {
+        Cursor cursor = null;
+        SQLiteDatabase db = dbHelper.getDatabase();
+        try {
+            db.beginTransaction();
+            switch(tableName) {
+                case Schema.TABLE_REF_ITEM:
+                    if(where == null) {
+                        args = null;
+                        cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName, args);
+                    } else {
+                        cursor = db.rawQuery("SELECT " + Schema.REF_ITEM_ROWID + " FROM " + tableName + where, args);
+                    }
+                    break;
+            }
+        } catch (Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            db.endTransaction();
+            if(cursor != null) {
+                return cursor.getCount();
+            } else {
+                return 0;
+            }
+        }
+    }
 
     /**
      * Write default table values to the database. Values are derived from app string resources.
@@ -380,16 +410,6 @@ public class Database {
         // TODO - item type OTHER not done.
     }
 
-    public void destroy() {
-        if(dbHelper != null) {
-            dbHelper.close();
-        }
-        dbHelper = null;
-        if(context != null) {
-            context = null;
-        }
-    }
-
     private Cursor getRecords(String tableName, @Nullable String[] projection, @Nullable String whereClause, @Nullable String[] selArgs) {
 
         // sanity checks.
@@ -449,7 +469,20 @@ public class Database {
         return  projection;
     }
 
+    public void destroy() {
+        if(dbHelper != null) {
+            dbHelper.close();
+        }
+        dbHelper = null;
+        if(context != null) {
+            context = null;
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Private Vars">
     private Context context;
     private static DatabaseHelper dbHelper;
     private static volatile Database instance = null;
+    //</editor-fold>
 }

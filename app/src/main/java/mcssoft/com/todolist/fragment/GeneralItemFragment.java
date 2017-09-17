@@ -19,8 +19,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mcssoft.com.todolist.R;
+import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.fragment.dialog.GeneralItemValue;
+import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
 public class GeneralItemFragment extends Fragment implements TextWatcher, View.OnKeyListener {
@@ -70,7 +75,8 @@ public class GeneralItemFragment extends Fragment implements TextWatcher, View.O
         switch(item.getItemId()) {
             case R.id.id_gi_save:
                 if(validateName()) {
-                    Toast.makeText(getActivity(), "TODO implement Save.", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "TO DO implement Save.", Toast.LENGTH_SHORT).show();
+                    writeNewGeneralItem(inputName.getText().toString());
                 }
                 break;
             case ID_GI_ADD_VALUE:
@@ -113,6 +119,18 @@ public class GeneralItemFragment extends Fragment implements TextWatcher, View.O
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
+    private void writeNewGeneralItem(String genItemName) {//int[] refIds) {
+        List<String> colVals = new ArrayList<>();
+        DateTime dateTime = new DateTime();
+
+        colVals.add(dateTime.getCompactedDateTime());      // general item identifier.
+        colVals.add(dateTime.getFormattedDate(false));     // general item date.
+        colVals.add(genItemName);                          // general item name.
+
+        long rowId = Database.getInstance().createGeneralItem(colVals);
+//        Database.getInstance().createShoppingListItems(rowId, refIds);
+    }
+
     private void initialise() {
         layoutInputName = (TextInputLayout) rootView.findViewById(R.id.id_input_layout_name);
         layoutInputName.setHint(Resources.getInstance().getString(R.string.gif_name));
