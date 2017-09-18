@@ -20,7 +20,7 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
 
     public GeneralViewHolder(View view, IItemClickListener iclistener) {
         super(view);
-//        tvTitle = (TextView) view.findViewById(R.id.id_tv_shopping_title);
+        tvTitle = (TextView) view.findViewById(R.id.id_tv_general_title);
 //        tvDate = (TextView) view.findViewById(R.id.id_tv_date);
 //        tvNumItems = (TextView) view.findViewById(R.id.id_tv_num_items);
 //        tvItems = (TextView) view.findViewById(R.id.id_tv_items);
@@ -39,7 +39,7 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
     }
 
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">
-//    public TextView getTvTitle() { return tvTitle; }
+    public TextView getTvTitle() { return tvTitle; }
 //    public TextView getTvDate() { return tvDate; }
 //    public TextView getTvNumItems() { return tvNumItems; }
 //    public TextView getTvItems() { return tvItems; }
@@ -49,7 +49,7 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
-//    private TextView tvTitle;
+    private TextView tvTitle;
 //    private TextView tvDate;
 //    private TextView tvNumItems;
 //    private TextView tvItems;

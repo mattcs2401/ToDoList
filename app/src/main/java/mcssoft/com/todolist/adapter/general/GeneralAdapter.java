@@ -33,7 +33,7 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
     public void onBindViewHolder(GeneralViewHolder holder, int position) {
         if(!isEmptyView) {
             cursor.moveToPosition(position);
-//            holder.getTvDate().setText(cursor.getString(idDateNdx));
+            holder.getTvTitle().setText(cursor.getString(idNameNdx));
         } else {
             holder.getEmptyView().getText().toString();
         }
@@ -73,21 +73,21 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
     public Cursor getCursor() { return cursor; }
 
     public void setData(Cursor cursor) {
-            this.cursor = cursor;
-            cursor.moveToFirst();
-            idColNdx = cursor.getColumnIndex(Schema.SLIST_ROWID);
-//            idDateNdx = cursor.getColumnIndex(Schema.SLIST_DATE);
-//            idNameNdx = cursor.getColumnIndex(Schema.SLIST_NAME);
-//            idNdx = cursor.getColumnIndex(Schema.SLIST_ID);
-            notifyDataSetChanged();
+       this.cursor = cursor;
+       cursor.moveToFirst();
+       idColNdx = cursor.getColumnIndex(Schema.GENERAL_ROWID);
+       idDateNdx = cursor.getColumnIndex(Schema.GENERAL_DATE);
+       idNameNdx = cursor.getColumnIndex(Schema.GENERAL_NAME);
+       idNdx = cursor.getColumnIndex(Schema.GENERAL_ID);
+       notifyDataSetChanged();
     }
 
 
     private Cursor cursor;                  // backing data
-    private int idColNdx;                   // SLIST.ROWID
-//    private int idDateNdx;                  // SLIST.DATE
-//    private int idNameNdx;                  // SLIST.NAME
-//    private int idNdx;                      // SLIST.ID
+    private int idColNdx;                   // GENERAL.ROWID
+    private int idDateNdx;                  // GENERAL.DATE
+    private int idNameNdx;                  // GENERAL.NAME
+    private int idNdx;                      // GENERAL.ID
     private boolean isEmptyView;
     private IItemClickListener icListener;
 
