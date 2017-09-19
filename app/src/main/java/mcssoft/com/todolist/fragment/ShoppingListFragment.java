@@ -76,7 +76,7 @@ public class ShoppingListFragment extends Fragment
      */
     @Override
     public void onItemClick(View view, int position) {
-        this.position = position;
+//        this.position = position;
         dbRowId = getDbRowId(position);
         switch(view.getId()) {
             case R.id.id_iv_delete:
@@ -184,7 +184,7 @@ public class ShoppingListFragment extends Fragment
     //</editor-fold>
 
     private int dbRowId;
-    private int position;
+//    private int position;
     private Cursor cursor;
     private View rootView;
     private ShoppingAdapter adapter;

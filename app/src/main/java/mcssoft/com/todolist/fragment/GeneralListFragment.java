@@ -3,6 +3,7 @@ package mcssoft.com.todolist.fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,15 +11,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.general.GeneralAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.utility.Resources;
 
 
-public class GeneralListFragment extends Fragment implements IItemClickListener {
+public class GeneralListFragment extends Fragment implements IItemClickListener, View.OnClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -46,7 +49,35 @@ public class GeneralListFragment extends Fragment implements IItemClickListener 
      */
     @Override
     public void onItemClick(View view, int position) {
-        String tba = "TBA";
+        dbRowId = getDbRowId(position);
+        switch(view.getId()) {
+            case R.id.id_iv_delete:
+                // TBA - confirm delete dialog / or snqackbar with undo button.
+                Database.getInstance().archiveGeneralItem(dbRowId, true);
+//                Database.getInstance().archiveShoppingListItem(dbRowId, true);
+                showSnackBarDelete(view);
+                adapter.setData(Database.getInstance().getAllGeneral());
+                break;
+            case R.id.id_iv_expand:
+                Toast.makeText(getActivity(), "Expand not implemted yet.", Toast.LENGTH_SHORT).show();
+                break;
+//            case R.id.id_cv_shopping_row:
+//                // show a dialog with summary of shopping items.
+//                showShoppingDetails(dbRowId);
+//                break;
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.snackbar_action) {
+            Database.getInstance().archiveGeneralItem(dbRowId, false);
+//            Database.getInstance().archiveShoppingListItem(dbRowId, false);
+            showSnackBarRestore(view);
+            adapter.setData(Database.getInstance().getAllGeneral());
+        }
     }
     //</editor-fold>
 
@@ -82,8 +113,22 @@ public class GeneralListFragment extends Fragment implements IItemClickListener 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
+
+    private void showSnackBarDelete(View view) {
+        Snackbar snackbar = Snackbar.make(view, Resources.getInstance()
+                .getString(R.string.snackbar_item_removed), Snackbar.LENGTH_LONG)
+                .setAction(Resources.getInstance().getString(R.string.snackbar_item_undo), this);
+        snackbar.show();
+    }
+
+    private void showSnackBarRestore(View view) {
+        Snackbar snackbar = Snackbar.make(view, Resources.getInstance()
+                .getString(R.string.snackbar_item_restored), Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
     //</editor-fold>
 
+    private int dbRowId;
     private Bundle args;
     private Cursor cursor;
     private View rootView;

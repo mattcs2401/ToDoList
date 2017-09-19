@@ -202,6 +202,36 @@ public class Database {
     }
 
     /**
+     * Set the archive flag on a general item list entry.
+     * @param dbRowId The row id in the database (GEENERAL table).
+     * @param archive True==archive, False==un-archive.
+     * @return The count of items updated.
+     */
+    public int archiveGeneralItem(int dbRowId, boolean archive) {
+        int count = -1;
+        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = dbHelper.getDatabase();
+
+        try {
+            db.beginTransaction();
+            if(archive) {
+                cv.put(Schema.GENERAL_ARCHV, "Y");
+            } else {
+                cv.put(Schema.GENERAL_ARCHV, "N");
+            }
+            count = db.update(Schema.TABLE_GENERAL, cv, Schema.WHERE_GENERAL_ROWID, new String[] {Integer.toString(dbRowId)});
+            db.setTransactionSuccessful();
+        } catch(Exception ex) {
+            Log.d(context.getClass().getCanonicalName(), ex.getMessage());
+        } finally {
+            if(db != null) {
+                db.endTransaction();
+            }
+        }
+        return count;
+    }
+
+    /**
      * Set the archive flag on a shopping list item entry. This should be called in conjunction with
      * archiveShoppingList().
      * @param dbRowId The row id in the database (SLIST table).

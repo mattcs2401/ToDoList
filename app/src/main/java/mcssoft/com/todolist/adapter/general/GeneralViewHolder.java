@@ -21,13 +21,14 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
     public GeneralViewHolder(View view, IItemClickListener iclistener) {
         super(view);
         tvTitle = (TextView) view.findViewById(R.id.id_tv_general_title);
-//        tvDate = (TextView) view.findViewById(R.id.id_tv_date);
+        tvDate = (TextView) view.findViewById(R.id.id_tv_date);
 //        tvNumItems = (TextView) view.findViewById(R.id.id_tv_num_items);
 //        tvItems = (TextView) view.findViewById(R.id.id_tv_items);
-//        ivDelete = (ImageView) view.findViewById(R.id.id_iv_delete);
-//        ivDelete.setOnClickListener(this);
-//        ivExpand = (ImageView) view.findViewById(R.id.id_iv_expand);
-//        ivExpand.setOnClickListener(this);
+        ivDelete = (ImageView) view.findViewById(R.id.id_iv_delete);
+        ivExpand = (ImageView) view.findViewById(R.id.id_iv_expand);
+
+        ivExpand.setOnClickListener(this);
+        ivDelete.setOnClickListener(this);
         this.icListener = iclistener;
         view.setOnClickListener(this);
     }
@@ -40,22 +41,22 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
 
     //<editor-fold defaultstate="collapsed" desc="Region: Accessors">
     public TextView getTvTitle() { return tvTitle; }
-//    public TextView getTvDate() { return tvDate; }
+    public TextView getTvDate() { return tvDate; }
 //    public TextView getTvNumItems() { return tvNumItems; }
 //    public TextView getTvItems() { return tvItems; }
-//    public ImageView getIvExpand() { return ivExpand; }
-//    public ImageView getIvDelete() { return ivDelete; }
+    public ImageView getIvExpand() { return ivExpand; }
+    public ImageView getIvDelete() { return ivDelete; }
     public TextView getEmptyView() { return tvEmpty; }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
     private TextView tvTitle;
-//    private TextView tvDate;
+    private TextView tvDate;
 //    private TextView tvNumItems;
 //    private TextView tvItems;
     private TextView tvEmpty;
-//    private ImageView ivExpand;
-//    private ImageView ivDelete;
+    private ImageView ivExpand;
+    private ImageView ivDelete;
     private IItemClickListener icListener;
     //</editor-fold>
 }

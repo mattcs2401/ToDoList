@@ -34,6 +34,7 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
         if(!isEmptyView) {
             cursor.moveToPosition(position);
             holder.getTvTitle().setText(cursor.getString(idNameNdx));
+            holder.getTvDate().setText(cursor.getString(idDateNdx));
         } else {
             holder.getEmptyView().getText().toString();
         }
@@ -48,7 +49,8 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
     @Override
     public int getItemCount() {
         if(isEmptyView) {
-            return  1; // need to do this so the onCreateViewHolder fires.
+            // need to do this so the onCreateViewHolder fires.
+            return  1;
         }
         return cursor.getCount();
     }
@@ -58,7 +60,6 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
         if(isEmptyView) {
             return EMPTY_VIEW;
         }
-        //return super.getItemViewType(position);  // this returns 0.
         return GENERAL_VIEW;
     }
 
@@ -82,16 +83,14 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
        notifyDataSetChanged();
     }
 
-
-    private Cursor cursor;                  // backing data
+    private int idNdx;                      // GENERAL.ID
     private int idColNdx;                   // GENERAL.ROWID
     private int idDateNdx;                  // GENERAL.DATE
     private int idNameNdx;                  // GENERAL.NAME
-    private int idNdx;                      // GENERAL.ID
-    private boolean isEmptyView;
+    private Cursor cursor;                  // backing data
+    private boolean isEmptyView;            // flag.
     private IItemClickListener icListener;
 
     private static final int EMPTY_VIEW = 0;
-//    private static final int SHOPPING_VIEW = 1;
     private static final int GENERAL_VIEW = 1;
 }
