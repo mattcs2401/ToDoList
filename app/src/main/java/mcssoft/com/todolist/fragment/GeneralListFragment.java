@@ -35,7 +35,6 @@ public class GeneralListFragment extends Fragment implements IItemClickListener,
         super.onActivityCreated(savedInstanceState);
 
         args = getArguments();    // TBA.
-        setData();                // set backing data.
         setAdapter();             // set adapter associated with the recycler view.
         setRecyclerView(rootView);
     }
@@ -52,7 +51,6 @@ public class GeneralListFragment extends Fragment implements IItemClickListener,
         dbRowId = getDbRowId(position);
         switch(view.getId()) {
             case R.id.id_iv_delete:
-                // TBA - confirm delete dialog / or snqackbar with undo button.
                 Database.getInstance().archiveGeneralItem(dbRowId, true);
 //                Database.getInstance().archiveShoppingListItem(dbRowId, true);
                 showSnackBarDelete(view);
@@ -61,9 +59,9 @@ public class GeneralListFragment extends Fragment implements IItemClickListener,
             case R.id.id_iv_expand:
                 Toast.makeText(getActivity(), "Expand not implemted yet.", Toast.LENGTH_SHORT).show();
                 break;
-//            case R.id.id_cv_shopping_row:
-//                // show a dialog with summary of shopping items.
-//                showShoppingDetails(dbRowId);
+//            case R.id.id_cv_general_row:
+//                Toast.makeText(getActivity(), "Show General details not implemted yet.", Toast.LENGTH_SHORT).show();
+//                // TBA show a dialog with summary of General item values.
 //                break;
         }
     }
@@ -72,11 +70,13 @@ public class GeneralListFragment extends Fragment implements IItemClickListener,
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.snackbar_action) {
-            Database.getInstance().archiveGeneralItem(dbRowId, false);
-//            Database.getInstance().archiveShoppingListItem(dbRowId, false);
-            showSnackBarRestore(view);
-            adapter.setData(Database.getInstance().getAllGeneral());
+        switch(view.getId()) {
+            case R.id.snackbar_action:
+                Database.getInstance().archiveGeneralItem(dbRowId, false);
+//                Database.getInstance().archiveShoppingListItem(dbRowId, false);
+                showSnackBarRestore(view);
+                adapter.setData(Database.getInstance().getAllGeneral());
+                break;
         }
     }
     //</editor-fold>
@@ -89,11 +89,8 @@ public class GeneralListFragment extends Fragment implements IItemClickListener,
         return dbRowId;
     }
 
-    private void setData() {
-        cursor = Database.getInstance().getAllGeneral();
-    }
-
     private void setAdapter() {
+        cursor = Database.getInstance().getAllGeneral();
         adapter = new GeneralAdapter();
         if(cursor == null || cursor.getCount() < 1) {
             adapter.setEmptyView(true);
