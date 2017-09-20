@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.pager.ShoppingItemPagerAdapter;
 import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.fragment.GeneralItemFragment;
+import mcssoft.com.todolist.fragment.GeneralItem;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
@@ -79,12 +79,11 @@ public class EditActivity extends AppCompatActivity {
         } else if(listItemType.equals(Resources.getInstance().getString(R.string.list_type_general))) {
             setContentView(R.layout.cv_general);
             setActionBar(Resources.getInstance().getString(R.string.toolbar_title_new_general));
-            GeneralItemFragment gif = new GeneralItemFragment();
+            GeneralItem gif = new GeneralItem();
             Bundle args = new Bundle();
             gif.setArguments(args);
             getSupportFragmentManager().beginTransaction()
-            //getFragmentManager().beginTransaction()
-                    .add(R.id.id_gif_container, gif, "tag_shopping_item_fragment").commit();
+                    .add(R.id.id_gif_container, gif, "tag_general_item_fragment").commit();
         }
     }
 

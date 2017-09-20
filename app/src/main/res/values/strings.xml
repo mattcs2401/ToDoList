@@ -147,7 +147,7 @@
         <item>White fish</item>
     </string-array>
 
-    <!-- Note: Don't change the order unless change ShoppingItemFragment.PageType. -->
+    <!-- Note: Don't change the order unless change ShoppingItem.PageType. -->
     <string-array name="shopping_item_types">
         <item>GENRL:General</item>
         <item>FANDV:Fruit &amp; Veg</item>

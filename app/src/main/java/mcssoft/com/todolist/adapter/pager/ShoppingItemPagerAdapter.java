@@ -1,17 +1,12 @@
 package mcssoft.com.todolist.adapter.pager;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.fragment.ShoppingItemFragment;
-import mcssoft.com.todolist.model.items.ShoppingItemsList;
-import mcssoft.com.todolist.model.items.ShoppingItemsListItem;
+import mcssoft.com.todolist.fragment.ShoppingItem;
 import mcssoft.com.todolist.utility.Resources;
 
 public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
@@ -25,7 +20,7 @@ public class ShoppingItemPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        ShoppingItemFragment shoppingItemFragment = new ShoppingItemFragment();
+        ShoppingItem shoppingItemFragment = new ShoppingItem();
         Bundle bundle = new Bundle();
         bundle.putString(Resources.getInstance().getString(R.string.bundle_pagecode_key), pageTitles[position].split(":")[0]);
         shoppingItemFragment.setArguments(bundle);

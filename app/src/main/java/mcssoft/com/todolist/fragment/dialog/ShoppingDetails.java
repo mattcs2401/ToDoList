@@ -18,7 +18,7 @@ import mcssoft.com.todolist.adapter.shopping.summary.ShoppingSummaryAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.utility.Resources;
 
-public class ShoppingDetailsFragment extends DialogFragment
+public class ShoppingDetails extends DialogFragment
         implements DialogInterface.OnClickListener {
 
     @Override

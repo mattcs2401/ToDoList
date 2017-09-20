@@ -1,7 +1,6 @@
 package mcssoft.com.todolist.adapter.shopping;
 
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,8 @@ import java.util.ArrayList;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
-import mcssoft.com.todolist.interfaces.IItemLongClickListener;
-import mcssoft.com.todolist.utility.Resources;
+import mcssoft.com.todolist.interfaces.IItemClick;
+import mcssoft.com.todolist.interfaces.IItemLongClick;
 
 public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
 
@@ -79,11 +77,11 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
         return SHOPPING_VIEW;
     }
 
-    public void setOnItemClickListener(IItemClickListener iclistener) {
+    public void setOnItemClickListener(IItemClick iclistener) {
         this.icListener = iclistener;
     }
 
-    public void setOnItemLongClickListener(IItemLongClickListener ilclistener) {
+    public void setOnItemLongClickListener(IItemLongClick ilclistener) {
         this.ilcListener = ilclistener;
     }
 
@@ -122,8 +120,8 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingViewHolder> {
     private int idNdx;                           // SLIST.ID
     private boolean isEmptyView;                 // flag, nothing to show.
     private ArrayList<int[]> metaData;           // shopping list meta data.
-    private IItemClickListener icListener;       // interface click listener.
-    private IItemLongClickListener ilcListener;  // interface long
+    private IItemClick icListener;       // interface click listener.
+    private IItemLongClick ilcListener;  // interface long
     // click listener.
 
     private static final int EMPTY_VIEW = 0;

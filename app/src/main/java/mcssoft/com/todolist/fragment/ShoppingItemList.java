@@ -19,16 +19,16 @@ import mcssoft.com.todolist.activity.EditActivity;
 import mcssoft.com.todolist.adapter.shopping.ShoppingAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.fragment.dialog.ShoppingDetailsFragment;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
-import mcssoft.com.todolist.interfaces.IItemLongClickListener;
+import mcssoft.com.todolist.fragment.dialog.ShoppingDetails;
+import mcssoft.com.todolist.interfaces.IItemClick;
+import mcssoft.com.todolist.interfaces.IItemLongClick;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
  * Class that displays the list of shopping items.
  */
-public class ShoppingListFragment extends Fragment
-        implements IItemClickListener, IItemLongClickListener, View.OnClickListener {
+public class ShoppingItemList extends Fragment
+        implements IItemClick, IItemLongClick, View.OnClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -70,7 +70,7 @@ public class ShoppingListFragment extends Fragment
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**
-     * Interface IItemClickListener returns here.
+     * Interface IItemClick returns here.
      * @param view The selected Adapter item view.
      * @param position Row position of the Adapter's item.
      */
@@ -161,7 +161,7 @@ public class ShoppingListFragment extends Fragment
     private void showShoppingDetails(int dbRowId) {
         Bundle args = new Bundle();
         args.putInt(Resources.getInstance().getString(R.string.sl_details_rowid_key), dbRowId);
-        ShoppingDetailsFragment sdf = new ShoppingDetailsFragment();
+        ShoppingDetails sdf = new ShoppingDetails();
         sdf.setArguments(args);
         sdf.show(getActivity().getFragmentManager(), null);
     }

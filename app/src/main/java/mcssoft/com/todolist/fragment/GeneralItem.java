@@ -28,7 +28,10 @@ import mcssoft.com.todolist.fragment.dialog.GeneralItemValue;
 import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
-public class GeneralItemFragment extends Fragment implements TextWatcher, View.OnKeyListener {
+/**
+ * Class that represents a General Item (in the list of General Items).
+ */
+public class GeneralItem extends Fragment implements TextWatcher, View.OnKeyListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override

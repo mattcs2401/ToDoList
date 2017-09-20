@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemClick;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.model.items.ShoppingItemsList;
 import mcssoft.com.todolist.model.items.ShoppingItemsListItem;
@@ -44,7 +44,7 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
         return shoppingItemsList.size();
     }
 
-    public void setOnItemClickListener(IItemClickListener iclistener) {
+    public void setOnItemClickListener(IItemClick iclistener) {
         this.icListener = iclistener;
     }
 
@@ -83,6 +83,6 @@ public class ShoppingItemAdapter extends RecyclerView.Adapter<ShoppingItemViewHo
 
     private Cursor cursor;
     private ShoppingItemViewHolder svh;
-    private IItemClickListener icListener;
+    private IItemClick icListener;
     private ShoppingItemsList shoppingItemsList; // backing (in memory) data.
 }

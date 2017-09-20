@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import mcssoft.com.todolist.R;
-import mcssoft.com.todolist.fragment.GeneralListFragment;
-import mcssoft.com.todolist.fragment.ShoppingListFragment;
+import mcssoft.com.todolist.fragment.GeneralItemList;
+import mcssoft.com.todolist.fragment.ShoppingItemList;
 import mcssoft.com.todolist.utility.Resources;
 
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
@@ -21,9 +21,9 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case SHOPPING:
-                return new ShoppingListFragment();
+                return new ShoppingItemList();
             case GENERAL:
-                return new GeneralListFragment();
+                return new GeneralItemList();
         }
         return null;
     }

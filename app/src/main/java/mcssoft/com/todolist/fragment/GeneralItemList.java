@@ -17,11 +17,13 @@ import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.general.GeneralAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemClick;
 import mcssoft.com.todolist.utility.Resources;
 
-
-public class GeneralListFragment extends Fragment implements IItemClickListener, View.OnClickListener {
+/**
+ * Class that represents the listing of General Items.
+ */
+public class GeneralItemList extends Fragment implements IItemClick, View.OnClickListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -42,7 +44,7 @@ public class GeneralListFragment extends Fragment implements IItemClickListener,
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**
-     * Interface IItemClickListener returns here.
+     * Interface IItemClick returns here.
      * @param view The selected Adapter item view.
      * @param position Row position of the Adapter's item.
      */

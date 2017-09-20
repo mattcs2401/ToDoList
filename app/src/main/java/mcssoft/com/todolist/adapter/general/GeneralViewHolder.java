@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemClick;
 import mcssoft.com.todolist.utility.Resources;
 
 public class GeneralViewHolder extends ParentViewHolder implements View.OnClickListener {
@@ -18,7 +18,7 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
         tvEmpty.setText(Resources.getInstance().getString(R.string.nothing_to_show));
     }
 
-    public GeneralViewHolder(View view, IItemClickListener iclistener) {
+    public GeneralViewHolder(View view, IItemClick iclistener) {
         super(view);
         tvTitle = (TextView) view.findViewById(R.id.id_tv_general_title);
         tvDate = (TextView) view.findViewById(R.id.id_tv_date);
@@ -57,6 +57,6 @@ public class GeneralViewHolder extends ParentViewHolder implements View.OnClickL
     private TextView tvEmpty;
     private ImageView ivExpand;
     private ImageView ivDelete;
-    private IItemClickListener icListener;
+    private IItemClick icListener;
     //</editor-fold>
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemClick;
 
 public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
 
@@ -63,7 +63,7 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
         return GENERAL_VIEW;
     }
 
-    public void setOnItemClickListener(IItemClickListener iclistener) {
+    public void setOnItemClickListener(IItemClick iclistener) {
         this.icListener = iclistener;
     }
 
@@ -89,7 +89,7 @@ public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
     private int idNameNdx;                  // GENERAL.NAME
     private Cursor cursor;                  // backing data
     private boolean isEmptyView;            // flag.
-    private IItemClickListener icListener;
+    private IItemClick icListener;
 
     private static final int EMPTY_VIEW = 0;
     private static final int GENERAL_VIEW = 1;

@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemClick;
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.base.ParentViewHolder;
 
@@ -24,7 +24,7 @@ public class ShoppingItemViewHolder extends ParentViewHolder {
         icListener.onItemClick(view, position);
     }
 
-    public void setItemClickListener(IItemClickListener iclistener) {
+    public void setItemClickListener(IItemClick iclistener) {
         this.icListener = iclistener;
         view.setOnClickListener(this);
     }
@@ -38,6 +38,6 @@ public class ShoppingItemViewHolder extends ParentViewHolder {
     private View view;
     private CheckBox cbShoppingItem;
     private TextView tvShoppingItem;
-    private IItemClickListener icListener;
+    private IItemClick icListener;
     //</editor-fold>
 }

@@ -23,14 +23,14 @@ import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.adapter.shopping.item.ShoppingItemAdapter;
 import mcssoft.com.todolist.database.Database;
 import mcssoft.com.todolist.database.Schema;
-import mcssoft.com.todolist.interfaces.IItemClickListener;
+import mcssoft.com.todolist.interfaces.IItemClick;
 import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
  * Class that is a single shopping item.
  */
-public class ShoppingItemFragment extends Fragment implements IItemClickListener {
+public class ShoppingItem extends Fragment implements IItemClick {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -76,7 +76,7 @@ public class ShoppingItemFragment extends Fragment implements IItemClickListener
 
     //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**
-     * Interface IItemClickListener returns here.
+     * Interface IItemClick returns here.
      * @param view The selected Adapter item view.
      * @param position Row position of the Adapter's item.
      */
