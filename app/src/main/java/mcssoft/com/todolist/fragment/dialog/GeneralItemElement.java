@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -22,14 +21,16 @@ import mcssoft.com.todolist.interfaces.IGeneralElement;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
- * Class to capture the value details entered for General Item.
+ * Class to capture the value/element details entered for a General Item.
  */
-public class GeneralItemElement extends DialogFragment implements DialogInterface.OnClickListener, TextWatcher, View.OnKeyListener {
+public class GeneralItemElement extends DialogFragment
+        implements DialogInterface.OnClickListener, TextWatcher, View.OnKeyListener {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isNameValid = false;
     }
 
     @Override
@@ -59,7 +60,9 @@ public class GeneralItemElement extends DialogFragment implements DialogInterfac
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case AlertDialog.BUTTON_POSITIVE:
-                iGeneralElement.onGeneralElement(inputName.getText().toString());
+                if(isNameValid) {
+                    iGeneralElement.onGeneralElement(inputName.getText().toString());
+                }
                 break;
             case AlertDialog.BUTTON_NEGATIVE:
                 break;
@@ -95,6 +98,7 @@ public class GeneralItemElement extends DialogFragment implements DialogInterfac
     //</editor-fold>
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Interface">
     /**
      * Establish the interface.
      * @param iGeneralElement The interface name.
@@ -102,6 +106,7 @@ public class GeneralItemElement extends DialogFragment implements DialogInterfac
     public void setIGeneralElement(IGeneralElement iGeneralElement) {
         this.iGeneralElement = iGeneralElement;
     }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Region: Utility">
     private boolean validateName() {
@@ -135,9 +140,11 @@ public class GeneralItemElement extends DialogFragment implements DialogInterfac
     }
     //</editor-fold>
 
-    private View rootView;
-    private EditText inputName;
-    private boolean isNameValid;
-    private TextInputLayout layoutInputName;
-    private IGeneralElement iGeneralElement;
+    //<editor-fold defaultstate="collapsed" desc="Region: Private vars">
+    private View rootView;                       // main view.
+    private EditText inputName;                  // text/element entry.
+    private boolean isNameValid;                 // flag, entered string meets criteria.
+    private TextInputLayout layoutInputName;     // used as part of validation.
+    private IGeneralElement iGeneralElement;     // interface.
+    //</editor-fold>
 }
