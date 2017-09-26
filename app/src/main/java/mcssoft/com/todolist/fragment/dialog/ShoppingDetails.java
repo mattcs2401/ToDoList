@@ -57,8 +57,7 @@ public class ShoppingDetails extends DialogFragment
         switch (which) {
             case AlertDialog.BUTTON_POSITIVE:
                 // TBA.
-//                break;
-//            case AlertDialog.BUTTON_NEGATIVE:
+                break;
         }
     }
 
@@ -69,7 +68,6 @@ public class ShoppingDetails extends DialogFragment
     private void setShoppingDetailsAdapter() {
         adapter = new ShoppingSummaryAdapter();
         adapter.swapCursor(cursor);
-
     }
 
     private void setRecyclerView(View view) {

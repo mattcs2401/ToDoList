@@ -17,21 +17,21 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mcssoft.com.todolist.R;
 import mcssoft.com.todolist.database.Database;
-import mcssoft.com.todolist.fragment.dialog.GeneralItemValue;
+import mcssoft.com.todolist.fragment.dialog.GeneralItemElement;
+import mcssoft.com.todolist.interfaces.IGeneralElement;
 import mcssoft.com.todolist.utility.DateTime;
 import mcssoft.com.todolist.utility.Resources;
 
 /**
  * Class that represents a General Item (in the list of General Items).
  */
-public class GeneralItem extends Fragment implements TextWatcher, View.OnKeyListener {
+public class GeneralItem extends Fragment implements TextWatcher, View.OnKeyListener, IGeneralElement {
 
     //<editor-fold defaultstate="collapsed" desc="Region: Lifecycle">
     @Override
@@ -72,6 +72,13 @@ public class GeneralItem extends Fragment implements TextWatcher, View.OnKeyList
     }
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Region: Interface">
+    @Override
+    public void onGeneralElement(String elementValue) {
+        String bp = "";
+    }
+    //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="Region: Listeners">
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -83,7 +90,8 @@ public class GeneralItem extends Fragment implements TextWatcher, View.OnKeyList
                 }
                 break;
             case ID_GI_ADD_VALUE:
-                GeneralItemValue giv = new GeneralItemValue();
+                GeneralItemElement giv = new GeneralItemElement();
+                giv.setIGeneralElement(this); // establish interface.
                 giv.show(getActivity().getSupportFragmentManager(), null);
                 break;
         }
