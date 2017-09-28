@@ -11,7 +11,7 @@ import mcssoft.com.todolist.database.Schema;
 import mcssoft.com.todolist.interfaces.IItemClick;
 
 public class GeneralAdapter extends RecyclerView.Adapter<GeneralViewHolder> {
-
+    // TODO - use the model for backing data (cursor -> model -> display -> model -> cursor)
     public GeneralAdapter() { }
 
     @Override

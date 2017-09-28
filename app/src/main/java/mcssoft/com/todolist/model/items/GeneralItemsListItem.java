@@ -1,65 +1,74 @@
 package mcssoft.com.todolist.model.items;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class that basically models a General item (within the list of General items).
  */
 public class GeneralItemsListItem {
 
-    public GeneralItemsListItem() {
-
+    public GeneralItemsListItem(String nameOrLabel) {
+        this.nameOrLabel = nameOrLabel;
+        hasElements = false;
+        elementList = new ArrayList();
     }
 
-//    public GeneralItemsListItem(int refId, String refCode, String refDesc, String refValue, String refSelect) {
-//        this.refId = refId;
-//        this.refCode = refCode;
-//        this.refDesc = refDesc;
-//        this.refValue = refValue;
-//        this.refSelect = refSelect;
-//    }
-//
-//    public int getRefId() {
-//        return refId;
-//    }
-//
-//    public void setRefId(int refId) {
-//        this.refId = refId;
-//    }
-//
-//    public String getRefCode() {
-//        return refCode;
-//    }
-//
-//    public void setRefCode(String refCode) {
-//        this.refCode = refCode;
-//    }
-//
-//    public String getRefDesc() {
-//        return refDesc;
-//    }
-//
-//    public void setRefDesc(String refDesc) {
-//        this.refDesc = refDesc;
-//    }
-//
-//    public String getRefValue() {
-//        return refValue;
-//    }
-//
-//    public void setRefValue(String refValue) {
-//        this.refValue = refValue;
-//    }
-//
-//    public String getRefSelect() {
-//        return refSelect;
-//    }
-//
-//    public void setRefSelect(String refSelect) {
-//        this.refSelect = refSelect;
-//    }
-//
-//    private int refId;            // reference item identifier (database row id).
-//    private String refCode;       // reference item code.
-//    private String refDesc;       // reference item description.
-//    private String refValue;      // reference item value.
-//    private String refSelect;     // reference item select.
+    public GeneralItemsListItem(String nameOrLabel, List elementList) {
+        this.nameOrLabel = nameOrLabel;
+        if(elementList != null && elementList.size() > 0) {
+            this.elementList = elementList;
+            hasElements = true;
+        } else {
+            hasElements = false;
+            this.elementList = new ArrayList();
+        }
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Item Actions">
+    /**
+     * Add an element to this General item's list of elements.
+     * @param element The element to add.
+     */
+    public void add(String element) {
+        if(elementList != null) {
+            elementList.add(element);
+        } else {
+            elementList = new ArrayList();
+            elementList.add(element);
+        }
+        hasElements = true;
+    }
+    // TODO - remove(int pos) method ?
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Region: Basic Get/Set">
+    public String getNameOrLabel() {
+        return nameOrLabel;
+    }
+
+    public void setNameOrLabel(String nameOrLabel) {
+        this.nameOrLabel = nameOrLabel;
+    }
+
+    public boolean getHasElements() {
+        return hasElements;
+    }
+
+    public void setHasElements(boolean hasElements) {
+        this.hasElements = hasElements;
+    }
+
+    public List getElementList() {
+        return elementList;
+    }
+
+    public void setElementList(List elementList) {
+        this.elementList = elementList;
+    }
+    //</editor-fold>
+
+    private String nameOrLabel;   // this General item's name/label.
+    private boolean hasElements;  // flag, element/values list contains entries.
+    private List elementList;     // list of this General item's elements/values.
 }
